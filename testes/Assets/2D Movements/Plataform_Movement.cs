@@ -12,7 +12,8 @@ public class Plataform_Movement : MonoBehaviour {
     [SerializeField] int vel;
     [SerializeField] int pulo;
     [SerializeField] bool puloCurto;
-    [SerializeField] Rigidbody2D RB;
+    [SerializeField] float fallSpeed;
+    Rigidbody2D RB;
 
     bool nochao;
 
@@ -26,6 +27,7 @@ public class Plataform_Movement : MonoBehaviour {
     void Start()
     {
         estado = Estado.parado;
+        RB = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -109,20 +111,20 @@ public class Plataform_Movement : MonoBehaviour {
 
                         break;
                     case Estado.pulando:
-                        controleMovimento = false;
+                        /*controleMovimento = false;
                         RB.velocity = Vector2.zero;
                         RB.gravityScale = 0;
-                        StartCoroutine("Queda");
+                        StartCoroutine("Queda");*/
                         break;
                 }
             }
         }
-        if (RB.velocity.y < 0 || (puloCurto && !Input.GetKey(KeyCode.W) && !nochao))
+        if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !Input.GetKey(KeyCode.W) && !nochao)))
         {
             print("caindo");
             estado = Estado.pulando;
             Vector3 fall = RB.velocity;
-            fall += Vector3.up * Physics2D.gravity.y * (RB.gravityScale + 10) * Time.deltaTime;
+            fall += Vector3.up * Physics2D.gravity.y * (RB.gravityScale + 10) * fallSpeed * Time.deltaTime;
             RB.velocity = fall;
         }
         else if (RB.velocity.y == 0)
@@ -146,7 +148,7 @@ public class Plataform_Movement : MonoBehaviour {
 
     }
 
-    IEnumerator Queda()
+    /*IEnumerator Queda()
     {
         RB.velocity = Vector2.up * 1;
         yield return new WaitForSeconds(0.5f);
@@ -167,7 +169,7 @@ public class Plataform_Movement : MonoBehaviour {
         print("bateu");
         controleMovimento = true;
         transform.localScale = new Vector3(1, 1, 1);
-    }
+    }*/
 
     void OnCollisionEnter2D(Collision2D c)
     {
