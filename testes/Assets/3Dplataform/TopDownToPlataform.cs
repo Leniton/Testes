@@ -22,7 +22,7 @@ public class TopDownToPlataform : MonoBehaviour {
 
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !moving)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !moving)
         {
             if(goal == 0)
             {
