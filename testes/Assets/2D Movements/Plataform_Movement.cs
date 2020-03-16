@@ -16,12 +16,14 @@ public class Plataform_Movement : MonoBehaviour {
     Rigidbody2D RB;
 
     bool nochao;
+    Collider2D chaoPisado;
 
     /*void OnDrawGizmos()
     {
         Vector2 size = GetComponent<BoxCollider2D>().size;
         float H = size.y * 0.5f;
-        Gizmos.DrawCube(transform.position + (Vector3.down * size.y * 0.8f), size - (Vector2.up * H));
+        //Gizmos.DrawCube(transform.position + (Vector3.down * size.y * 0.8f), size - (Vector2.up * H));
+        Gizmos.DrawWireCube(transform.position + (Vector3.down * size.y * 0.8f), size - (Vector2.up * H));
     }*/
 
     void Start()
@@ -31,6 +33,25 @@ public class Plataform_Movement : MonoBehaviour {
     }
 
     void Update()
+    {
+        Mover();
+        /*else if (RB.velocity.y == 0)
+        {
+            if (RB.velocity.x != 0)
+            {
+                estado = Estado.andando;
+                //print("desceu andando");
+            }
+            else if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                estado = Estado.parado;
+                //print("desceu");
+            }
+            nochao = true;
+        }*/
+    }
+
+    void Mover()
     {
         if (controleMovimento)
         {
@@ -99,6 +120,11 @@ public class Plataform_Movement : MonoBehaviour {
             else
             {
                 RB.velocity = new Vector2(0, RB.velocity.y);
+                if (nochao)
+                {
+                    RB.velocity = Vector2.zero;
+                    estado = Estado.parado;
+                }
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -121,31 +147,12 @@ public class Plataform_Movement : MonoBehaviour {
         }
         if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !Input.GetKey(KeyCode.W) && !nochao)))
         {
-            print("caindo");
+            //print("caindo");
             estado = Estado.pulando;
             Vector3 fall = RB.velocity;
             fall += Vector3.up * Physics2D.gravity.y * (RB.gravityScale + 10) * fallSpeed * Time.deltaTime;
             RB.velocity = fall;
         }
-        else if (RB.velocity.y == 0)
-        {
-            if (RB.velocity.x != 0)
-            {
-                estado = Estado.andando;
-                //print("desceu andando");
-            }
-            else if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
-            {
-                estado = Estado.parado;
-                //print("desceu");
-            }
-            nochao = true;
-        }
-    }
-
-    void Mover()
-    {
-
     }
 
     /*IEnumerator Queda()
@@ -173,25 +180,33 @@ public class Plataform_Movement : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D c)
     {
-        print("normal:"+c.GetContact(0).normal);
+        //print("normal:"+c.GetContact(0).normal);
         if(c.collider.tag == "Chão")
         {
-            if (c.GetContact(0).normal == Vector2.up)
+            if (c.GetContact(0).normal.y >= 0.4f)
             {
                 RB.velocity = new Vector2(RB.velocity.x, 0);
-                /*if (RB.velocity.x != 0)
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
                     estado = Estado.andando;
                     //print("desceu andando");
                 }
-                else if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+                else
                 {
                     estado = Estado.parado;
                     //print("desceu");
-                }*/
+                }
                 nochao = true;
+                chaoPisado = c.collider;
             }
         }
     }
 
+    /*void OnCollisionExit2D(Collision2D c)
+    {
+        if (c.collider == chaoPisado)
+        {
+            
+        }
+    }*/
 }
