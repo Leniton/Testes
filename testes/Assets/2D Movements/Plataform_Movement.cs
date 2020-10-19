@@ -15,7 +15,9 @@ public class Plataform_Movement : MonoBehaviour {
     [SerializeField] float fallSpeed;
     Rigidbody2D RB;
 
-    bool nochao;
+    [Space]
+    [SerializeField]bool nochao;
+
     Collider2D chaoPisado;
 
     /*void OnDrawGizmos()
@@ -202,11 +204,11 @@ public class Plataform_Movement : MonoBehaviour {
         }
     }
 
-    /*void OnCollisionExit2D(Collision2D c)
+    void OnCollisionExit2D(Collision2D c)
     {
         if (c.collider == chaoPisado)
         {
-            
+            nochao = false;
         }
-    }*/
+    }
 }
