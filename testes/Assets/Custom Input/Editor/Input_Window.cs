@@ -11,11 +11,12 @@ public class Input_Window : EditorWindow
     public int Nbuttons = 3;
     List<string> Names = new List<string>();
 
-    List<SearchField> searchFields = new List<SearchField>();
-    List<string> pqs = new List<string>();
-    List<string> txt = new List<string>();
+    List<KeyCode> keycodes = new List<KeyCode>();
+    List<string> teclas = new List<string>();
 
-    KeyCode kc = KeyCode.A;
+    public bool checking;
+    Input_Data data;
+    bool emptySlot = true;
 
     [MenuItem("Window/Custom input")]
     public static void Show_Window()
@@ -25,10 +26,32 @@ public class Input_Window : EditorWindow
 
     private void OnGUI()
     {
+        if (!emptySlot && data == null)
+        {
+            emptySlot = true;
+        }
+
+        data = (Input_Data)EditorGUILayout.ObjectField("Scriptable object",data, typeof(Input_Data),true);
+
+        if (data != null && emptySlot)
+        {
+            Nbuttons = data.inputs.Count;
+            emptySlot = false;
+        }
+
         if (GUILayout.Button("Add"))
         {
             Nbuttons++;
         }
+
+        GUILayout.Space(5);
+
+        if (GUILayout.Button("Atualizar lista de teclas"))
+        {
+            CriarTeclas();
+        }
+
+        GUILayout.Space(5);
 
         for (int i = 0; i < Nbuttons; i++)
         {
@@ -36,29 +59,40 @@ public class Input_Window : EditorWindow
 
             if (Names.Count != Nbuttons)
             {
-                FillLists();
+                if (data != null)
+                {
+                    FillLists(data);
+                }
+                else
+                {
+                    FillLists();
+                }
             }
 
-            Names[i] = EditorGUILayout.TextField(Names[i]);
+            Names[i] = EditorGUILayout.TextField("Nome da ação:",Names[i]);
 
-            txt[i] = searchFields[i].OnToolbarGUI(pqs[i]);
-            if(txt[i] != pqs[i])
+            if (GUILayout.Button(teclas[i],GUILayout.Width(150)))
             {
-                pqs[i] = txt[i];
+                //Debug.Log("clicou");
+                if (!teclas.Contains("aguardando input"))
+                {
+                    //Debug.Log("checando..");
+                    teclas[i] = "aguardando input";
+                    checking = true;
+                }
+                else if(teclas[i] == "aguardando input")
+                {
+                    teclas[i] = "Registrar tecla";
+                    checking = false;
+                }
             }
 
-            if (searchFields[i].HasFocus())
-            {
-
-            }
-
-            if (GUILayout.Button("remove"))
+            if (GUILayout.Button("remover",GUILayout.Width(70)))
             {
                 Names.RemoveAt(i);
 
-                searchFields.RemoveAt(i);
-                txt.RemoveAt(i);
-                pqs.RemoveAt(i);
+                keycodes.RemoveAt(i);
+                teclas.RemoveAt(i);
 
                 Nbuttons--;
             }
@@ -66,12 +100,38 @@ public class Input_Window : EditorWindow
             EditorGUILayout.EndHorizontal();
         }
 
-        EditorGUILayout.Space();
+        
 
-        /*if (GUILayout.Button("criar"))
+        if (checking)
         {
-            Debug.Log("criar");
-        }*/
+            Event e = Event.current;
+            if (e != null && (e.type == EventType.MouseDown || e.type == EventType.KeyDown))
+            {
+                //checkButton();
+                //Debug.Log("opa");
+                checking = false;
+                keyPressed(e);
+            }
+        }
+    }
+
+    void keyPressed(Event e)
+    {
+        int index = teclas.IndexOf("aguardando input");
+
+        if(e.type == EventType.MouseDown)
+        {
+            //323 valor do botão 0 do mouse
+            keycodes[index] = (KeyCode)323 + e.button;
+            teclas[index] = "Mouse" + e.button;
+        }
+        else
+        {
+            keycodes[index] = e.keyCode;
+            teclas[index] = e.keyCode.ToString();
+        }
+
+        Debug.Log("A ação \'" + Names[index] + "\' agora é a tecla \'" + keycodes[index].ToString() + "\'");
     }
 
     void FillLists()
@@ -83,20 +143,63 @@ public class Input_Window : EditorWindow
                 Names.Add(i.ToString());
                 
             }
-            if (i >= pqs.Count)
+            if (i >= teclas.Count)
             {
-                searchFields.Add(new SearchField());
-                txt.Add("");
-                pqs.Add("botão");
+                keycodes.Add(KeyCode.None);
+                teclas.Add("Registrar tecla");
             }
 
         }
         //Custom_Input ci;
     }
 
-    void Sugestions()
+    void FillLists(Input_Data d)
     {
-        //EditorGUILayout.EnumFlagsField(kc);
-        GUI.Label(new Rect(0, 0, 20, 80), "asfgtr");
+        int n = 0;
+
+        Names.Clear();
+
+        teclas.Clear();
+        keycodes.Clear();
+
+        foreach (KeyValuePair<string,KeyCode> keys in data.inputs)
+        {
+            Names.Add(keys.Key);
+
+            keycodes.Add(keys.Value);
+            if((int)keys.Value > 322)
+            {
+                teclas.Add("Mouse" + ((int)keys.Value - 323).ToString());
+            }
+            else
+            {
+                teclas.Add(keys.Value.ToString());
+            }
+            n++;
+        }
+
+        if(n < Nbuttons)
+        {
+            for (int i = n; i < Nbuttons; i++)
+            {
+                Names.Add(i.ToString());
+
+                teclas.Add("Registrar tecla");
+                keycodes.Add(KeyCode.None);
+            }
+        }
+    }
+
+    void CriarTeclas()
+    {
+        Debug.Log("criar");
+
+        data.inputs.Clear();
+
+        for (int i = 0; i < Nbuttons; i++)
+        {
+            data.inputs.Add(Names[i], keycodes[i]);
+            //Debug.Log("Adicionado a ação \'" + Names[i] + "\' que é a tecla \'" + keycodes[i].ToString() + "\'");
+        }
     }
 }

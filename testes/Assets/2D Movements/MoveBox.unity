@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 652576063}
   - component: {fileID: 652576066}
   - component: {fileID: 652576067}
+  - component: {fileID: 652576069}
   - component: {fileID: 652576062}
   - component: {fileID: 652576065}
   - component: {fileID: 652576068}
@@ -499,6 +500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604fafde7b8992844ba9f23732ed1394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: 0
+  right: 0
+  jump: 0
   estado: 0
   controleMovimento: 1
   vel: 4
@@ -646,6 +650,18 @@ MonoBehaviour:
   Velocidade: 5
   "Acelera\xE7\xE3o": 1
   "Desacelera\xE7\xE3o": 1
+--- !u!114 &652576069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652576061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d0a7d7dfc8fcd4eb31ed701623b5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &816380775
 GameObject:
   m_ObjectHideFlags: 0
