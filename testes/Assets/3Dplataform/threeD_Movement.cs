@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class threeD_Movement : MonoBehaviour
 {
+    //Apenas a base para o movimento, usar outro script para os inputs
 
-    protected enum Estado { parado, andando, pulando }
+    public enum Estado { parado, andando, pulando }
 
-    [SerializeField] protected Estado estado = new Estado();
+    [HideInInspector]
+    public bool left, right, foward, backward, jump;
+
+    [SerializeField] public Estado estado = new Estado();
 
     public bool controleMovimento = true;
     [SerializeField] protected float vel;
@@ -17,8 +22,11 @@ public class threeD_Movement : MonoBehaviour
     [SerializeField] protected bool puloCurto;
     [SerializeField] protected float fallSpeed;
 
+    int frontBack, leftRight;
+
     protected Rigidbody RB;
 
+    public Collider chaoPisado { get; private set; }
     [SerializeField] protected bool nochao;
     [Tooltip("Forças aplicadas se mantém")] [SerializeField] bool Momentunm = true;
 
@@ -50,7 +58,7 @@ public class threeD_Movement : MonoBehaviour
         if (controleMovimento)
         {
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (jump)
             {
                 switch (estado)
                 {
@@ -68,94 +76,137 @@ public class threeD_Movement : MonoBehaviour
 
                         break;
                 }
+                jump = false;
             }
-            if (Input.GetKey(KeyCode.W))
+            if (foward)
             {
                 switch (estado)
                 {
                     case Estado.parado:
                         estado = Estado.andando;
-                        RB.velocity = transform.forward * vel;
+                        //RB.velocity = transform.forward * vel;
+                        frontBack = 1;
                         break;
                     case Estado.andando:
                         /*if (RB.velocity.x > 0)
                         {
                             RB.velocity = Vector3.left * vel;
                         }*/
-                        RB.velocity = transform.forward * vel;
+                        //RB.velocity = transform.forward * vel;
+                        frontBack = 1;
                         break;
                     case Estado.pulando:
-                        RB.velocity = new Vector3(transform.forward.x * vel, RB.velocity.y, transform.forward.z * vel);
+                        //RB.velocity = new Vector3(transform.forward.x * vel, RB.velocity.y, transform.forward.z * vel);
+                        frontBack = 1;
                         break;
                 }
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (backward)
             {
                 switch (estado)
                 {
                     case Estado.parado:
                         estado = Estado.andando;
-                        RB.velocity = -transform.right * vel;
+                        //RB.velocity = -transform.forward * vel;
+                        frontBack = -1;
                         break;
                     case Estado.andando:
-
-                        RB.velocity = -transform.right * vel;
+                        /*if (RB.velocity.x > 0)
+                        {
+                            RB.velocity = Vector3.left * vel;
+                        }*/
+                        //RB.velocity = -transform.forward * vel;
+                        frontBack = -1;
                         break;
                     case Estado.pulando:
-                        RB.velocity = new Vector3(-transform.right.x * vel, RB.velocity.y, -transform.right.z * vel);
+                        //RB.velocity = new Vector3(-transform.forward.x * vel, RB.velocity.y, -transform.forward.z * vel);
+                        frontBack = -1;
                         break;
                 }
             }
-            else if (Input.GetKey(KeyCode.D))
+            else
+            {
+                frontBack = 0;
+            }
+
+            if (left)
+            {
+                switch (estado)
+                {
+                    case Estado.parado:
+                        estado = Estado.andando;
+                        //RB.velocity = -transform.right * vel;
+                        leftRight = -1;
+                        break;
+                    case Estado.andando:
+
+                        //RB.velocity = -transform.right * vel;
+                        leftRight = -1;
+                        break;
+                    case Estado.pulando:
+                        //RB.velocity = new Vector3(-transform.right.x * vel, RB.velocity.y, -transform.right.z * vel);
+                        leftRight = -1;
+                        break;
+                }
+            }
+            else if (right)
             {
                 //print(estado);
                 switch (estado)
                 {
                     case Estado.parado:
                         estado = Estado.andando;
-                        RB.velocity = transform.right * vel;
+                        //RB.velocity = transform.right * vel;
+                        leftRight = 1;
                         break;
                     case Estado.andando:
 
-                        RB.velocity = transform.right * vel;
+                        //RB.velocity = transform.right * vel;
+                        leftRight = 1;
                         break;
                     case Estado.pulando:
-                        RB.velocity = new Vector3(transform.right.x * vel, RB.velocity.y, transform.right.z * vel);
+                        //RB.velocity = new Vector3(transform.right.x * vel, RB.velocity.y, transform.right.z * vel);
                         //print("no ar");
-                        break;
-                }
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                switch (estado)
-                {
-                    case Estado.parado:
-                        estado = Estado.andando;
-                        RB.velocity = -transform.forward * vel;
-                        break;
-                    case Estado.andando:
-                        /*if (RB.velocity.x > 0)
-                        {
-                            RB.velocity = Vector3.left * vel;
-                        }*/
-                        RB.velocity = -transform.forward * vel;
-                        break;
-                    case Estado.pulando:
-                        RB.velocity = new Vector3(-transform.forward.x * vel, RB.velocity.y, -transform.forward.z * vel);
+                        leftRight = 1;
                         break;
                 }
             }
             else
             {
+                leftRight = 0;
+            }
+
+            //print((foward == backward == left == right) && foward == false);
+            if (right == false && foward == false && backward == false && left == false)
+            {
                 if (!Momentunm)
                 {
-                    RB.velocity = new Vector3(0, RB.velocity.y, 0);
+                    if (nochao)
+                    {
+                        RB.velocity = Vector2.zero;
+                        frontBack = leftRight = 0;
+                        estado = Estado.parado;
+                    }
+                    else
+                    {
+                        RB.velocity = new Vector3(0, RB.velocity.y, 0); ;
+                        estado = Estado.pulando;
+                    }
                 }
+            }
+            else if(estado != Estado.parado)
+            {
+                //print(frontBack + " | " + leftRight);
+                Vector3 movement = (transform.forward * vel * frontBack) + (transform.right * vel * leftRight);
+                movement = new Vector3(movement.x, RB.velocity.y, movement.z);
+                RB.velocity = movement;
+
+                //if (estado == Estado.pulando && leftRight != 0) print("assim?");
             }
 
         }
 
-        if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !Input.GetKey(KeyCode.W) && !nochao)))
+        if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !jump && !nochao)))
         {
             print("caindo");
             estado = Estado.pulando;
@@ -194,8 +245,8 @@ public class threeD_Movement : MonoBehaviour
             {
                 RB.velocity = new Vector3(RB.velocity.x, 0, RB.velocity.z);
 
-                if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)
-                 && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
+                if (foward || backward
+                  || left || right)
                 {
                     print("andando");
                     estado = Estado.andando;
@@ -208,8 +259,16 @@ public class threeD_Movement : MonoBehaviour
                     //print("desceu");
                 }
                 nochao = true;
+                chaoPisado = c.collider;
             }
         }
     }
 
+    private void OnCollisionExit(Collision c)
+    {
+        if (c.collider == chaoPisado)
+        {
+            nochao = false;
+        }
+    }
 }
