@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dba28db8588eb14db8437d172ff672a, type: 3}
-  m_Name: TestTextToType
+  m_Name: First text
   m_EditorClassIdentifier: 
-  StartText: 'Segundo texto: '
-  ToTypeText: "Esse \xE9 o pr\xF3ximo texto da sequ\xEAncia, como tamb\xE9m \xE9
-    o \xFAltimo. Este texto funciona da mesma forma que o anterior, mas ao apertar
-    Espa\xE7o ap\xF3s aparecer todo o texto, a caixa de di\xE1logo ser\xE1 fechada."
+  StartText: 'Primeiro texto: '
+  ToTypeText: "Esse \xE9 o primeiro texto, para mostrar todo o texto pressione Espa\xE7o.
+    Para passar para o pr\xF3ximo texto pressione Espa\xE7o ap\xF3s todo o texto
+    aparecer."
