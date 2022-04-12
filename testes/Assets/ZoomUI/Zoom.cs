@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Zoom : MonoBehaviour
 {
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  https://docs.unity3d.com/ScriptReference/RectTransformUtility.ScreenPointToLocalPointInRectangle.html !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
     [SerializeField]
     float minZoom = 1,maxZoom;
     [SerializeField] float currentZoom,zoomRate,moveMod;
