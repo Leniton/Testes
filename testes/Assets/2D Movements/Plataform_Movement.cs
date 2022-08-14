@@ -2,21 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Plataform_Movement : MonoBehaviour {
 
+    /*
+    setting up:
+    - adicionar Tag "Chão"
+    - criar layers "Não Controlado" na posição 3 e "Chão"
+    */
+
     public enum Estado { parado, andando, pulando }
+    Rigidbody2D RB;
 
     //[HideInInspector] 
-	public bool left, right, jump;
+    public bool left, right, jump;
 
     [SerializeField] public Estado estado = new Estado();
+    [SerializeField] bool fliped;
 
+    [Header("Movement parapeters")]
     [SerializeField] bool controleMovimento = true;
-    [SerializeField] int vel;
-    [SerializeField] int pulo;
+    [SerializeField] float startingSpeed;
+    [SerializeField] float acceleration;
+    [SerializeField] float topSpeed = 5;
+    [SerializeField] float deceleration;
+
+    [Header("Gravity parameters")]
+    [SerializeField] float gravity = .8f;
+    [SerializeField] float terminalVelocity = 10;
+
+    [Header("Jump parapeters")]
+    [SerializeField] float pulo = 10;
     [SerializeField] bool puloCurto;
-    [SerializeField] float fallSpeed;
-    Rigidbody2D RB;
+    [SerializeField,Range(.01f,.8f),Tooltip("At wich point in the jump you start falling with the short jump")] 
+    float fallSpot;
 
     
     public bool nochao { get; private set; }
@@ -39,15 +58,40 @@ public class Plataform_Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        Gravidade();
         Mover();
+    }
+
+    void Gravidade()
+    {
+        if (nochao) return;
+
+        if(puloCurto && fallSpot > 0 && !jump && RB.velocity.y > 0 && 
+            RB.velocity.y <= pulo * Mathf.Abs(fallSpot-1))
+        {
+            Vector2 dropOff = Vector2.one;
+            dropOff.y = .2f;
+            RB.velocity *= dropOff;
+        }
+
+        Vector2 gravityEffect = Vector2.zero;
+        if (RB.velocity.y > -terminalVelocity)
+            gravityEffect.y -= gravity;
+
+        RB.velocity += gravityEffect;
+
+        if (RB.velocity.y < 0)
+        {
+            jump = false;
+            estado = Estado.pulando;
+        }
     }
 
     void Mover()
     {
         if (controleMovimento)
         {
-
-            if (jump)
+            if (jump && pulo > 0)
             {
                 switch (estado)
                 {
@@ -65,6 +109,7 @@ public class Plataform_Movement : MonoBehaviour {
 
                         break;
                 }
+                if(!puloCurto)
                 jump = false;
             }
             if (left)
@@ -73,13 +118,23 @@ public class Plataform_Movement : MonoBehaviour {
                 {
                     case Estado.parado:
                         estado = Estado.andando;
-                        RB.velocity = Vector3.left * vel;
+                        float startSpeed = topSpeed;
+                        if (acceleration > 0) startSpeed = startingSpeed;
+
+                        RB.velocity = Vector3.left * startSpeed;
                         break;
                     case Estado.andando:
-                        //if (RB.velocity.x > 0)
-                        //{
-                            RB.velocity = Vector3.left * vel;
-                        //}
+
+                        float currentSpeed = topSpeed;
+
+                        if (acceleration > 0)
+                        {
+                            currentSpeed = -RB.velocity.x;
+                            currentSpeed = Mathf.Clamp(currentSpeed, startingSpeed, topSpeed);
+                            currentSpeed = Mathf.Clamp(currentSpeed + acceleration, startingSpeed, topSpeed);
+                        }
+
+                        RB.velocity = Vector3.left * currentSpeed;
 
                         if (!nochao) 
                         {
@@ -87,7 +142,7 @@ public class Plataform_Movement : MonoBehaviour {
                         }
                         break;
                     case Estado.pulando:
-                        RB.velocity = new Vector3(-1 * vel, RB.velocity.y, 0);
+                        RB.velocity = new Vector3(-1 * topSpeed, RB.velocity.y, 0);
                         break;
                 }
                 transform.localScale = new Vector3(-1, 1, 1);
@@ -99,13 +154,22 @@ public class Plataform_Movement : MonoBehaviour {
                 {
                     case Estado.parado:
                         estado = Estado.andando;
-                        RB.velocity = Vector3.right * vel;
+                        float startSpeed = topSpeed;
+                        if (acceleration > 0) startSpeed = startingSpeed;
+
+                        RB.velocity = Vector3.right * startSpeed;
                         break;
                     case Estado.andando:
-                        //if (RB.velocity.x < 0)
-                        //{
-                            RB.velocity = Vector3.right * vel;
-                        //}
+                        float currentSpeed = topSpeed;
+
+                        if (acceleration > 0)
+                        {
+                            currentSpeed = RB.velocity.x;
+                            currentSpeed = Mathf.Clamp(currentSpeed, startingSpeed, topSpeed);
+                            currentSpeed = Mathf.Clamp(currentSpeed + acceleration, startingSpeed, topSpeed);
+                        }
+
+                        RB.velocity = Vector3.right * currentSpeed;
 
                         if (!nochao)
                         {
@@ -113,7 +177,7 @@ public class Plataform_Movement : MonoBehaviour {
                         }
                         break;
                     case Estado.pulando:
-                        RB.velocity = new Vector3(1 * vel, RB.velocity.y, 0);
+                        RB.velocity = new Vector3(1 * topSpeed, RB.velocity.y, 0);
                         //print("no ar");
                         break;
                 }
@@ -121,25 +185,38 @@ public class Plataform_Movement : MonoBehaviour {
             }
             else
             {
-                RB.velocity = new Vector2(0, RB.velocity.y);
+                float decrease = RB.velocity.x - (Mathf.Sign(RB.velocity.x) * deceleration);
+
+                Vector2 currentSpeed = Vector2.zero;
+                currentSpeed.y = RB.velocity.y;
+                if (deceleration > 0 && (RB.velocity.x < -0.00001 || RB.velocity.x > 0.00001))
+                    currentSpeed.x = decrease;
+
                 if (nochao)
                 {
-                    RB.velocity = Vector2.zero;
+                    currentSpeed.y = 0;
                     estado = Estado.parado;
                 }
                 else
                 {
                     estado = Estado.pulando;
                 }
+
+                RB.velocity = currentSpeed;
             }
         }
-        if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !jump && !nochao)))
+        else
         {
-            //print("caindo");
-            estado = Estado.pulando;
-            Vector3 fall = RB.velocity;
-            fall += Vector3.up * Physics2D.gravity.y * (RB.gravityScale + 10) * fallSpeed * Time.deltaTime;
-            RB.velocity = fall;
+            if (nochao)
+            {
+                RB.velocity = Vector2.zero;
+                estado = Estado.parado;
+            }
+            else
+            {
+                RB.velocity = new Vector2(0, RB.velocity.y);
+                estado = Estado.pulando;
+            }
         }
     }
 
@@ -173,5 +250,19 @@ public class Plataform_Movement : MonoBehaviour {
         {
             nochao = false;
         }
+    }
+
+    public void MoveControl(bool inControl)
+    {
+        controleMovimento = inControl;
+
+        gameObject.layer = inControl ? 0 : 3;
+    }
+
+    public void ResetInput()
+    {
+        left = false;
+        right = false;
+        jump = false;
     }
 }
