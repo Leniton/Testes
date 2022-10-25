@@ -934,6 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83de305830a5acc4cadad18616370f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   input: {x: 0, y: 0, z: 0}
   hasControl: 1
   jumpHeight: 5
@@ -992,7 +993,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 1d89617fcfdf4f24e94d62c99d5232b2, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1

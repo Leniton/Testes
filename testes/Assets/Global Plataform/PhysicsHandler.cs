@@ -59,6 +59,7 @@ public class PhysicsHandler : MonoBehaviour
             finalValue = Vector3.zero;
         }
 
+        velocity = finalValue;
         return velocity;
     }
 }
