@@ -6,7 +6,7 @@ using UnityEngine;
 public class Plataform_Script : MonoBehaviour
 {
 #if UNITY_EDITOR
-    bool testMode = true;
+    public bool testMode = true;
 #endif
 
     public enum State { idle, walking, jumping }
@@ -23,7 +23,7 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] float jumpHeight;
     [SerializeField] float timeToMaxHeight;
     [SerializeField] float timeToFall;
-    float jumpStrength;
+    float jumpSpeed;
     float gravity;
     float terminalVelocity;
 
@@ -39,17 +39,29 @@ public class Plataform_Script : MonoBehaviour
 
     void CalculateParameters()
     {
-        float totalTicks = (1 / Time.fixedDeltaTime);
-        print(totalTicks);
+        gravity = 1f;// (jumpHeight * 2) / Mathf.Pow(timeToMaxHeight, 2);
 
-        jumpStrength = (jumpHeight / timeToMaxHeight);
-        gravity = ((jumpHeight + (jumpStrength * timeToMaxHeight) - jumpHeight) / (Mathf.Pow(timeToMaxHeight, 2) / 2)) / totalTicks;
+        float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
+        float ticksPerSecond = (1 / Time.fixedDeltaTime)/10;
+        //print(totalTicks);
 
+        jumpSpeed = (jumpHeight/timeToMaxHeight);
+        gravity = jumpSpeed / timeToMaxHeight*Time.fixedDeltaTime;
+
+        print($"jump: {jumpSpeed}");
+        print($"gravity: {gravity}");
     }
-
 
     void FixedUpdate()
     {
+
+#if UNITY_EDITOR
+        if (testMode)
+        {
+            CalculateParameters();
+        }
+#endif
+
         if (hasControl)
         {
             if(input.y > 0)
@@ -90,9 +102,9 @@ public class Plataform_Script : MonoBehaviour
 
     void Jump()
     {
-        print(gravity);
-        print(jumpStrength);
+        //print(gravity);
+        //print(jumpSpeed);
 
-        finalVelocity.y = jumpStrength;
+        finalVelocity.y = jumpSpeed;
     }
 }
