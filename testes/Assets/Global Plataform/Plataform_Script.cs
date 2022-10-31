@@ -39,14 +39,15 @@ public class Plataform_Script : MonoBehaviour
 
     void CalculateParameters()
     {
-        gravity = 1f;// (jumpHeight * 2) / Mathf.Pow(timeToMaxHeight, 2);
+        //use my gravity over time instead!!!!
+        gravity = /*-jumpHeight / (Mathf.Pow(timeToFall, 2) / 2);*/ (jumpHeight * 2) / Mathf.Pow(timeToMaxHeight, 2);
 
         float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
         float ticksPerSecond = (1 / Time.fixedDeltaTime)/10;
         //print(totalTicks);
 
-        jumpSpeed = (jumpHeight/timeToMaxHeight);
-        gravity = jumpSpeed / timeToMaxHeight*Time.fixedDeltaTime;
+        //use my gravity over time instead!!!!
+        jumpSpeed = (jumpHeight + (gravity * Mathf.Pow(timeToMaxHeight, 2) / 2)) / timeToMaxHeight;
 
         print($"jump: {jumpSpeed}");
         print($"gravity: {gravity}");
