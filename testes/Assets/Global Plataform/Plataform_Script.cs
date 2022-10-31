@@ -40,7 +40,7 @@ public class Plataform_Script : MonoBehaviour
     void CalculateParameters()
     {
         //use my gravity over time instead!!!!
-        gravity = /*-jumpHeight / (Mathf.Pow(timeToFall, 2) / 2);*/ (jumpHeight * 2) / Mathf.Pow(timeToMaxHeight, 2);
+        gravity = /*-jumpHeight / (Mathf.Pow(timeToFall, 2) / 2);*/ (jumpHeight * 2) / Mathf.Pow(timeToFall, 2);
 
         float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
         float ticksPerSecond = (1 / Time.fixedDeltaTime)/10;
