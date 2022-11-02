@@ -24,7 +24,7 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] float timeToMaxHeight;
     [SerializeField] float timeToFall;
     float jumpSpeed;
-    float gravity;
+    float gravity,jumpGravity;
     float terminalVelocity;
 
     //Movement parameters
@@ -39,18 +39,15 @@ public class Plataform_Script : MonoBehaviour
 
     void CalculateParameters()
     {
-        //use my gravity over time instead!!!!
-        gravity = /*-jumpHeight / (Mathf.Pow(timeToFall, 2) / 2);*/ (jumpHeight * 2) / Mathf.Pow(timeToFall, 2);
+        //float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
+        float ticksPerSecond = (1 / Time.fixedDeltaTime)-1;
+        //print(ticksPerSecond);
 
-        float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
-        float ticksPerSecond = (1 / Time.fixedDeltaTime)/10;
-        //print(totalTicks);
+        jumpSpeed = jumpHeight * 2 / (timeToMaxHeight * (1-Time.fixedDeltaTime));
+        gravity = (jumpSpeed/(ticksPerSecond * timeToMaxHeight));
 
-        //use my gravity over time instead!!!!
-        jumpSpeed = (jumpHeight + (gravity * Mathf.Pow(timeToMaxHeight, 2) / 2)) / timeToMaxHeight;
-
-        print($"jump: {jumpSpeed}");
-        print($"gravity: {gravity}");
+        //print($"jump: {jumpSpeed}");
+        //print($"gravity: {gravity}");
     }
 
     void FixedUpdate()
@@ -67,6 +64,8 @@ public class Plataform_Script : MonoBehaviour
         {
             if(input.y > 0)
             {
+                checkStopTime = true;
+                stopTime = 0;
                 Jump();
                 input.y = 0;
                 physicsHandler.SetVelocity(finalVelocity);
@@ -76,6 +75,9 @@ public class Plataform_Script : MonoBehaviour
         Gravity();
     }
 
+    //test parameters
+    bool checkStopTime;
+    float stopTime;
     void Gravity()
     {
         //if (onGround) return;
@@ -93,6 +95,21 @@ public class Plataform_Script : MonoBehaviour
             gravityEffect.y -= gravity;
 
         physicsHandler.SetVelocity(gravityEffect);
+
+        if(checkStopTime)
+        {
+            stopTime += Time.fixedDeltaTime;
+        }
+
+        if (gravityEffect.y <= 0)
+        {
+            if (checkStopTime)
+            {
+                checkStopTime = false;
+                print($"stop time: {stopTime}");
+                stopTime = 0;
+            }
+        }
 
         if (gravityEffect.y < 0)
         {
