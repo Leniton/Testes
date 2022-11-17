@@ -2051,7 +2051,7 @@ MonoBehaviour:
   input: {x: 0, y: 0, z: 0}
   hasControl: 1
   jumpHeight: 10
-  timeToMaxHeight: 2
+  timeToMaxHeight: 0.5
   timeToFall: 0
 --- !u!114 &1544372082
 MonoBehaviour:
