@@ -43,8 +43,11 @@ public class Plataform_Script : MonoBehaviour
         float ticksPerSecond = (1 / Time.fixedDeltaTime)-1;
         //print(ticksPerSecond);
 
-        jumpSpeed = jumpHeight * 2 / (timeToMaxHeight * (1-Time.fixedDeltaTime));
-        gravity = (jumpSpeed/(ticksPerSecond * timeToMaxHeight));
+        jumpSpeed = jumpHeight / (timeToMaxHeight * (1-Time.fixedDeltaTime));
+        jumpSpeed += (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
+        jumpSpeed *= 2;
+
+        gravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
 
         //print($"jump: {jumpSpeed}");
         //print($"gravity: {gravity}");
