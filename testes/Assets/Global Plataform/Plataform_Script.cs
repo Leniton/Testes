@@ -126,7 +126,7 @@ public class Plataform_Script : MonoBehaviour
             if (checkStopTime)
             {
                 checkStopTime = false;
-                print($"stop time: {stopTime}");
+                print($"stop time: {stopTime} | height: {transform.position.y}");
                 stopTime = 0;
             }
         }

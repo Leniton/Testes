@@ -2046,14 +2046,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83de305830a5acc4cadad18616370f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 0
+  testMode: 1
   state: 0
   input: {x: 0, y: 0, z: 0}
   hasControl: 1
   onGround: 0
-  jumpHeight: 3
-  timeToMaxHeight: 0.5
-  timeToFall: 0.2
+  jumpHeight: 10
+  timeToMaxHeight: 1
+  timeToFall: 0.7
 --- !u!114 &1544372082
 MonoBehaviour:
   m_ObjectHideFlags: 0
