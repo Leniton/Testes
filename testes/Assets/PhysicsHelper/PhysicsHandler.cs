@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +12,9 @@ public class PhysicsHandler : MonoBehaviour
     Collider2D c2D;
 
     private Vector3 velocity;
+
+    Action<CollisionData> CollisionEnter, CollisionStay, CollisionExit;
+    Action<ColliderData> TriggerEnter, TriggerStay, TriggerExit;
 
     private void Awake()
     {
@@ -62,4 +65,62 @@ public class PhysicsHandler : MonoBehaviour
         velocity = finalValue;
         return velocity;
     }
+
+    #region Collision
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        TriggerEnter.Invoke(new ColliderData(collision));
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        TriggerEnter.Invoke(new ColliderData(collision));
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        TriggerStay.Invoke(new ColliderData(collision));
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        TriggerStay.Invoke(new ColliderData(collision));
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        TriggerExit.Invoke(new ColliderData(collision));
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        TriggerExit.Invoke(new ColliderData(collision));
+    }
+
+    #endregion
 }
