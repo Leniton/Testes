@@ -24,7 +24,8 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] float timeToMaxHeight;
     [SerializeField] float timeToFall;
     float jumpSpeed;
-    float gravity,jumpGravity;
+    float fallGravity,jumpGravity;
+    float currentGravity;
     float terminalVelocity;
 
     //Movement parameters
@@ -47,7 +48,10 @@ public class Plataform_Script : MonoBehaviour
         jumpSpeed += (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
         jumpSpeed *= 2;
 
-        gravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
+        jumpGravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
+        fallGravity = (jumpSpeed / (ticksPerSecond * timeToFall));
+
+        currentGravity = jumpGravity;
 
         //print($"jump: {jumpSpeed}");
         //print($"gravity: {gravity}");
@@ -94,8 +98,12 @@ public class Plataform_Script : MonoBehaviour
         }*/
 
         Vector2 gravityEffect = physicsHandler.GetVelocity();
+
+        if (gravityEffect.y >= 0) currentGravity = jumpGravity;
+        else currentGravity = fallGravity;
+
         //if (gravityEffect.y > -terminalVelocity)
-            gravityEffect.y -= gravity;
+            gravityEffect.y -= currentGravity;
 
         physicsHandler.SetVelocity(gravityEffect);
 
