@@ -802,7 +802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &652576062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2046,10 +2046,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83de305830a5acc4cadad18616370f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 1
+  testMode: 0
   state: 0
   input: {x: 0, y: 0, z: 0}
   hasControl: 1
+  onGround: 0
   jumpHeight: 3
   timeToMaxHeight: 0.5
   timeToFall: 0.2

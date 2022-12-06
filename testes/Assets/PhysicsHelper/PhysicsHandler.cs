@@ -13,8 +13,8 @@ public class PhysicsHandler : MonoBehaviour
 
     private Vector3 velocity;
 
-    Action<CollisionData> CollisionEnter, CollisionStay, CollisionExit;
-    Action<ColliderData> TriggerEnter, TriggerStay, TriggerExit;
+    public Action<CollisionData> CollisionEnter, CollisionStay, CollisionExit;
+    public Action<ColliderData> TriggerEnter, TriggerStay, TriggerExit;
 
     private void Awake()
     {
@@ -70,56 +70,56 @@ public class PhysicsHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        CollisionEnter.Invoke(new CollisionData(collision));
+        CollisionEnter?.Invoke(new CollisionData(collision));
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollisionEnter.Invoke(new CollisionData(collision));
+        CollisionEnter?.Invoke(new CollisionData(collision));
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        CollisionStay.Invoke(new CollisionData(collision));
+        CollisionStay?.Invoke(new CollisionData(collision));
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        CollisionStay.Invoke(new CollisionData(collision));
+        CollisionStay?.Invoke(new CollisionData(collision));
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        CollisionExit.Invoke(new CollisionData(collision));
+        CollisionExit?.Invoke(new CollisionData(collision));
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        CollisionExit.Invoke(new CollisionData(collision));
+        CollisionExit?.Invoke(new CollisionData(collision));
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        TriggerEnter.Invoke(new ColliderData(collision));
+        TriggerEnter?.Invoke(new ColliderData(collision));
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TriggerEnter.Invoke(new ColliderData(collision));
+        TriggerEnter?.Invoke(new ColliderData(collision));
     }
 
     private void OnTriggerStay(Collider collision)
     {
-        TriggerStay.Invoke(new ColliderData(collision));
+        TriggerStay?.Invoke(new ColliderData(collision));
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        TriggerStay.Invoke(new ColliderData(collision));
+        TriggerStay?.Invoke(new ColliderData(collision));
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        TriggerExit.Invoke(new ColliderData(collision));
+        TriggerExit?.Invoke(new ColliderData(collision));
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        TriggerExit.Invoke(new ColliderData(collision));
+        TriggerExit?.Invoke(new ColliderData(collision));
     }
 
     #endregion

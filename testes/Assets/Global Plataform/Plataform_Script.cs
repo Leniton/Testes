@@ -14,10 +14,11 @@ public class Plataform_Script : MonoBehaviour
 
     public Vector3 input = Vector3.zero;
     public bool hasControl = true;
-    bool onGround;
+    [SerializeField] bool onGround;
 
     //Reference Parameters
     PhysicsHandler physicsHandler;
+    GameObject standingFloor;
 
     //Jump parameters
     [SerializeField] float jumpHeight;
@@ -30,11 +31,16 @@ public class Plataform_Script : MonoBehaviour
 
     //Movement parameters
     Vector3 finalVelocity;
+    float maxSlopeAngle;
 
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-        
+
+        //adding events
+        physicsHandler.CollisionEnter = CollisionEnter;
+        physicsHandler.CollisionExit = CollisionExit;
+
         CalculateParameters();
     }
 
@@ -44,7 +50,7 @@ public class Plataform_Script : MonoBehaviour
         float ticksPerSecond = (1 / Time.fixedDeltaTime)-1;
         //print(ticksPerSecond);
 
-        jumpSpeed = jumpHeight / (timeToMaxHeight * (1-Time.fixedDeltaTime));
+        jumpSpeed = jumpHeight / (timeToMaxHeight * (1 - Time.fixedDeltaTime));
         jumpSpeed += (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
         jumpSpeed *= 2;
 
@@ -71,11 +77,14 @@ public class Plataform_Script : MonoBehaviour
         {
             if(input.y > 0)
             {
-                checkStopTime = true;
-                stopTime = 0;
-                Jump();
-                input.y = 0;
-                physicsHandler.SetVelocity(finalVelocity);
+                if (onGround)
+                {
+                    checkStopTime = true;
+                    stopTime = 0;
+                    Jump();
+                    input.y = 0;
+                    physicsHandler.SetVelocity(finalVelocity);
+                }
             }
         }
 
@@ -87,7 +96,7 @@ public class Plataform_Script : MonoBehaviour
     float stopTime;
     void Gravity()
     {
-        //if (onGround) return;
+        if (onGround) return;
 
         /*if (puloCurto && fallSpot > 0 && !jump && RB.velocity.y > 0 &&
             RB.velocity.y <= pulo * Mathf.Abs(fallSpot - 1))
@@ -131,9 +140,38 @@ public class Plataform_Script : MonoBehaviour
 
     void Jump()
     {
-        //print(gravity);
-        //print(jumpSpeed);
+        if (!onGround) return;
+
+        //print("jump");
 
         finalVelocity.y = jumpSpeed;
     }
+    void CollisionEnter(CollisionData data)
+    {
+        //print($"collided with {data.collider.gameObject.name}");
+        if (data.collider.gameObject.CompareTag("Chão"))
+        {
+            standingFloor = data.collider.gameObject;
+            onGround = true;
+        }
+    }
+    void CollisionExit(CollisionData data)
+    {
+        //print($"Exit {data.collider.gameObject.name}");
+        if (data.collider.gameObject == standingFloor)
+        {
+            standingFloor = null;
+            onGround = false;
+        }
+    }
+
+    #region Enable/Disable
+
+    private void OnDisable()
+    {
+        physicsHandler.CollisionEnter = null;
+        physicsHandler.CollisionExit = null;
+    }
+
+    #endregion
 }
