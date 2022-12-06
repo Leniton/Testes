@@ -70,29 +70,29 @@ public class PhysicsHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        CollisionEnter.Invoke(new CollisionData(collision));
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        CollisionEnter.Invoke(new CollisionData(collision));
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        
+        CollisionStay.Invoke(new CollisionData(collision));
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        
+        CollisionStay.Invoke(new CollisionData(collision));
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        
+        CollisionExit.Invoke(new CollisionData(collision));
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        
+        CollisionExit.Invoke(new CollisionData(collision));
     }
 
     private void OnTriggerEnter(Collider collision)
