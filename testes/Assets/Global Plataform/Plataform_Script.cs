@@ -50,9 +50,9 @@ public class Plataform_Script : MonoBehaviour
         float ticksPerSecond = (1 / Time.fixedDeltaTime)-1;
         //print(ticksPerSecond);
 
-        jumpSpeed = jumpHeight / (timeToMaxHeight * (1 - Time.fixedDeltaTime));
+        jumpSpeed = (jumpHeight / timeToMaxHeight)*1.8f;
         jumpSpeed += (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
-        jumpSpeed *= 2;
+        //jumpSpeed *= 2;
 
         jumpGravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
         fallGravity = (jumpSpeed / (ticksPerSecond * timeToFall));
@@ -82,6 +82,8 @@ public class Plataform_Script : MonoBehaviour
                     checkStopTime = true;
                     stopTime = 0;
                     Jump();
+                    //print($"Start Height:{transform.position.y}");
+                    //StartCoroutine(TestCount());
                     input.y = 0;
                     physicsHandler.SetVelocity(finalVelocity);
                 }
@@ -91,9 +93,16 @@ public class Plataform_Script : MonoBehaviour
         Gravity();
     }
 
+    IEnumerator TestCount()
+    {
+        yield return new WaitForSeconds(timeToMaxHeight);
+        print($"End Height:{transform.position.y}");
+    }
+
     //test parameters
     bool checkStopTime;
     float stopTime;
+    int ticksCount = 0;
     void Gravity()
     {
         if (onGround) return;
@@ -119,6 +128,7 @@ public class Plataform_Script : MonoBehaviour
         if(checkStopTime)
         {
             stopTime += Time.fixedDeltaTime;
+            ticksCount++;
         }
 
         if (gravityEffect.y <= 0)
@@ -127,7 +137,9 @@ public class Plataform_Script : MonoBehaviour
             {
                 checkStopTime = false;
                 print($"stop time: {stopTime} | height: {transform.position.y}");
+                //print(ticksCount);
                 stopTime = 0;
+                ticksCount = 0;
             }
         }
 
