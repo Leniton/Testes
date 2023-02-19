@@ -22,8 +22,8 @@ public class Plataform_Script : MonoBehaviour
 
     //Jump parameters
     [SerializeField] float jumpHeight;
-    [SerializeField] float timeToMaxHeight;
-    [SerializeField] float timeToFall;
+    [SerializeField, Min(.2f)] float timeToMaxHeight;
+    [SerializeField, Min(.2f)] float timeToFall;
     float jumpSpeed;
     float fallGravity,jumpGravity;
     float currentGravity;
@@ -47,11 +47,11 @@ public class Plataform_Script : MonoBehaviour
     void CalculateParameters()
     {
         //float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
-        float ticksPerSecond = (1 / Time.fixedDeltaTime)-1;
+        float ticksPerSecond = (1f / Time.fixedDeltaTime);
         //print(ticksPerSecond);
 
-        jumpSpeed = (jumpHeight / timeToMaxHeight)*1.8f;
-        jumpSpeed += (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
+        jumpSpeed = (jumpHeight / timeToMaxHeight);
+        jumpSpeed *= 1 + (Mathf.Pow((1f - Time.fixedDeltaTime * (jumpSpeed / (ticksPerSecond * timeToMaxHeight))), ticksPerSecond * timeToMaxHeight));
         //jumpSpeed *= 2;
 
         jumpGravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
@@ -152,10 +152,6 @@ public class Plataform_Script : MonoBehaviour
 
     void Jump()
     {
-        if (!onGround) return;
-
-        //print("jump");
-
         finalVelocity.y = jumpSpeed;
     }
     void CollisionEnter(CollisionData data)
