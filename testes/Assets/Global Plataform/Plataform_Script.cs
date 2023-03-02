@@ -47,12 +47,25 @@ public class Plataform_Script : MonoBehaviour
     void CalculateParameters()
     {
         //float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
-        float ticksPerSecond = (1f / Time.fixedDeltaTime);
+        float ticksPerSecond = (1f / Time.fixedDeltaTime)-1;
         //print(ticksPerSecond);
 
+        //jump ajustment:
+        //the jump needs to be multiplied by something similar to the drag
+        //discover what's the total speed he loses during the fall ((V-G) + (V-G²).... etc)
+        //discover what proportion that represents from the original (.8, 1.2... ect) and add 1 before multiplying
+
         jumpSpeed = (jumpHeight / timeToMaxHeight);
-        jumpSpeed *= 1 + (Mathf.Pow((1f - Time.fixedDeltaTime * (jumpSpeed / (ticksPerSecond * timeToMaxHeight))), ticksPerSecond * timeToMaxHeight));
-        //jumpSpeed *= 2;
+
+        //adding ajustment
+        float incremented = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
+
+        print($"initial force: {jumpSpeed} | extra: {incremented * (ticksPerSecond * timeToMaxHeight)}");
+
+        for (int i = 2; i < ticksPerSecond; i++)
+        {
+            incremented += incremented * i;
+        }
 
         jumpGravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
         fallGravity = (jumpSpeed / (ticksPerSecond * timeToFall));
@@ -93,10 +106,11 @@ public class Plataform_Script : MonoBehaviour
         Gravity();
     }
 
+    float t_initialHeight;
     IEnumerator TestCount()
     {
         yield return new WaitForSeconds(timeToMaxHeight);
-        print($"End Height:{transform.position.y}");
+        print($"End Height:{transform.position.y - t_initialHeight}");
     }
 
     //test parameters
@@ -136,7 +150,7 @@ public class Plataform_Script : MonoBehaviour
             if (checkStopTime)
             {
                 checkStopTime = false;
-                print($"stop time: {stopTime} | height: {transform.position.y}");
+                print($"stop time: {stopTime} | height: {transform.position.y-t_initialHeight}");
                 //print(ticksCount);
                 stopTime = 0;
                 ticksCount = 0;
@@ -152,6 +166,7 @@ public class Plataform_Script : MonoBehaviour
 
     void Jump()
     {
+        //print($"jump: {jumpSpeed}");
         finalVelocity.y = jumpSpeed;
     }
     void CollisionEnter(CollisionData data)
@@ -161,6 +176,9 @@ public class Plataform_Script : MonoBehaviour
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
+
+            //test only
+            t_initialHeight = transform.position.y;
         }
     }
     void CollisionExit(CollisionData data)
