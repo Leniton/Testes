@@ -21,9 +21,9 @@ public class Plataform_Script : MonoBehaviour
     GameObject standingFloor;
 
     //Jump parameters
-    [SerializeField] float jumpHeight;
-    [SerializeField, Min(.2f)] float timeToMaxHeight;
-    [SerializeField, Min(.2f)] float timeToFall;
+    [SerializeField] float jumpHeight; //the height the jump will reach
+    [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
+    [SerializeField, Min(.2f)] float timeToFall; //the time it will take to get to the ground from max jump height
     float jumpSpeed;
     float fallGravity,jumpGravity;
     float currentGravity;
@@ -46,27 +46,18 @@ public class Plataform_Script : MonoBehaviour
 
     void CalculateParameters()
     {
-        //float dragMultiplier = 1 + (Mathf.Pow((1 - Time.fixedDeltaTime * gravity), (1 / Time.fixedDeltaTime)) * timeToMaxHeight);
+        //the amount of physics tick per second
         float ticksPerSecond = (1f / Time.fixedDeltaTime)-1;
         //print(ticksPerSecond);
 
-        //jump ajustment:
-        //the jump needs to be multiplied by something similar to the drag
-        //discover what's the total speed he loses during the fall ((V-G) + (V-G²).... etc)
-        //discover what proportion that represents from the original (.8, 1.2... ect) and add 1 before multiplying
-
+        //offset of missing ticks when calculating gravity
+        float tickOffset = ticksPerSecond * Time.fixedDeltaTime*5;
+        //basic speed formula plus the extra force needed to compensate for the gravity force
         jumpSpeed = (jumpHeight / timeToMaxHeight);
+        jumpSpeed *= 1f + ExtraForceWithDrag(jumpSpeed, (jumpSpeed / (ticksPerSecond * timeToMaxHeight)),
+            ticksPerSecond - tickOffset, timeToMaxHeight);
 
-        //adding ajustment
-        float incremented = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
-
-        print($"initial force: {jumpSpeed} | extra: {incremented * (ticksPerSecond * timeToMaxHeight)}");
-
-        for (int i = 2; i < ticksPerSecond; i++)
-        {
-            incremented += incremented * i;
-        }
-
+        //gravity calculations. jump and fall gravity are different
         jumpGravity = (jumpSpeed / (ticksPerSecond * timeToMaxHeight));
         fallGravity = (jumpSpeed / (ticksPerSecond * timeToFall));
 
@@ -74,6 +65,22 @@ public class Plataform_Script : MonoBehaviour
 
         //print($"jump: {jumpSpeed}");
         //print($"gravity: {gravity}");
+    }
+
+    /// <summary>
+    /// Calculates the percentage of force needed to compensate some dictated drag force
+    /// </summary>
+    /// <param name="speed">the speed you want to calculate the compensation</param>
+    /// <param name="dragForce">the force slowing down the speed</param>
+    /// <param name="ticksPerSecond">the amount of ticks the drag is added per second</param>
+    /// <param name="totalTime">the amount of time the calculation is taking into account</param>
+    /// <returns></returns>
+    float ExtraForceWithDrag(float speed, float dragForce, float ticksPerSecond,float totalTime)
+    {
+        float dragPercentage = dragForce / speed;
+        dragPercentage *= (ticksPerSecond * totalTime);
+
+        return dragPercentage;
     }
 
     void FixedUpdate()
@@ -107,16 +114,11 @@ public class Plataform_Script : MonoBehaviour
     }
 
     float t_initialHeight;
-    IEnumerator TestCount()
-    {
-        yield return new WaitForSeconds(timeToMaxHeight);
-        print($"End Height:{transform.position.y - t_initialHeight}");
-    }
 
     //test parameters
     bool checkStopTime;
     float stopTime;
-    int ticksCount = 0;
+    float speedLost = 0;
     void Gravity()
     {
         if (onGround) return;
@@ -142,7 +144,8 @@ public class Plataform_Script : MonoBehaviour
         if(checkStopTime)
         {
             stopTime += Time.fixedDeltaTime;
-            ticksCount++;
+            speedLost += jumpSpeed - physicsHandler.GetVelocity().y;
+            //Debug.Log($"lost {jumpSpeed - physicsHandler.GetVelocity().y} speed");
         }
 
         if (gravityEffect.y <= 0)
@@ -151,9 +154,11 @@ public class Plataform_Script : MonoBehaviour
             {
                 checkStopTime = false;
                 print($"stop time: {stopTime} | height: {transform.position.y-t_initialHeight}");
-                //print(ticksCount);
+                //print($"Initial speed: {jumpSpeed} | total speed lost: {speedLost}");
+                //float ticksPerSecond = (1f / Time.fixedDeltaTime) - 1;
+                //print($"Percentage lost: {ExtraForceWithDrag(jumpSpeed, jumpGravity, ticksPerSecond-1, timeToMaxHeight):0.0000}");
                 stopTime = 0;
-                ticksCount = 0;
+                speedLost = 0;
             }
         }
 
