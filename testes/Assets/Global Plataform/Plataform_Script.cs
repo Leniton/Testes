@@ -123,14 +123,6 @@ public class Plataform_Script : MonoBehaviour
     {
         if (onGround) return;
 
-        /*if (puloCurto && fallSpot > 0 && !jump && RB.velocity.y > 0 &&
-            RB.velocity.y <= pulo * Mathf.Abs(fallSpot - 1))
-        {
-            Vector2 dropOff = Vector2.one;
-            dropOff.y = .2f;
-            RB.velocity *= dropOff;
-        }*/
-
         Vector2 gravityEffect = physicsHandler.GetVelocity();
 
         if (gravityEffect.y >= 0) currentGravity = jumpGravity;
@@ -145,7 +137,6 @@ public class Plataform_Script : MonoBehaviour
         {
             stopTime += Time.fixedDeltaTime;
             speedLost += jumpSpeed - physicsHandler.GetVelocity().y;
-            //Debug.Log($"lost {jumpSpeed - physicsHandler.GetVelocity().y} speed");
         }
 
         if (gravityEffect.y <= 0)
@@ -171,9 +162,9 @@ public class Plataform_Script : MonoBehaviour
 
     void Jump()
     {
-        //print($"jump: {jumpSpeed}");
         finalVelocity.y = jumpSpeed;
     }
+
     void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
