@@ -43,7 +43,7 @@ public class Plataform_Script : MonoBehaviour
 
         CalculateParameters();
     }
-
+    public float testValue;
     void CalculateParameters()
     {
         //the amount of physics tick per second
@@ -51,7 +51,22 @@ public class Plataform_Script : MonoBehaviour
         //print(ticksPerSecond);
 
         //offset of missing ticks when calculating gravity
-        float tickOffset = ticksPerSecond * Time.fixedDeltaTime*5;
+        //at.25: 1.22197525
+        //at .5: 1.10093
+        //at  1: 1,040522
+        //at  2: 1.022412
+        //at  3: 1.0007525
+        //at  4: 0,99633825
+       //dif.25: 0.12104
+        //dif.5: 0.060408
+        //dif 1: 0.0216595
+        //diff roughly 0.03/time
+        float tickOffset = ticksPerSecond * Time.fixedDeltaTime * (testValue);
+        //Debug.Log(tickOffset);
+        //.5== 10
+        //1 == 4
+        //2 == 1
+
         //basic speed formula plus the extra force needed to compensate for the gravity force
         jumpSpeed = (jumpHeight / timeToMaxHeight);
         jumpSpeed *= 1f + ExtraForceWithDrag(jumpSpeed, (jumpSpeed / (ticksPerSecond * timeToMaxHeight)),
