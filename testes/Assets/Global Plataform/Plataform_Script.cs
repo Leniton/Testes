@@ -63,9 +63,14 @@ public class Plataform_Script : MonoBehaviour
         //diff roughly 0.03/time
         float tickOffset = ticksPerSecond * Time.fixedDeltaTime * (testValue);
         //Debug.Log(tickOffset);
+        //.2== 21
+        //.25==18
         //.5== 10
+        //.75==6
         //1 == 4
         //2 == 1
+        //3 == 0
+        //4 == -.5
 
         //basic speed formula plus the extra force needed to compensate for the gravity force
         jumpSpeed = (jumpHeight / timeToMaxHeight);
