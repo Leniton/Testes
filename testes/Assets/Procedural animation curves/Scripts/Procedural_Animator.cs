@@ -92,7 +92,6 @@ public class Procedural_Animator : MonoBehaviour
         {
             float time = step * i;
             //Debug.Log(DampEffect(smoothValue, time - 1));
-            //Debug.Log(DampEffect(initialResponse, time, dampEffect));
             FinalAnimationParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(time)) +
                 Vector2.up * (FullAnimation(time));
         }
@@ -117,10 +116,8 @@ public class Procedural_Animator : MonoBehaviour
 
     public float FullAnimation(float time)
     {
-        float delta = inputChange * (time - (Mathf.Clamp(time - 1, 0, 9999999)*(1-smoothValue)));
-        //delta += InitialResponse(DampEffect(-1f / inputChange, time, .5f), Mathf.Clamp01(time) + 1f, .25f);
-        
-        //delta += InitialResponse(initialResponse * (inputChange * Mathf.Clamp01(1 - time)), time);
+        float delta = inputChange * (Mathf.Clamp01(time) +
+            ((Mathf.Clamp((time - 1), 0, 1) * smoothValue) / Mathf.Clamp(time, 1, 9999999)));
         delta += InitialResponse(DampEffect(initialResponse, time, dampEffect), time);
         return delta;
     }
