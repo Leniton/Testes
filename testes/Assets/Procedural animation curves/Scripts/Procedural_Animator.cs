@@ -9,6 +9,7 @@ public class Procedural_Animator : MonoBehaviour
     [SerializeField, Range(-3, 0)] float yOffset;
     [SerializeField, Range(0, 6)] float inputChange;
     [SerializeField, Range(0, 7)] float timeRange;
+    [Range(0, 1)] public float smoothValue = 0;
     [Space]
     [Header("TimeToRespond")]
     [SerializeField] Transform TTR_SampleParent;
@@ -71,7 +72,7 @@ public class Procedural_Animator : MonoBehaviour
         for (int i = 0; i < IR_SampleParent.childCount; i++)
         {
             IR_SampleParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(step * i)) +
-                Vector2.up * (rect.height * InitialResponse(initialResponse, step * i));
+                Vector2.up * (InitialResponse(initialResponse, step * i));
         }
 
         //damp value: drag; value that reduces the initial response amplitude over time. proportional to initial response
@@ -81,7 +82,7 @@ public class Procedural_Animator : MonoBehaviour
         {
 
             DE_SampleParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(step * i)) +
-                Vector2.up * (rect.height * InitialResponse(DampEffect(initialResponse,step * i), step * i));
+                Vector2.up * (InitialResponse(DampEffect(initialResponse, step * i, dampEffect), step * i));
         }
 
         //adding modifiers in a single sample
@@ -90,31 +91,42 @@ public class Procedural_Animator : MonoBehaviour
         for (int i = 0; i < FinalAnimationParent.childCount; i++)
         {
             float time = step * i;
-            float delta = DampEffect(time, Mathf.Clamp01(time - 1));
-            Debug.Log(delta);
-            //delta += InitialResponse(initialResponse * (inputChange * Mathf.Clamp01(1 - time)), time);
-            delta += InitialResponse(initialResponse, time);
-            //delta = DampEffect(delta, time);
-
+            //Debug.Log(DampEffect(smoothValue, time - 1));
+            //Debug.Log(DampEffect(initialResponse, time, dampEffect));
             FinalAnimationParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(time)) +
-                Vector2.up * (rect.height * delta);
+                Vector2.up * (FullAnimation(time));
         }
     }
 
-    float TimeToReact(float time)
+    public float TimeToReact(float time)
     {
         return time * timeToReact;
     }
 
-    float InitialResponse(float amp,float time)
+    float InitialResponse(float amp, float time, float frequency = .5f)
     {
-        return amp * Mathf.Sin(2 * Mathf.PI * .5f/*frequency*/ * time);
+        return inputChange * amp * Mathf.Sin(2 * Mathf.PI * frequency/*frequency*/ * time);
     }
 
-    float DampEffect(float delta,float time)
+    float DampEffect(float delta,float time,float damp = 1)
     {
         float max = Mathf.Max(delta, 0);
         float min = Mathf.Min(delta, 0);
-        return Mathf.Clamp(delta * (1 - (dampEffect) * time), min, max);
+        return Mathf.Clamp(delta * (1 - (damp) * time), min, max);
+    }
+
+    public float FullAnimation(float time)
+    {
+        float delta = inputChange * (time - (Mathf.Clamp(time - 1, 0, 9999999)*(1-smoothValue)));
+        //delta += InitialResponse(DampEffect(-1f / inputChange, time, .5f), Mathf.Clamp01(time) + 1f, .25f);
+        
+        //delta += InitialResponse(initialResponse * (inputChange * Mathf.Clamp01(1 - time)), time);
+        delta += InitialResponse(DampEffect(initialResponse, time, dampEffect), time);
+        return delta;
+    }
+
+    public Vector2 initialPos()
+    {
+        return new Vector2(0, yOffset);
     }
 }
