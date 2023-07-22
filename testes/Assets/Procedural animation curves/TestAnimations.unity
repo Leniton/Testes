@@ -16160,6 +16160,7 @@ GameObject:
   - component: {fileID: 1795688897}
   - component: {fileID: 1795688896}
   - component: {fileID: 1795688895}
+  - component: {fileID: 1795688898}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -16233,6 +16234,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1795688898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795688894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078cb2d3a53418b428682fcb764b8a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movingObject: {fileID: 1877759440}
+  animator: {fileID: 1840490704}
+  duration: 4
+  timeModifier: 1
+  timeRange: 5
 --- !u!1 &1795921846
 GameObject:
   m_ObjectHideFlags: 0
@@ -16791,10 +16809,11 @@ MonoBehaviour:
   yOffset: -1
   inputChange: 3.5
   timeRange: 5
+  offset: 3.5
   TTR_SampleParent: {fileID: 122840690}
   timeToReact: 0.5
   IR_SampleParent: {fileID: 761075989}
-  initialResponse: -0.2
+  initialResponse: 1
   DE_SampleParent: {fileID: 753772779}
   dampEffect: 0
   FinalAnimationParent: {fileID: 1114725238}
@@ -17239,7 +17258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1877759439
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17301,8 +17320,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877759438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
