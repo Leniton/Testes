@@ -10,7 +10,7 @@ public class Procedural_Animator : MonoBehaviour
     [SerializeField, Range(-3, 0)] float yOffset;
     [SerializeField, Range(-5, 0)] float xOffset;
     [SerializeField, Range(0, 6)] float inputChange;
-    [SerializeField, Range(0, 14)] int changeID;
+    [SerializeField, Range(1, 14)] int changeID;
     [SerializeField, Range(0, 7)] float timeRange;
     [Space]
     [Header("TimeToRespond")]
@@ -28,7 +28,8 @@ public class Procedural_Animator : MonoBehaviour
     [Space]
     [Header("InitialResponse")]
     [SerializeField] Transform FinalAnimationParent;
-
+    float timeStep => (1f / (sampleParent.childCount / 3f));
+    float changeTime => timeStep * changeID;
     void Update()
     {
         //startLine
@@ -39,36 +40,32 @@ public class Procedural_Animator : MonoBehaviour
         for (int i = 0; i < sampleDivision; i++)
         {
             //code for initial straight line
-            sampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * step * i)+
-                Vector2.up*(rect.height* DetermineAlphaValue(i, changeID, sampleDivision, 1));
+            sampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * step * i) +
+                Vector2.up*(GetX(i * step));
         }
         step = 1f / (sampleParent.childCount - sampleDivision-1);
         for (int i = sampleDivision; i < sampleParent.childCount; i++)
         {
             //code for straight line towards change in input
-            sampleParent.GetChild(i).position = sampleParent.GetChild(changeID-1).position +
+            sampleParent.GetChild(i).position = 
+                sampleParent.GetChild(Mathf.Clamp(changeID - 1,0,sampleParent.childCount)).position +
                 Vector3.up * ((rect.height) * step * (i - sampleDivision));
         }
 
-        return;
         //!!! all values are proportional to inputChange
 
         //time to resepond: lerp rate for initial response center
         //line code for timeTo respond
-        rect = new Rect(0, yOffset, timeRange, inputChange);
-        step = 1f / (TTR_SampleParent.childCount-1);
+        step = 1f / (TTR_SampleParent.childCount/2);
 
         for (int i = 0; i < TTR_SampleParent.childCount; i++)
         {
             float time = step * i;
-            float currentTime = ((time / timeBalance) / 2) * (DetermineAlphaValue(time,0,timeBalance,1-timeBalance)/2);
-            currentTime += ((Mathf.Clamp((time) - timeBalance, 0, 99999999 - timeBalance) / (1 - timeBalance)) / 2) *
-                (DetermineAlphaValue(time, 1, 99999999, 1 - timeBalance) / 2);
             //Debug.Log($"input: {time} | output: {DetermineAlphaValue(time, 0, timeBalance, 1 - timeBalance)}");
-            TTR_SampleParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(time)) +
-                Vector2.up * (rect.height * currentTime);
+            TTR_SampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * time) + Vector2.up * (GetY(time));
         }
 
+        return;
         //initial Response: amplitude of sine wave based on time to respond value
         //line code for initial response
         step = 1f / IR_SampleParent.childCount;
@@ -94,6 +91,19 @@ public class Procedural_Animator : MonoBehaviour
             FinalAnimationParent.GetChild(i).position = rect.min + Vector2.right * (rect.width * TimeToReact(time)) +
                 Vector2.up * (FullAnimation(time));
         }
+    }
+
+    float GetX(float time)
+    {
+        //Debug.Log($"{time} | {changeTime}");
+        return inputChange * Mathf.Clamp01(DetermineAlphaValue(time, changeTime, 99999, timeStep));
+    }
+
+    float GetY(float time)
+    {
+        float y = GetX(time);
+
+        return y;
     }
 
     public float TimeToReact(float time)
@@ -125,7 +135,6 @@ public class Procedural_Animator : MonoBehaviour
     {
         return new Vector2(0, yOffset);
     }
-
 
     float NormalizedDistance(float value, float target, float range)
     {
