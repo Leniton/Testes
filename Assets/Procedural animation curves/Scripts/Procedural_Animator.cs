@@ -6,9 +6,11 @@ using UnityEngine.Experimental.AI;
 
 public class Procedural_Animator : MonoBehaviour
 {
-    [SerializeField]Transform sampleParent;
+    [SerializeField] Transform sampleParent;
     [SerializeField, Range(-3, 0)] float yOffset;
+    [SerializeField, Range(-5, 0)] float xOffset;
     [SerializeField, Range(0, 6)] float inputChange;
+    [SerializeField, Range(0, 14)] int changeID;
     [SerializeField, Range(0, 7)] float timeRange;
     [Space]
     [Header("TimeToRespond")]
@@ -30,28 +32,25 @@ public class Procedural_Animator : MonoBehaviour
     void Update()
     {
         //startLine
-        Rect rect = new Rect(-timeRange, yOffset, timeRange * 2, inputChange);
+        Rect rect = new Rect(xOffset, yOffset, timeRange - xOffset, inputChange);
         int sampleDivision = sampleParent.childCount / 3;
         float step = 1f / sampleDivision;
+        sampleDivision *= 2;
         for (int i = 0; i < sampleDivision; i++)
         {
             //code for initial straight line
-            sampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * step * i);
+            sampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * step * i)+
+                Vector2.up*(rect.height* DetermineAlphaValue(i, changeID, sampleDivision, 1));
         }
-        for (int i = sampleDivision; i < sampleDivision*2; i++)
+        step = 1f / (sampleParent.childCount - sampleDivision-1);
+        for (int i = sampleDivision; i < sampleParent.childCount; i++)
         {
             //code for straight line towards change in input
-            sampleParent.GetChild(i).position = Vector2.up * (rect.min) +
-                Vector2.up * (rect.height * step * (i - sampleDivision));
-        }
-        for (int i = sampleDivision * 2; i < sampleDivision * 3; i++)
-        {
-            //code for final straight line
-
-            sampleParent.GetChild(i).position = Vector2.right * (rect.max * step * (i - (sampleDivision * 2))) +
-                Vector2.up * (rect.max);
+            sampleParent.GetChild(i).position = sampleParent.GetChild(changeID-1).position +
+                Vector3.up * ((rect.height) * step * (i - sampleDivision));
         }
 
+        return;
         //!!! all values are proportional to inputChange
 
         //time to resepond: lerp rate for initial response center
