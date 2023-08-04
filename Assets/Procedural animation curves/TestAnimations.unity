@@ -17410,7 +17410,7 @@ MonoBehaviour:
   sampleParent: {fileID: 63290292}
   yOffset: -1
   xOffset: -5
-  inputChange: 3.5
+  inputChange: 3
   changeID: 14
   timeRange: 5
   TTR_SampleParent: {fileID: 122840690}
@@ -17421,6 +17421,9 @@ MonoBehaviour:
   DE_SampleParent: {fileID: 753772779}
   dampEffect: 0
   FinalAnimationParent: {fileID: 1114725238}
+  k1: 0.15
+  k2: 0.005
+  k3: -0.1
 --- !u!1 &1843570210
 GameObject:
   m_ObjectHideFlags: 0

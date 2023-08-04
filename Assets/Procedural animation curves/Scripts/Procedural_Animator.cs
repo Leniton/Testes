@@ -30,6 +30,8 @@ public class Procedural_Animator : MonoBehaviour
     [SerializeField] Transform FinalAnimationParent;
     float timeStep => (1f / (sampleParent.childCount / 3f));
     float changeTime => timeStep * changeID;
+    [Space]
+    [SerializeField] float k1=1, k2=1, k3 = 1;
     void Update()
     {
         //startLine
@@ -101,10 +103,20 @@ public class Procedural_Animator : MonoBehaviour
 
     float GetY(float time)
     {
-        float y = GetX(time);
+        time = time-1 == 0 ? .01f : time - 1;
+        //Debug.Log(time);
+        float y = inputChange * Mathf.Clamp01(DetermineAlphaValue(time, changeTime, 99999, timeStep));
+        float derivative1 = 1 / time;
+        float derivative2 = derivative1 / time;
+        y -= k1 * derivative1;
+        y -= k2 * derivative2;
+        y += k3 * derivative1;
 
         return y;
     }
+
+    //velocity = displacement/time
+    //acceleration = velocity/time | (displacement/time)/time
 
     public float TimeToReact(float time)
     {
