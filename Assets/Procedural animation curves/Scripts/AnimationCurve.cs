@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,15 @@ public class AnimationCurve : MonoBehaviour
     void Start()
     {
         initialPos = animator.initialPos();
+
+        bit b = new bit(true);
+        //b ^= 1;
+        Debug.Log((b);
     }
 
     void Update()
     {
+        return;
         if (currentTime <= duration)
         {
             currentTime += Time.deltaTime * timeModifier;
@@ -57,4 +63,45 @@ public struct InterpolationCurve
         currentValue += currentSpeed * deltaTime;
         return currentValue;
     }
+}
+
+public struct bit
+{
+    private byte value;
+    public bit(bool on = false) => value = (byte)(on ? 1 : 0);
+    private static byte ToBit(byte by) => (byte)(by > 0 ? 1 : 0);
+
+    public static implicit operator byte(bit bit) => bit.value;
+    public static implicit operator int(bit bit) => bit.value;
+    public static explicit operator bit(int n) => new bit(n > 0);
+
+    public static bit operator +(bit b, byte by)
+    {
+        b.value = ToBit((byte)(b.value + by));
+        return b;
+    }
+    public static bit operator -(bit b, byte by)
+    {
+        b.value = ToBit((byte)(b.value - by));
+        return b;
+    }
+    public static bit operator |(bit b, byte by)
+    {
+        b.value = (byte)(ToBit(by) | b.value);
+        return b;
+    }
+    public static bit operator &(bit b, byte by)
+    {
+        b.value = (byte)(ToBit(by) & b.value);
+        return b;
+    }
+    public static bit operator ^(bit b, byte by)
+    {
+        b.value = (byte)(ToBit(by) ^ b.value);
+        return b;
+    }
+    public static bit operator ~(bit b) => b ^ 1;
+    public static bit operator !(bit b) => ~b;
+
+    public override string ToString() => value.ToString();
 }
