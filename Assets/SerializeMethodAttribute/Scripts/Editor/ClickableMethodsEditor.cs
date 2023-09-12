@@ -61,59 +61,61 @@ public class ClickableMethodsEditor : Editor
 
     private object CreateObjectField(object currentValue, ParameterInfo parameter)
     {
+        string label = parameter.Name;
+        GUILayoutOption width = GUILayout.ExpandWidth(false);
         object returnObject = (currentValue == null || currentValue.GetType() != parameter.ParameterType)
             ? parameter.ParameterType.Default()
             : currentValue;
         if (parameter.ParameterType == typeof(string) || parameter.ParameterType == typeof(char))
         {
             returnObject = returnObject == null ? string.Empty : returnObject;
-            returnObject = EditorGUILayout.TextField(parameter.Name,returnObject.ToString());
+            returnObject = EditorGUILayout.TextField(label,returnObject.ToString(),width);
         }
         else if (parameter.ParameterType == typeof(int))
         {
-            returnObject = EditorGUILayout.IntField(parameter.Name,(int)returnObject);
+            returnObject = EditorGUILayout.IntField(label,(int)returnObject,width);
         }
         else if (parameter.ParameterType == typeof(float))
         {
-            returnObject = EditorGUILayout.FloatField(parameter.Name,(float)returnObject);
+            returnObject = EditorGUILayout.FloatField(label,(float)returnObject,width);
         }
         else if (parameter.ParameterType == typeof(bool))
         {
-            returnObject = EditorGUILayout.Toggle(parameter.Name,(bool)returnObject);
+            returnObject = EditorGUILayout.Toggle(label,(bool)returnObject,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Color))
         {
             Color value = (returnObject as Color?).HasValue ? (Color)(returnObject as Color?) : default;
-            returnObject = EditorGUILayout.ColorField(parameter.Name,value);
+            returnObject = EditorGUILayout.ColorField(label,value,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector2))
         {
             Vector2 value = (returnObject as Vector2?).HasValue ? (Vector2)(returnObject as Vector2?) : Vector2.zero;
-            returnObject = EditorGUILayout.Vector2Field(parameter.Name,value);
+            returnObject = EditorGUILayout.Vector2Field(label,value,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector3))
         {
             Vector3 value = (returnObject as Vector3?).HasValue ? (Vector3)(returnObject as Vector3?) : Vector3.zero;
-            returnObject = EditorGUILayout.Vector3Field(parameter.Name,value);
+            returnObject = EditorGUILayout.Vector3Field(label,value,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector4))
         {
             Vector4 value = (returnObject as Vector4?).HasValue ? (Vector4)(returnObject as Vector4?) : Vector4.zero;
-            returnObject = EditorGUILayout.Vector4Field(parameter.Name,value);
+            returnObject = EditorGUILayout.Vector4Field(label,value,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Rect))
         {
             Rect value = (returnObject as Rect?).HasValue ? (Rect)(returnObject as Rect?) : Rect.zero;
-            returnObject = EditorGUILayout.RectField(parameter.Name,value);
+            returnObject = EditorGUILayout.RectField(label,value,width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Bounds))
         {
             Bounds value = (returnObject as Bounds?).HasValue ? (Bounds)(returnObject as Bounds?) : default;
-            returnObject = EditorGUILayout.BoundsField(parameter.Name,value);
+            returnObject = EditorGUILayout.BoundsField(label,value,width);
         }
         else if (parameter.ParameterType.IsReferenceType())
         {
-            returnObject = EditorGUILayout.ObjectField(parameter.Name,(Object)returnObject, parameter.ParameterType, true);
+            returnObject = EditorGUILayout.ObjectField(label,(Object)returnObject, parameter.ParameterType, true, width);
         }
         else
         {
