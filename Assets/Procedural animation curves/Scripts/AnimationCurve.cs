@@ -19,7 +19,7 @@ public class AnimationCurve : MonoBehaviour
 
         bit b = new bit(true);
         //b ^= 1;
-        Debug.Log((b);
+        Debug.Log(b);
     }
 
     void Update()
