@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -19,27 +18,14 @@ public class MethodTestWindow : EditorWindow
     //saved values
     private GameObject target = null;
     private int classChoice = -1;
-    private string[] keys;
-    [SerializeField]private object[] values;
     
     Dictionary<string, object> _methodParameters;
     private Dictionary<string, object> methodParameters
     {
         get
         {
-            if (_methodParameters == null || _methodParameters.Count <= 0)
-            {
+            if (_methodParameters == null)
                 _methodParameters = new();
-                if (values != null)
-                {
-                    Debug.Log(values.Length);
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        _methodParameters.Add(keys[i], values[i]);
-                        Debug.Log($"loading {keys[i]}: {_methodParameters[keys[i]] == null}");
-                    }
-                }
-            }
             SaveDictionary();
             return _methodParameters;
         }
@@ -279,29 +265,5 @@ public class MethodTestWindow : EditorWindow
     
     private void SaveDictionary()
     {
-        if (_methodParameters.Count <= 0) return;
-        int count = 0;
-        keys = new string[_methodParameters.Count];
-        values = new object[_methodParameters.Count];
-        foreach (KeyValuePair<string,object> item in _methodParameters)
-        {
-            /*if (keys.Contains(item.Key))
-            {
-                values[keys.IndexOf(item.Key)] = item.Value;
-                //Debug.Log($"changing {item.Key} to {item.Value}");
-            }
-            else
-            {
-                keys.Add(item.Key);
-                values.Add(item.Value);
-                //Debug.Log($"adding {item.Value}");
-            }*/
-            keys[count] = item.Key;
-            values[count] = item.Value;
-            //Debug.Log($"setting {keys[count]} to {values[count]}");
-            count++;
-            //Debug.Log($"saving ({item.Key}): {values[keys.IndexOf(item.Key)] == null}");
-        }
-        //Debug.Log($"dictionary size: {count}");
     }
 }
