@@ -14,11 +14,12 @@ public class ClickableMethodsEditor : Editor
     {
         base.OnInspectorGUI();
         //Debug.Log(methods.Length);
-        if (target.GetType().HasAttribute<SerializeMethods>(true))
+
+        MethodInfo[] methods = target.GetType().GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance |
+                                                           BindingFlags.Public | BindingFlags.NonPublic);
+        foreach (MethodInfo method in methods)
         {
-            MethodInfo[] methods = target.GetType().GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance |
-                                                               BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (MethodInfo method in methods)
+            if (method.HasAttribute<SerializeMethod>(true))
             {
                 ShowMethod(method);
             }
