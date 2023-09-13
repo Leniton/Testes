@@ -8,6 +8,7 @@
 [Oo]bj/
 [Tt]emp/
 [Uu]nityGenerated/
+[Ll]ogs/
 .vs/
 # file on crash reports
 sysinfo.txt
