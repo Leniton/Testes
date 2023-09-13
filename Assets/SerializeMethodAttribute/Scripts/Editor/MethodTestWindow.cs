@@ -19,7 +19,33 @@ public class MethodTestWindow : EditorWindow
     //saved values
     private GameObject target = null;
     private int classChoice = -1;
-    private Dictionary<string, object> methodParameters = new();
+    private string[] keys;
+    [SerializeField]private object[] values;
+    
+    Dictionary<string, object> _methodParameters;
+    private Dictionary<string, object> methodParameters
+    {
+        get
+        {
+            if (_methodParameters == null || _methodParameters.Count <= 0)
+            {
+                _methodParameters = new();
+                if (values != null)
+                {
+                    Debug.Log(values.Length);
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        _methodParameters.Add(keys[i], values[i]);
+                        Debug.Log($"loading {keys[i]}: {_methodParameters[keys[i]] == null}");
+                    }
+                }
+            }
+            SaveDictionary();
+            return _methodParameters;
+        }
+    }
+    private string MethodKey(MethodInfo method) => method.ToString();
+    private string ParameterKey(MethodInfo method, ParameterInfo parameter) => $"{MethodKey(method)} - {parameter.Name}";
 
     [MenuItem("Tools/MethodTesting")]
     public static void ShowWindow()
@@ -30,6 +56,7 @@ public class MethodTestWindow : EditorWindow
 
     public void CreateGUI()
     {
+        Debug.Log(methodParameters);
         VisualElement root = rootVisualElement;
         int padding = 5;
         root.style.paddingTop = padding;
@@ -116,13 +143,8 @@ public class MethodTestWindow : EditorWindow
     }
     private void ShowMethod(MethodInfo method, VisualElement methodsArea)
     {
-        ParameterInfo[] parameters = method.GetParameters();
-        //GUILayout.BeginHorizontal();
-        string methodKey = method.ToString();
-        if (!methodParameters.ContainsKey(methodKey)) methodParameters.Add(methodKey, false);
-
         VisualElement area = new VisualElement();
-        float darkness = .15f;
+        float darkness = .18f;
         area.style.backgroundColor = new Color(darkness, darkness, darkness, 1);
         area.style.width = 250;
         int margin = 2;
@@ -133,86 +155,85 @@ public class MethodTestWindow : EditorWindow
         area.style.flexDirection = FlexDirection.Column;
         methodsArea.Add(area);
 
+        ParameterInfo[] parameters = method.GetParameters();
+        string methodKey = MethodKey(method);
+        if (!methodParameters.ContainsKey(methodKey)) methodParameters.Add(methodKey, parameters);
+        else methodParameters[methodKey] = parameters;
+
         if (parameters.Length > 0)
         {
-            object[] methodParams = new object[parameters.Length];
             for (int i = 0; i < parameters.Length; i++)
             {
-                string key = $"{method.ToString()} - {parameters[i].Name}";
-                if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameters[i].DefaultValue);
-                if (methodParameters[key] == null || methodParameters[key].GetType() != parameters[i].ParameterType)
-                    methodParameters[key] = parameters[i].ParameterType.Default();
-
-                Label returnType = new Label($"({parameters[i].Name})");
-                area.Add(returnType);
-                //methodParameters[key] = CreateObjectField(methodParameters[key], parameters[i]);
-
-                //methodParams[i] = methodParameters[key];
+                string key = ParameterKey(method, parameters[i]);
+                if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, null);
+                CreateObjectField(method, parameters[i], area);
             }
         }
-
         Button invokeMethod = new Button();
-        area.Add(invokeMethod);
-        Debug.Log(invokeMethod.localBound);
         invokeMethod.text = method.Name;
+        invokeMethod.clicked += () =>
+        {
+            object[] methodParams = new object[parameters.Length];
+            if (parameters.Length > 0)
+            {
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    methodParams[i] = methodParameters[ParameterKey(method, parameters[i])];
+                }
+            }
 
+            method.Invoke(target.GetComponent(method.ReflectedType), methodParams);
+        };
+        area.Add(invokeMethod);
         if (method.ReturnType != typeof(void))
         {
             //Label returnType = new Label($"returns({method.ReturnType.Name}):");
             //area.Add(returnType);
             //Debug.Log($"the method returns {returnValue}");
         }
-        return;
-        bool button = GUILayout.Button(method.Name);
-        GUILayout.Space(10);
-        if (parameters.Length > 0) methodParameters[methodKey] = EditorGUILayout.Foldout((bool)methodParameters[methodKey], $"parameters", true);
-        GUILayout.EndHorizontal();
-        if (parameters.Length <= 0 || (bool)methodParameters[methodKey])
-        {
-            object[] methodParams = new object[parameters.Length];
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                string key = $"{method.ToString()} - {parameters[i].Name}";
-                if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameters[i].DefaultValue);
-                if (methodParameters[key] == null || methodParameters[key].GetType() != parameters[i].ParameterType)
-                    methodParameters[key] = parameters[i].ParameterType.Default();
-
-                methodParameters[key] = CreateObjectField(methodParameters[key], parameters[i]);
-                methodParams[i] = methodParameters[key];
-            }
-            if (button)
-            {
-                object returnValue = method.Invoke(target, methodParams);
-                if (method.ReturnType != typeof(void))
-                {
-                    Debug.Log($"the method returns {returnValue}");
-                }
-            }
-        }
     }
 
-    private object CreateObjectField(object currentValue, ParameterInfo parameter)
+    private void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
     {
-        string label = parameter.Name;
-        //GUILayoutOption width = GUILayout.ExpandWidth(false);
-        object returnObject = (currentValue == null || currentValue.GetType() != parameter.ParameterType)
-            ? parameter.ParameterType.Default()
-            : currentValue;
+        string key = ParameterKey(method, parameter);
+        if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.DefaultValue);
+        if (methodParameters[key] == null || methodParameters[key].GetType() != parameter.ParameterType)
+            methodParameters[key] = parameter.ParameterType.Default();
+         
+        string label = parameter.Name; 
+        object returnObject = methodParameters[key];
+
         if (parameter.ParameterType == typeof(string) || parameter.ParameterType == typeof(char))
         {
             returnObject = returnObject == null ? string.Empty : returnObject;
-            //returnObject = EditorGUILayout.TextField(label, returnObject.ToString(), width);
+            TextField field = new TextField(label);
+            field.value = returnObject.ToString();
+            //methodParameters[key] = field.value;
+            field.RegisterCallback<ChangeEvent<string>>((evt) => methodParameters[key] = evt.newValue);
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(int))
         {
+            IntegerField field = new IntegerField(label);
+            field.value = (int)returnObject;
+            field.RegisterCallback<ChangeEvent<int>>((evt) => methodParameters[key] = evt.newValue);
+            objectParent.Add(field);
             //returnObject = EditorGUILayout.IntField(label, (int)returnObject, width);
         }
         else if (parameter.ParameterType == typeof(float))
         {
+            FloatField field = new FloatField(label);
+            field.value = (float)returnObject;
+            field.RegisterCallback<ChangeEvent<float>>((evt) => methodParameters[key] = evt.newValue);
+            objectParent.Add(field);
             //returnObject = EditorGUILayout.FloatField(label, (float)returnObject, width);
         }
         else if (parameter.ParameterType == typeof(bool))
         {
+            Toggle field = new Toggle(label);
+            field.value = (bool)returnObject;
+            field.RegisterCallback<ChangeEvent<bool>>((evt) => methodParameters[key] = evt.newValue);
+            objectParent.Add(field);
             //returnObject = EditorGUILayout.Toggle(label, (bool)returnObject, width);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Color))
@@ -254,6 +275,33 @@ public class MethodTestWindow : EditorWindow
             //GUILayout.Label($"{parameter.ParameterType} is an unsupported type");
             Label a = new Label($"{parameter.ParameterType} is an unsupported type");
         }
-        return returnObject;
+    }
+    
+    private void SaveDictionary()
+    {
+        if (_methodParameters.Count <= 0) return;
+        int count = 0;
+        keys = new string[_methodParameters.Count];
+        values = new object[_methodParameters.Count];
+        foreach (KeyValuePair<string,object> item in _methodParameters)
+        {
+            /*if (keys.Contains(item.Key))
+            {
+                values[keys.IndexOf(item.Key)] = item.Value;
+                //Debug.Log($"changing {item.Key} to {item.Value}");
+            }
+            else
+            {
+                keys.Add(item.Key);
+                values.Add(item.Value);
+                //Debug.Log($"adding {item.Value}");
+            }*/
+            keys[count] = item.Key;
+            values[count] = item.Value;
+            //Debug.Log($"setting {keys[count]} to {values[count]}");
+            count++;
+            //Debug.Log($"saving ({item.Key}): {values[keys.IndexOf(item.Key)] == null}");
+        }
+        //Debug.Log($"dictionary size: {count}");
     }
 }

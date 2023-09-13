@@ -17,9 +17,9 @@ public class TestA : MonoBehaviour
         Debug.Log("invoking WithReturnType method");
         return 1;
     }
-    
-    public void WithParams(string s, float f = 0,int i=2,bool b = false)
+
+    public void WithParams(string s, float f = 0, int i = 2, bool b = false)
     {
-        Debug.Log($"invoking WithParams method. params: i={i} | n={f} | s=\"{s}\" | b={b}");
+        Debug.Log($"invoking WithParams method.\n params: i={i} | n={f} | s=\"{s}\" | b={b}");
     }
 }
