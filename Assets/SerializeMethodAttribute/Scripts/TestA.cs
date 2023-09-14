@@ -7,7 +7,7 @@ using System.Reflection;
 public class TestA : MonoBehaviour
 {
     [SerializeField] private string a;
-    private void PrivateNoParam(string a)
+    private void PrivateNoParam(GameObject a)
     {
         Debug.Log("invoking privateNoParam method");
     }

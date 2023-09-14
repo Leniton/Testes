@@ -5,7 +5,9 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Reflection;
+using Unity.Plastic.Newtonsoft.Json;
 using Unity.VisualScripting;
+using Object = UnityEngine.Object;
 
 public class MethodTestWindow : EditorWindow
 {
@@ -16,22 +18,20 @@ public class MethodTestWindow : EditorWindow
     private const string MethodAreaName = "Method area";
 
     //saved values
+    MethodTestData data = new();
     private GameObject target = null;
     private int classChoice = -1;
-    
-    Dictionary<string, object> _methodParameters;
+
     private Dictionary<string, object> methodParameters
     {
-        get
-        {
-            if (_methodParameters == null)
-                _methodParameters = new();
-            SaveDictionary();
-            return _methodParameters;
-        }
+        get => data.methodParameters;
+
     }
+
     private string MethodKey(MethodInfo method) => method.ToString();
-    private string ParameterKey(MethodInfo method, ParameterInfo parameter) => $"{MethodKey(method)} - {parameter.Name}";
+
+    private string ParameterKey(MethodInfo method, ParameterInfo parameter) =>
+        $"{MethodKey(method)} - {parameter.Name}";
 
     [MenuItem("Tools/MethodTesting")]
     public static void ShowWindow()
@@ -42,7 +42,6 @@ public class MethodTestWindow : EditorWindow
 
     public void CreateGUI()
     {
-        Debug.Log(methodParameters);
         VisualElement root = rootVisualElement;
         int padding = 5;
         root.style.paddingTop = padding;
@@ -88,6 +87,7 @@ public class MethodTestWindow : EditorWindow
             target = null;
             return;
         }
+
         target = (GameObject)evt.newValue;
 
         //dropDown For picking class
@@ -95,7 +95,7 @@ public class MethodTestWindow : EditorWindow
         dropdownField.name = PickClassDropdown;
         List<string> options = new();
         Component[] components = target.GetComponents<Component>();
-        for (int i = 1; i < components.Length; i++)//starts at 1 to ignore the transform component
+        for (int i = 1; i < components.Length; i++) //starts at 1 to ignore the transform component
             options.Add(components[i].GetType().Name);
         dropdownField.choices = options;
 
@@ -113,20 +113,23 @@ public class MethodTestWindow : EditorWindow
 
         classChoice = dropdown.choices.IndexOf(evt.newValue);
 
-        LoadMethods(target.GetComponents<Component>()[classChoice + 1].GetType());//still ignoring transform component
+        LoadMethods(target.GetComponents<Component>()[classChoice + 1].GetType()); //still ignoring transform component
     }
 
     private void LoadMethods(Type targetClass)
     {
         MethodInfo[] methods = targetClass.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance |
-                                                           BindingFlags.Public | BindingFlags.NonPublic);
+                                                      BindingFlags.Public | BindingFlags.NonPublic);
         VisualElement methodsArea = rootVisualElement.Q(MethodAreaName);
         methodsArea.Clear();
         foreach (MethodInfo method in methods)
         {
             ShowMethod(method, methodsArea);
         }
+        
+        data.Save();
     }
+
     private void ShowMethod(MethodInfo method, VisualElement methodsArea)
     {
         VisualElement area = new VisualElement();
@@ -143,8 +146,8 @@ public class MethodTestWindow : EditorWindow
 
         ParameterInfo[] parameters = method.GetParameters();
         string methodKey = MethodKey(method);
-        if (!methodParameters.ContainsKey(methodKey)) methodParameters.Add(methodKey, parameters);
-        else methodParameters[methodKey] = parameters;
+        /*if (!methodParameters.ContainsKey(methodKey)) methodParameters.Add(methodKey, parameters);
+        else methodParameters[methodKey] = parameters;*/
 
         if (parameters.Length > 0)
         {
@@ -155,6 +158,7 @@ public class MethodTestWindow : EditorWindow
                 CreateObjectField(method, parameters[i], area);
             }
         }
+
         Button invokeMethod = new Button();
         invokeMethod.text = method.Name;
         invokeMethod.clicked += () =>
@@ -182,11 +186,18 @@ public class MethodTestWindow : EditorWindow
     private void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
     {
         string key = ParameterKey(method, parameter);
-        if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.DefaultValue);
-        if (methodParameters[key] == null || methodParameters[key].GetType() != parameter.ParameterType)
+        if (!methodParameters.ContainsKey(key))
+        {
+            Debug.Log($"{key} key not found ");
+            methodParameters.Add(key, parameter.DefaultValue);
+        }
+
+        if (methodParameters[key] == null)
+        {
             methodParameters[key] = parameter.ParameterType.Default();
-         
-        string label = parameter.Name; 
+        }
+
+        string label = parameter.Name;
         object returnObject = methodParameters[key];
 
         if (parameter.ParameterType == typeof(string) || parameter.ParameterType == typeof(char))
@@ -195,22 +206,22 @@ public class MethodTestWindow : EditorWindow
             TextField field = new TextField(label);
             field.value = returnObject.ToString();
             //methodParameters[key] = field.value;
-            field.RegisterCallback<ChangeEvent<string>>((evt) => methodParameters[key] = evt.newValue);
+            field.RegisterCallback<ChangeEvent<string>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(int))
         {
             IntegerField field = new IntegerField(label);
             field.value = (int)returnObject;
-            field.RegisterCallback<ChangeEvent<int>>((evt) => methodParameters[key] = evt.newValue);
+            field.RegisterCallback<ChangeEvent<int>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
             //returnObject = EditorGUILayout.IntField(label, (int)returnObject, width);
         }
         else if (parameter.ParameterType == typeof(float))
-        {
+        { 
             FloatField field = new FloatField(label);
-            field.value = (float)returnObject;
-            field.RegisterCallback<ChangeEvent<float>>((evt) => methodParameters[key] = evt.newValue);
+            field.value = (float)(Convert.ToDecimal(returnObject));
+            field.RegisterCallback<ChangeEvent<float>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
             //returnObject = EditorGUILayout.FloatField(label, (float)returnObject, width);
         }
@@ -218,7 +229,7 @@ public class MethodTestWindow : EditorWindow
         {
             Toggle field = new Toggle(label);
             field.value = (bool)returnObject;
-            field.RegisterCallback<ChangeEvent<bool>>((evt) => methodParameters[key] = evt.newValue);
+            field.RegisterCallback<ChangeEvent<bool>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
             //returnObject = EditorGUILayout.Toggle(label, (bool)returnObject, width);
         }
@@ -254,16 +265,23 @@ public class MethodTestWindow : EditorWindow
         }
         else if (parameter.ParameterType.IsReferenceType())
         {
+            ObjectField field = new ObjectField(label);
+            field.objectType = parameter.ParameterType;
+            field.value = (Object)returnObject;
+            field.RegisterCallback<ChangeEvent<Object>>((evt) => SetValue(key,evt.newValue));
+            objectParent.Add(field);
             //returnObject = EditorGUILayout.ObjectField(label, (UnityEngine.Object)returnObject, parameter.ParameterType, true, width);
         }
         else
         {
-            //GUILayout.Label($"{parameter.ParameterType} is an unsupported type");
             Label a = new Label($"{parameter.ParameterType} is an unsupported type");
         }
     }
-    
-    private void SaveDictionary()
+
+    private void SetValue(string key, object value)
     {
+        methodParameters[key] = value;
+        data.Save();
     }
+
 }
