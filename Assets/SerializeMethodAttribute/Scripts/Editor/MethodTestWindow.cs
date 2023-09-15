@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
-using Unity.Plastic.Newtonsoft.Json;
 using Unity.VisualScripting;
 using Object = UnityEngine.Object;
 
@@ -17,6 +15,7 @@ public class MethodTestWindow : EditorWindow
     private const string PickClassLabel = "Pick class:";
     private const string PickClassDropdown = "Pick a class:";
     private const string MethodAreaName = "Method area";
+    private const string ReturnValue = "Return value";
 
     //saved values
     MethodTestData data = new();
@@ -26,7 +25,6 @@ public class MethodTestWindow : EditorWindow
     private Dictionary<string, object> methodParameters
     {
         get => data.methodParameters;
-
     }
 
     private string MethodKey(MethodInfo method) => method.ToString();
@@ -162,7 +160,8 @@ public class MethodTestWindow : EditorWindow
         }
 
         Button invokeMethod = new Button();
-        invokeMethod.text = method.Name;
+        string returnType = method.ReturnType != typeof(void) ? $"({method.ReturnType.Name})-" : string.Empty;
+        invokeMethod.text = $"{returnType}{method.Name}";
         invokeMethod.clicked += () =>
         {
             object[] methodParams = new object[parameters.Length];
@@ -174,9 +173,24 @@ public class MethodTestWindow : EditorWindow
                 }
             }
 
-            method.Invoke(target.GetComponent(method.ReflectedType), methodParams);
+            object returnValue = method.Invoke(target.GetComponent(method.ReflectedType), methodParams);
+            if (returnValue != null)
+            {
+                Label returnLabel = area.Q<Label>(ReturnValue);
+                returnLabel.text = $"returned ({returnValue.GetType()})[{returnValue}]";
+                SetValue($"{methodKey} - Return:", returnValue);
+            }
         };
         area.Add(invokeMethod);
+        if (method.ReturnType != typeof(void))
+        { 
+            Label returnLabel = new Label();
+            returnLabel.name = ReturnValue;
+            string key = $"{methodKey} - Return:";
+            if(methodParameters.ContainsKey(key)) 
+                returnLabel.text = $"last return: ({methodParameters[key].GetType()})[{methodParameters[key]}]";
+            area.Add(returnLabel);
+        }
         if (method.ReturnType != typeof(void))
         {
             //Label returnType = new Label($"returns({method.ReturnType.Name}):");
