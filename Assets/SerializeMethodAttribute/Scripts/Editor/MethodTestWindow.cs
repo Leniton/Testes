@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.VisualScripting;
 using Object = UnityEngine.Object;
@@ -41,7 +42,9 @@ public class MethodTestWindow : EditorWindow
     }
 
     public void CreateGUI()
-    {
+    { 
+        //data.DeleteSave();
+        //methodParameters.Clear();
         VisualElement root = rootVisualElement;
         int padding = 5;
         root.style.paddingTop = padding;
@@ -51,7 +54,7 @@ public class MethodTestWindow : EditorWindow
 
         VisualElement Header = new VisualElement();
         Header.style.flexDirection = FlexDirection.Row;
-        //create Elements
+        //Create Elements
         string label = TargetObjectLabel;
         ObjectField targetObjectField = new ObjectField(label);
         targetObjectField.name = label;
@@ -74,7 +77,6 @@ public class MethodTestWindow : EditorWindow
         root.Add(Header);
         root.Add(methodsArea);
 
-        //apply value to avoid losses post recompiling
         targetObjectField.value = target;
     }
 
@@ -186,20 +188,11 @@ public class MethodTestWindow : EditorWindow
     private void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
     {
         string key = ParameterKey(method, parameter);
-        if (!methodParameters.ContainsKey(key))
-        {
-            Debug.Log($"{key} key not found ");
-            methodParameters.Add(key, parameter.DefaultValue);
-        }
-
-        if (methodParameters[key] == null)
-        {
-            methodParameters[key] = parameter.ParameterType.Default();
-        }
+        if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.ParameterType.Default());
+        if (methodParameters[key] == null) methodParameters[key] = parameter.ParameterType.Default();
 
         string label = parameter.Name;
         object returnObject = methodParameters[key];
-
         if (parameter.ParameterType == typeof(string) || parameter.ParameterType == typeof(char))
         {
             returnObject = returnObject == null ? string.Empty : returnObject;
@@ -236,32 +229,50 @@ public class MethodTestWindow : EditorWindow
         else if (parameter.ParameterType == typeof(UnityEngine.Color))
         {
             Color value = (returnObject as Color?).HasValue ? (Color)(returnObject as Color?) : default;
-            //returnObject = EditorGUILayout.ColorField(label, value, width);
+            ColorField field = new ColorField();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Color>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector2))
         {
             Vector2 value = (returnObject as Vector2?).HasValue ? (Vector2)(returnObject as Vector2?) : Vector2.zero;
-            //returnObject = EditorGUILayout.Vector2Field(label, value, width);
+            Vector2Field field = new Vector2Field();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Vector2>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector3))
         {
             Vector3 value = (returnObject as Vector3?).HasValue ? (Vector3)(returnObject as Vector3?) : Vector3.zero;
-            //returnObject = EditorGUILayout.Vector3Field(label, value, width);
+            Vector3Field field = new Vector3Field();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Vector3>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Vector4))
         {
             Vector4 value = (returnObject as Vector4?).HasValue ? (Vector4)(returnObject as Vector4?) : Vector4.zero;
-            //returnObject = EditorGUILayout.Vector4Field(label, value, width);
+            Vector4Field field = new Vector4Field();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Vector4>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Rect))
         {
             Rect value = (returnObject as Rect?).HasValue ? (Rect)(returnObject as Rect?) : Rect.zero;
-            //returnObject = EditorGUILayout.RectField(label, value, width);
+            RectField field = new RectField();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Rect>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType == typeof(UnityEngine.Bounds))
         {
             Bounds value = (returnObject as Bounds?).HasValue ? (Bounds)(returnObject as Bounds?) : default;
-            //returnObject = EditorGUILayout.BoundsField(label, value, width);
+            BoundsField field = new BoundsField();
+            field.value = value;
+            field.RegisterCallback<ChangeEvent<Bounds>>(evt => SetValue(key, evt.newValue));
+            objectParent.Add(field);
         }
         else if (parameter.ParameterType.IsReferenceType())
         {
@@ -277,7 +288,6 @@ public class MethodTestWindow : EditorWindow
             Label a = new Label($"{parameter.ParameterType} is an unsupported type");
         }
     }
-
     private void SetValue(string key, object value)
     {
         methodParameters[key] = value;

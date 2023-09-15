@@ -30,14 +30,19 @@ public class ClickableMethodsEditor : Editor
 
     public override VisualElement CreateInspectorGUI()
     {
+        Bounds testTarget = default;
+        testTarget.center = Vector3.one;
+        testTarget.extents = Vector3.up;
         //getting the parameters of the class
-        foreach (var item in target.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance |
-                                                           BindingFlags.Public | BindingFlags.NonPublic))
+        object[] structure = StructSerializer.SerializeStruct(testTarget, testTarget.GetType());
+        //StructSerializer.DeserializeStruct(structure);
+        
+        MethodTestData data = new();
+
+        foreach (var item in data.methodParameters)
         {
-            //Debug.Log(item.bi);
+            Debug.Log($"{item.Key}{item.Value.GetType()} is \n{item.Value})");
         }
-        Debug.Log(target.GetType().AssemblyQualifiedName);
-        Debug.Log(Type.GetType(target.GetType().AssemblyQualifiedName));//getting type by name
 
         return base.CreateInspectorGUI();
     }
@@ -53,7 +58,7 @@ public class ClickableMethodsEditor : Editor
         if(parameters.Length > 0) methodParameters[methodKey] = EditorGUILayout.Foldout((bool)methodParameters[methodKey],$"parameters",true);
         GUILayout.EndHorizontal();
         if (parameters.Length <= 0 || (bool)methodParameters[methodKey])
-        {
+        { 
             object[] methodParams = new object[parameters.Length];
             for (int i = 0; i < parameters.Length; i++)
             {

@@ -58,14 +58,28 @@ public class MethodTestData
         Dictionary<string, object> returnData = new Dictionary<string, object>();
         foreach (KeyValuePair<string,object> item in data)
         {
-            try
+            if (item.Value != null)
             {
-                returnData[item.Key] = JsonUtility.FromJson<ObjectID>((string)item.Value).ToObject();
+                try
+                {
+                    object value = JsonUtility.FromJson<ObjectID>((string)item.Value).ToObject();
+                    returnData.Add(item.Key, value);
+                }
+                catch (Exception e)
+                {
+                    object value = item.Value;
+                    if (item.Value.GetType() == typeof(object[]))
+                    {
+                        //Debug.Log("deserialized object");
+                        object[] deserializedStruct = (object[])item.Value;
+                        value = StructSerializer.DeserializeStruct(deserializedStruct);
+                    }
+                    returnData.Add(item.Key,value);
+                    Debug.Log($"L - {item.Key}({item.Value.GetType()}) value: {returnData[item.Key]}");
+                }
             }
-            catch (Exception e)
-            {
-                returnData.Add(item.Key,item.Value);
-            }
+            else returnData.Add(item.Key,null);
+            
         }
 
         return returnData;
@@ -73,7 +87,9 @@ public class MethodTestData
     
     public void Save()
     {
-        DataContractJsonSerializer son = new DataContractJsonSerializer(typeof(Dictionary<string,object>));
+        List<Type> knownTypes = new();
+        knownTypes.Add(typeof(List<object>));
+        DataContractJsonSerializer son = new DataContractJsonSerializer(typeof(Dictionary<string,object>),knownTypes);
         //Debug.Log(filePath);
         FileStream file = new FileStream(filePath, FileMode.Create);
         son.WriteObject(file, SerializableDictionary());
@@ -94,10 +110,16 @@ public class MethodTestData
             }
             catch (Exception e)
             {
-                returnType.Add(item.Key, item.Value != null ? item.Value : null);
+                //Debug.Log($"is {item.Key}({item.Value.GetType()}) serializable? {item.Value.GetType().IsSerializable}");
+                object value = item.Value != null ? item.Value : null;
+                if (!value.GetType().IsSerializable)
+                {
+                    value = StructSerializer.SerializeStruct(value, value.GetType());
+                }
+                returnType.Add(item.Key, value);
+                //Debug.Log($"S - {item.Key} value: {returnType[item.Key]}");
             }
         }
-        
         return returnType;
     }
  
@@ -109,8 +131,7 @@ public class MethodTestData
         }
     }
 }
-
-[System.Serializable]
+[Serializable]
 public class ObjectID
 {
     public int id;
