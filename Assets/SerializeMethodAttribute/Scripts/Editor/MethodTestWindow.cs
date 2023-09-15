@@ -188,7 +188,7 @@ public class MethodTestWindow : EditorWindow
             returnLabel.name = ReturnValue;
             string key = $"{methodKey} - Return:";
             if(methodParameters.ContainsKey(key)) 
-                returnLabel.text = $"last return: ({methodParameters[key].GetType()})[{methodParameters[key]}]";
+                returnLabel.text = $"last return: ({methodParameters[key].GetType().Name})[{methodParameters[key]}]";
             area.Add(returnLabel);
         }
         if (method.ReturnType != typeof(void))
