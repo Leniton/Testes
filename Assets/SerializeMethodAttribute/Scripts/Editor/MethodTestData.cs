@@ -75,7 +75,7 @@ public class MethodTestData
                         value = StructSerializer.DeserializeStruct(deserializedStruct);
                     }
                     returnData.Add(item.Key,value);
-                    Debug.Log($"L - {item.Key}({item.Value.GetType()}) value: {returnData[item.Key]}");
+                    //Debug.Log($"L - {item.Key}({item.Value.GetType()}) value: {returnData[item.Key]}");
                 }
             }
             else returnData.Add(item.Key,null);
