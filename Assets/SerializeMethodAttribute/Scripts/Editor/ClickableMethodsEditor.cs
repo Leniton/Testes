@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
 [CustomEditor(typeof(MonoBehaviour), true)]
@@ -24,6 +26,20 @@ public class ClickableMethodsEditor : Editor
                 ShowMethod(method);
             }
         }
+    }
+
+    public override VisualElement CreateInspectorGUI()
+    {
+        //getting the parameters of the class
+        foreach (var item in target.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance |
+                                                           BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            //Debug.Log(item.bi);
+        }
+        Debug.Log(target.GetType().AssemblyQualifiedName);
+        Debug.Log(Type.GetType(target.GetType().AssemblyQualifiedName));//getting type by name
+
+        return base.CreateInspectorGUI();
     }
 
     private void ShowMethod(MethodInfo method)
