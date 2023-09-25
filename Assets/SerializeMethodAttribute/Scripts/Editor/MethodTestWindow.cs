@@ -289,10 +289,6 @@ public class MethodTestWindow : EditorWindow
             field.value = (Object)returnObject;
             field.RegisterCallback<ChangeEvent<Object>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
-
-            //testing stuff
-            var types = parameter.ParameterType.IsAssignableFrom(typeof(Object));
-            Debug.Log($"{parameter.ParameterType} - {types}"); 
         }
         else
         {
