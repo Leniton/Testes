@@ -15,6 +15,7 @@ public class ClickableMethodsEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        return;
         //Debug.Log(methods.Length);
 
         MethodInfo[] methods = target.GetType().GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance |
@@ -30,6 +31,7 @@ public class ClickableMethodsEditor : Editor
 
     public override VisualElement CreateInspectorGUI()
     {
+        return base.CreateInspectorGUI();
         Bounds testTarget = default;
         testTarget.center = Vector3.one;
         testTarget.extents = Vector3.up;

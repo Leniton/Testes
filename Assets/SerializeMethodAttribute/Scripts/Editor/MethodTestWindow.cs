@@ -191,12 +191,6 @@ public class MethodTestWindow : EditorWindow
                 returnLabel.text = $"last return: ({methodParameters[key].GetType().Name})[{methodParameters[key]}]";
             area.Add(returnLabel);
         }
-        if (method.ReturnType != typeof(void))
-        {
-            //Label returnType = new Label($"returns({method.ReturnType.Name}):");
-            //area.Add(returnType);
-            //Debug.Log($"the method returns {returnValue}");
-        }
     }
 
     private void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
@@ -240,7 +234,7 @@ public class MethodTestWindow : EditorWindow
             objectParent.Add(field);
             //returnObject = EditorGUILayout.Toggle(label, (bool)returnObject, width);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Color))
+        else if (parameter.ParameterType == typeof(Color))
         {
             Color value = (returnObject as Color?).HasValue ? (Color)(returnObject as Color?) : default;
             ColorField field = new ColorField();
@@ -248,7 +242,7 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Color>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Vector2))
+        else if (parameter.ParameterType == typeof(Vector2))
         {
             Vector2 value = (returnObject as Vector2?).HasValue ? (Vector2)(returnObject as Vector2?) : Vector2.zero;
             Vector2Field field = new Vector2Field();
@@ -256,7 +250,7 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Vector2>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Vector3))
+        else if (parameter.ParameterType == typeof(Vector3))
         {
             Vector3 value = (returnObject as Vector3?).HasValue ? (Vector3)(returnObject as Vector3?) : Vector3.zero;
             Vector3Field field = new Vector3Field();
@@ -264,7 +258,7 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Vector3>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Vector4))
+        else if (parameter.ParameterType == typeof(Vector4))
         {
             Vector4 value = (returnObject as Vector4?).HasValue ? (Vector4)(returnObject as Vector4?) : Vector4.zero;
             Vector4Field field = new Vector4Field();
@@ -272,7 +266,7 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Vector4>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Rect))
+        else if (parameter.ParameterType == typeof(Rect))
         {
             Rect value = (returnObject as Rect?).HasValue ? (Rect)(returnObject as Rect?) : Rect.zero;
             RectField field = new RectField();
@@ -280,7 +274,7 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Rect>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType == typeof(UnityEngine.Bounds))
+        else if (parameter.ParameterType == typeof(Bounds))
         {
             Bounds value = (returnObject as Bounds?).HasValue ? (Bounds)(returnObject as Bounds?) : default;
             BoundsField field = new BoundsField();
@@ -288,18 +282,22 @@ public class MethodTestWindow : EditorWindow
             field.RegisterCallback<ChangeEvent<Bounds>>(evt => SetValue(key, evt.newValue));
             objectParent.Add(field);
         }
-        else if (parameter.ParameterType.IsReferenceType())
+        else if (parameter.ParameterType.IsAssignableFrom(typeof(Object)))
         {
             ObjectField field = new ObjectField(label);
             field.objectType = parameter.ParameterType;
             field.value = (Object)returnObject;
             field.RegisterCallback<ChangeEvent<Object>>((evt) => SetValue(key,evt.newValue));
             objectParent.Add(field);
-            //returnObject = EditorGUILayout.ObjectField(label, (UnityEngine.Object)returnObject, parameter.ParameterType, true, width);
+
+            //testing stuff
+            var types = parameter.ParameterType.IsAssignableFrom(typeof(Object));
+            Debug.Log($"{parameter.ParameterType} - {types}"); 
         }
         else
         {
-            Label a = new Label($"{parameter.ParameterType} is an unsupported type");
+            Label unsupported = new Label($"{parameter.ParameterType} is an unsupported type");
+            objectParent.Add(unsupported);
         }
     }
     private void SetValue(string key, object value)

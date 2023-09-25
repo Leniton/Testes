@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class TestA : MonoBehaviour
 {
     [SerializeField] private string a;
-    private void PrivateNoParam(GameObject a)
+    private void PrivateNoParam()
     {
         Debug.Log("invoking privateNoParam method");
     }
