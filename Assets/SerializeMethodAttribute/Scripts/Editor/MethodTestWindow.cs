@@ -280,9 +280,9 @@ public class MethodTestWindow : EditorWindow
             BoundsField field = new BoundsField();
             field.value = value;
             field.RegisterCallback<ChangeEvent<Bounds>>(evt => SetValue(key, evt.newValue));
-            objectParent.Add(field);
+            objectParent.Add(field); 
         }
-        else if (parameter.ParameterType.IsAssignableFrom(typeof(Object)))
+        else if (parameter.ParameterType.IsAssignableFrom(typeof(Object)) || parameter.ParameterType.IsSubclassOf(typeof(Object)))
         {
             ObjectField field = new ObjectField(label);
             field.objectType = parameter.ParameterType;
