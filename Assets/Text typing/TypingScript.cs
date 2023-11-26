@@ -18,9 +18,6 @@ public class TypingScript : MonoBehaviour
 
     void Start()
     {
-        //testando, apagar dps
-        
-        Type(sequence);
     }
 
     private void Update()
