@@ -2087,7 +2087,7 @@ MonoBehaviour:
   input: {x: 0, y: 0, z: 0}
   hasControl: 1
   onGround: 0
-  jumpHeight: 4
+  jumpHeight: 5
   timeToMaxHeight: 1
   timeToFall: 1
   testValue: 0
