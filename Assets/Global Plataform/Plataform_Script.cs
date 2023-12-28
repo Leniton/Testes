@@ -54,7 +54,7 @@ public class Plataform_Script : MonoBehaviour
         jumpSpeed *= 1f + gravityCompensation;
 
         //gravity calculations. jump and fall gravity are different
-        fallGravity = (jumpSpeed / (ticksPerSecond * timeToFall));
+        fallGravity = (2 * jumpHeight) / (Mathf.Pow(timeToFall, 2));
 
         //print($"jump: {jumpSpeed}");
         //print($"gravity: {gravity}");
@@ -90,8 +90,6 @@ public class Plataform_Script : MonoBehaviour
         Gravity();
     }
 
-    float t_initialHeight;
-
     //test parameters
     bool checkStopTime = false;
     float stopTime;
@@ -111,7 +109,11 @@ public class Plataform_Script : MonoBehaviour
             if (gravityEffect.y - gravityGuess < 0.00001f) gravityGuess = gravityEffect.y;
             currentGravity = gravityGuess;
         }
-        else currentGravity = fallGravity;
+        else
+        {
+            gravityGuess = fallGravity * Time.fixedDeltaTime;
+            currentGravity = gravityGuess;
+        }
 
         //if (gravityEffect.y > -terminalVelocity)
             gravityEffect.y -= currentGravity;
@@ -129,6 +131,7 @@ public class Plataform_Script : MonoBehaviour
         {
             if (!checkStopTime)
             {
+                Debug.LogError($"fall acceleration is {fallGravity} per second");
                 checkStopTime = true;
                 //Debug.LogError($"stop time: {stopTime} | height: {transform.position.y - t_initialHeight} \ncurrentSpeed: {gravityEffect.y}");
                 //Debug.DrawRay(transform.position, Vector3.down * t_initialHeight, Color.red + (Color.yellow / 2), .2f);
@@ -162,7 +165,6 @@ public class Plataform_Script : MonoBehaviour
             onGround = true;
 
             //test only
-            t_initialHeight = data.other.bounds.extents.y;
 
             Debug.LogError($"it took {stopTime}s to land");
             checkStopTime = false;
