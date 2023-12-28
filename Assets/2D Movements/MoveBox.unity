@@ -2091,9 +2091,9 @@ MonoBehaviour:
   hasControl: 1
   onGround: 0
   jumpHeight: 5
-  timeToMaxHeight: 1
-  timeToFall: 1
-  gravityCompensation: 0.885
+  timeToMaxHeight: 0.5
+  timeToFall: 0.3
+  gravityCompensation: 2.57
 --- !u!114 &1544372082
 MonoBehaviour:
   m_ObjectHideFlags: 0
