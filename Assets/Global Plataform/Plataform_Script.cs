@@ -14,7 +14,7 @@ public class Plataform_Script : MonoBehaviour
 
     public Vector3 input = Vector3.zero;
     public bool hasControl = true;
-    [SerializeField] bool onGround;
+    public bool onGround { get; private set; }
 
     //Reference Parameters
     PhysicsHandler physicsHandler;
@@ -46,9 +46,6 @@ public class Plataform_Script : MonoBehaviour
     }
     void CalculateParameters()
     {
-        //the amount of physics tick per second
-        float ticksPerSecond = (1f / Time.fixedDeltaTime)-1;
-
         //basic speed formula plus the extra force needed to compensate for the gravity force
         jumpSpeed = jumpHeight;
         jumpSpeed *= 1f + gravityCompensation;
@@ -76,11 +73,8 @@ public class Plataform_Script : MonoBehaviour
             {
                 if (onGround)
                 {
-                    checkStopTime = true;
                     stopTime = 0;
                     Jump();
-                    //print($"Start Height:{transform.position.y}");
-                    //StartCoroutine(TestCount());
                     input.y = 0;
                     physicsHandler.SetVelocity(finalVelocity);
                 }
