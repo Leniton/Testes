@@ -29,6 +29,9 @@ public class Plataform_Script : MonoBehaviour
     float currentGravity;
     float terminalVelocity;
 
+    //movement parameters
+    [SerializeField] float timeToTopSpeed, speed, timeToStop;
+
     //Movement parameters
     Vector3 finalVelocity;
     float maxSlopeAngle;
@@ -66,6 +69,7 @@ public class Plataform_Script : MonoBehaviour
         }
 #endif
 
+        finalVelocity = physicsHandler.GetVelocity();
         if (input.y > 0)
         {
             if (onGround)
@@ -73,9 +77,10 @@ public class Plataform_Script : MonoBehaviour
                 stopTime = 0;
                 Jump();
                 input.y = 0;
-                physicsHandler.SetVelocity(finalVelocity);
             }
         }
+        Move(input);
+        physicsHandler.SetVelocity(finalVelocity);
 
         Gravity();
     }
@@ -146,20 +151,29 @@ public class Plataform_Script : MonoBehaviour
         finalVelocity.y = jumpSpeed; 
     }
 
+    public void Move(Vector3 direction)
+    {
+        direction *= speed;
+        direction.y = finalVelocity.y;
+        finalVelocity = direction;
+    }
+
     void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
-        if (data.collider.gameObject.CompareTag("Chão"))
+        if (data.collider.gameObject.CompareTag("Chão") && data.contacts[0].normal.y > 0)
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
 
             //test only
 
-            Debug.LogWarning($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
+            //Debug.LogWarning($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
             checkStopTime = false;
             stopTime = 0;
             speedLost = 0;
+
+            state = (physicsHandler.GetVelocity().x > 0 || physicsHandler.GetVelocity().z > 0) ? State.walking : State.idle;
         }
     }
     void CollisionExit(CollisionData data)
