@@ -131,9 +131,9 @@ public class Plataform_Script : MonoBehaviour
         {
             if (!checkStopTime)
             {
-                Debug.LogError($"fall acceleration is {fallGravity} per second");
+                //Debug.LogError($"fall acceleration is {fallGravity} per second");
                 checkStopTime = true;
-                //Debug.LogError($"stop time: {stopTime} | height: {transform.position.y - t_initialHeight} \ncurrentSpeed: {gravityEffect.y}");
+                //Debug.LogError($"stop time: {stopTime} | height: {transform.position.y} \ncurrentSpeed: {gravityEffect.y}");
                 //Debug.DrawRay(transform.position, Vector3.down * t_initialHeight, Color.red + (Color.yellow / 2), .2f);
                 //print($"Initial speed: {jumpSpeed} | total speed lost: {speedLost}");
                 //float ticksPerSecond = (1f / Time.fixedDeltaTime) - 1;
@@ -166,7 +166,7 @@ public class Plataform_Script : MonoBehaviour
 
             //test only
 
-            Debug.LogError($"it took {stopTime}s to land");
+            Debug.LogWarning($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
             checkStopTime = false;
             stopTime = 0;
             speedLost = 0;
