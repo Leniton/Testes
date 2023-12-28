@@ -13,7 +13,6 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] public State state = new State();
 
     public Vector3 input = Vector3.zero;
-    public bool hasControl = true;
     public bool onGround { get; private set; }
 
     //Reference Parameters
@@ -67,17 +66,14 @@ public class Plataform_Script : MonoBehaviour
         }
 #endif
 
-        if (hasControl)
+        if (input.y > 0)
         {
-            if(input.y > 0)
+            if (onGround)
             {
-                if (onGround)
-                {
-                    stopTime = 0;
-                    Jump();
-                    input.y = 0;
-                    physicsHandler.SetVelocity(finalVelocity);
-                }
+                stopTime = 0;
+                Jump();
+                input.y = 0;
+                physicsHandler.SetVelocity(finalVelocity);
             }
         }
 
@@ -87,14 +83,13 @@ public class Plataform_Script : MonoBehaviour
     //test parameters
     bool checkStopTime = false;
     float stopTime;
-    float speedLost = 0;
     void Gravity()
     {
         if (onGround) return;
 
         Vector2 gravityEffect = physicsHandler.GetVelocity();
 
-        float gravityGuess = 0;
+        float gravityGuess;
         if (gravityEffect.y > 0)
         {
             //currentGravity = jumpGravity;
@@ -114,7 +109,14 @@ public class Plataform_Script : MonoBehaviour
 
         physicsHandler.SetVelocity(gravityEffect);
 
-        if(checkStopTime)
+        if (gravityEffect.y < 0)
+        {
+            input.y = 0;
+            state = State.jumping;
+        }
+
+        //test only
+        if (checkStopTime)
         {
             stopTime += Time.fixedDeltaTime;
             speedLost += currentGravity;
@@ -136,18 +138,11 @@ public class Plataform_Script : MonoBehaviour
                 speedLost = 0;
             }
         }
-
-        if (gravityEffect.y < 0)
-        {
-            input.y = 0;
-            state = State.jumping;
-        }
     }
 
-    void Jump()
+    public void Jump()
     {
         finalVelocity.y = jumpSpeed; 
-        checkStopTime = false;
     }
 
     void CollisionEnter(CollisionData data)
