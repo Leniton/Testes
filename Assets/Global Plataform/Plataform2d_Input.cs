@@ -19,5 +19,26 @@ public class Plataform2d_Input : MonoBehaviour
         {
             plataform.input.y = 1;
         }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            plataform.input.y = 0;
+        }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            plataform.input.x -= 1;
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            plataform.input.x += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            plataform.input.x += 1;
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            plataform.input.x -= 1;
+        }
     }
 }

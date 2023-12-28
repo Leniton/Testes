@@ -83,6 +83,7 @@ public class Plataform_Script : MonoBehaviour
     //test parameters
     bool checkStopTime = false;
     float stopTime;
+    float speedLost;
     void Gravity()
     {
         if (onGround) return;
