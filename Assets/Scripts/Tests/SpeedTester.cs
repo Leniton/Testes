@@ -15,7 +15,7 @@ public class SpeedTester : MonoBehaviour
 
     private void CheckSpeed(ColliderData data)
     {
-        Debug.Log($"hit at {physicsHandler.GetVelocity()} speed on {Time.time - prevCheckpointTime} seconds");
+        Debug.Log($"hit at {physicsHandler.GetVelocity().x} speed on {Time.time - prevCheckpointTime} seconds");
         prevCheckpointTime = Time.time;
     }
 }
