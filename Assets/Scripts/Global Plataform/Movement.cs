@@ -7,12 +7,6 @@ public class Movement : Displacement
     //movement parameters
     [SerializeField] float timeToTopSpeed, topSpeed, timeToStop;
     float accelerationRate, decelerationRate;
-    
-
-    public override void Init(PhysicsHandler handler)
-    {
-        base.Init(handler);
-    }
 
     public override void CalculateParameters()
     {
