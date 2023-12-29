@@ -5,8 +5,14 @@ using UnityEngine;
 public class Movement : Displacement
 {
     //movement parameters
-    [SerializeField] float timeToTopSpeed, speed, timeToStop;
+    [SerializeField] float timeToTopSpeed, topSpeed, timeToStop;
     float accelerationRate, decelerationRate;
+    
+
+    public override void Init(PhysicsHandler handler = null)
+    {
+        base.Init(handler);
+    }
 
     public override void CalculateParameters()
     {
@@ -15,8 +21,8 @@ public class Movement : Displacement
 
     public Vector3 Move(Vector3 direction)
     {
-        direction *= speed;
-        direction.y = 0;
+        direction *= topSpeed;
+        direction.y = physicsHandler.GetVelocity().y;
         return direction;
     }
 }

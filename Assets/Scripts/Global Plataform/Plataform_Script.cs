@@ -28,20 +28,20 @@ public class Plataform_Script : MonoBehaviour
         physicsHandler = GetComponent<PhysicsHandler>();
 
         jump.Init(physicsHandler);
-        jump.CalculateParameters();
+        movement.Init(physicsHandler);
     }
 
     void FixedUpdate()
     {
-
 #if UNITY_EDITOR
         if (testMode)
         {
             jump.CalculateParameters();
+            movement.CalculateParameters();
         }
 #endif
 
-        finalVelocity = physicsHandler.GetVelocity();
+        finalVelocity = movement.Move(new Vector3(input.x, 0, input.z));
         if (input.y > 0)
         {
             if (jump.onGround)
@@ -50,9 +50,6 @@ public class Plataform_Script : MonoBehaviour
                 input.y = 0;
             }
         }
-        Vector3 moveValue = movement.Move(input);
-        finalVelocity.x = moveValue.x;
-        finalVelocity.z = moveValue.z;
 
         finalVelocity.y -= jump.GravityForce();
 

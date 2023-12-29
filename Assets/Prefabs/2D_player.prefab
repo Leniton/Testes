@@ -256,7 +256,7 @@ MonoBehaviour:
     maxSlopeAngle: 0
   movement:
     timeToTopSpeed: 0
-    speed: 4
+    topSpeed: 4
     timeToStop: 0
 --- !u!114 &4477279677991117514
 MonoBehaviour:
