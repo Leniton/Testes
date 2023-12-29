@@ -9,7 +9,7 @@ public class Movement : Displacement
     float accelerationRate, decelerationRate;
     
 
-    public override void Init(PhysicsHandler handler = null)
+    public override void Init(PhysicsHandler handler)
     {
         base.Init(handler);
     }

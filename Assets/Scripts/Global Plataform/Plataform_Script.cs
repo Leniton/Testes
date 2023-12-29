@@ -15,12 +15,11 @@ public class Plataform_Script : MonoBehaviour
     public Vector3 input = Vector3.zero;
 
     //Reference Parameters
-    PhysicsHandler physicsHandler;
-
     [SerializeField] Jump jump;
     [SerializeField] Movement movement;
 
-    //Movement parameters
+    PhysicsHandler physicsHandler;
+
     Vector3 finalVelocity;
 
     void Awake()

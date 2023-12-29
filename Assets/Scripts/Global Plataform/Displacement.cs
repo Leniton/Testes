@@ -5,7 +5,7 @@ public abstract class Displacement
 {
     protected PhysicsHandler physicsHandler;
 
-    public virtual void Init(PhysicsHandler handler = null)
+    public virtual void Init(PhysicsHandler handler)
     {
         physicsHandler = handler;
         CalculateParameters();
