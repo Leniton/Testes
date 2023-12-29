@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class PhysicsHandler : MonoBehaviour
 {
     Rigidbody rb3D;
@@ -12,6 +13,19 @@ public class PhysicsHandler : MonoBehaviour
     Collider2D c2D;
 
     private Vector3 velocity;
+    public Vector3 Velocity
+    {
+        get
+        {
+            Debug.Log("get");
+            return velocity;
+        }
+        set
+        {
+            Debug.Log("set");
+            velocity = value;
+        }
+    }
 
     public Action<CollisionData> CollisionEnter, CollisionStay, CollisionExit;
     public Action<ColliderData> TriggerEnter, TriggerStay, TriggerExit;
