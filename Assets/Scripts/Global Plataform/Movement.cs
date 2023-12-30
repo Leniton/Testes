@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : Displacement
 {
     //movement parameters
-    [SerializeField] float timeToTopSpeed, topSpeed, timeToStop;
+    [SerializeField, Min(0)] float timeToTopSpeed, topSpeed, timeToStop;
     private float accelerationRate, decelerationRate;
     private float lastUpdateTime = -1;
     private float currentTime = 0;
@@ -13,8 +13,8 @@ public class Movement : Displacement
 
     public override void CalculateParameters()
     {
-        accelerationRate = 1;
-        decelerationRate = 1f;
+        accelerationRate = timeToTopSpeed > 0 ? 1f / timeToTopSpeed : 999999999f;
+        decelerationRate = timeToStop > 0 ? 1f / timeToStop: 999999999f;
     }
 
     public Vector3 Move(Vector3 direction)
