@@ -15,16 +15,8 @@ public class PhysicsHandler : MonoBehaviour
     private Vector3 velocity;
     public Vector3 Velocity
     {
-        get
-        {
-            Debug.Log("get");
-            return velocity;
-        }
-        set
-        {
-            Debug.Log("set");
-            velocity = value;
-        }
+        get => GetVelocity();
+        set => SetVelocity(value);
     }
 
     public Action<CollisionData> CollisionEnter, CollisionStay, CollisionExit;
@@ -39,7 +31,7 @@ public class PhysicsHandler : MonoBehaviour
         c3D = GetComponent<Collider>();
     }
 
-    public void SetVelocity(Vector3 value)
+    private void SetVelocity(Vector3 value)
     {
         Vector3 finalValue = value;
 
@@ -59,7 +51,7 @@ public class PhysicsHandler : MonoBehaviour
         velocity = finalValue;
     }
 
-    public Vector3 GetVelocity()
+    private Vector3 GetVelocity()
     {
         Vector3 finalValue = velocity;
 

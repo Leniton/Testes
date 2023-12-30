@@ -39,8 +39,8 @@ public class Plataform_Script : MonoBehaviour
             movement.CalculateParameters();
         }
 #endif
-        //finalVelocity = physicsHandler.GetVelocity();
         finalVelocity = movement.Move(new Vector3(input.x, 0, input.z));
+        finalVelocity.y = physicsHandler.Velocity.y;
         if (input.y > 0)
         {
             if (jump.onGround)
@@ -52,7 +52,7 @@ public class Plataform_Script : MonoBehaviour
 
         finalVelocity.y -= jump.GravityForce();
 
-        physicsHandler.SetVelocity(finalVelocity);
+        physicsHandler.Velocity = finalVelocity;
 
 
         if (finalVelocity.y < 0)

@@ -58,7 +58,7 @@ public class Jump : Displacement
         //test only
         stopTime = 0;
 
-        Vector2 gravityEffect = physicsHandler.GetVelocity();
+        Vector2 gravityEffect = physicsHandler.Velocity;
 
         float currentGravity;
         float gravityGuess;

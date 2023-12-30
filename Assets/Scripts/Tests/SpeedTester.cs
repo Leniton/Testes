@@ -18,7 +18,7 @@ public class SpeedTester : MonoBehaviour
 
     private void CheckSpeed(ColliderData data)
     {
-        Debug.Log($"hit at {physicsHandler.GetVelocity().x} speed on {Time.time - prevCheckpointTime} seconds");
+        Debug.Log($"hit at {physicsHandler.Velocity.x} speed on {Time.time - prevCheckpointTime} seconds");
         prevCheckpointTime = Time.time;
     }
 
@@ -39,12 +39,12 @@ public class SpeedTester : MonoBehaviour
     IEnumerator Test(float goal)
     {
         float timing = 0;
-        float currentSpeed = physicsHandler.GetVelocity().x;
+        float currentSpeed = physicsHandler.Velocity.x;
         do
         {
             yield return new WaitForFixedUpdate();
             timing += Time.fixedDeltaTime;
-            currentSpeed = physicsHandler.GetVelocity().x;
+            currentSpeed = physicsHandler.Velocity.x;
 
         } while(currentSpeed != goal);
         //Debug.Log($"reached speed in {timing} seconds");
