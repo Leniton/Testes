@@ -39,7 +39,7 @@ public class Plataform_Script : MonoBehaviour
             movement.CalculateParameters();
         }
 #endif
-
+        //finalVelocity = physicsHandler.GetVelocity();
         finalVelocity = movement.Move(new Vector3(input.x, 0, input.z));
         if (input.y > 0)
         {
