@@ -1337,6 +1337,16 @@ PrefabInstance:
       propertyPath: input.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
+        type: 3}
+      propertyPath: movement.timeToStop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
+        type: 3}
+      propertyPath: movement.timeToTopSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4477279677991117516, guid: 4f0e12de589b9234ab1a749e84391ccb,
         type: 3}
       propertyPath: m_RootOrder
@@ -1418,7 +1428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedTrigger: 4
-  done: 0
 --- !u!1 &706409170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3722,7 +3731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1814269756
 Transform:
   m_ObjectHideFlags: 0

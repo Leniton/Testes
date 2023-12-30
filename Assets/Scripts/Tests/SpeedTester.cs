@@ -47,6 +47,6 @@ public class SpeedTester : MonoBehaviour
             currentSpeed = physicsHandler.GetVelocity().x;
 
         } while(currentSpeed != goal);
-        Debug.Log($"reached speed in {timing} seconds");
+        //Debug.Log($"reached speed in {timing} seconds");
     }
 }
