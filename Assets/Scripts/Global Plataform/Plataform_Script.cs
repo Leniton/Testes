@@ -39,7 +39,7 @@ public class Plataform_Script : MonoBehaviour
             movement.CalculateParameters();
         }
 #endif
-        finalVelocity = movement.Move(new Vector3(input.x, 0, input.z));
+        finalVelocity = movement.Move(AdjustToNormal());
         finalVelocity.y = physicsHandler.Velocity.y;
         if (input.y > 0)
         {
@@ -60,5 +60,15 @@ public class Plataform_Script : MonoBehaviour
             input.y = 0;
             state = State.jumping;
         }
+    }
+
+    private Vector3 AdjustToNormal()
+    {
+        if (input.x == 0 && input.z == 0) return Vector3.zero;
+        Vector3 normal = jump.floorNormal;
+        Vector3 direction = new Vector3(input.x, 0, input.z);
+
+        Vector3.OrthoNormalize(ref normal, ref direction);
+        return direction;
     }
 }

@@ -14,8 +14,9 @@ public class Jump : Displacement
     float fallGravity;
     float terminalVelocity;
     public bool onGround { get; private set; }
+    public Vector3 floorNormal {  get; private set; }
 
-    public Action OnLand;
+    public Action<CollisionData> OnLand;
     GameObject standingFloor;
 
     public override void Init(PhysicsHandler handler)
@@ -116,12 +117,16 @@ public class Jump : Displacement
             stopTime = 0;
             speedLost = 0;
         }
+
+        floorNormal = data.contacts[0].normal;
+        OnLand?.Invoke(data);
     }
     void CollisionExit(CollisionData data)
     {
         //print($"Exit {data.collider.gameObject.name}");
         if (data.collider.gameObject == standingFloor)
         {
+            floorNormal = orientation;
             standingFloor = null;
             onGround = false;
         }
