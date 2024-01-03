@@ -24,7 +24,7 @@ public class Calculator : MonoBehaviour
         {
             AddressableAsyncObject dot = new("Dot", transform);
             float value = (min + (interval * i)) * xScale;
-            float result = DivisiveFunction(value) * yScale;
+            float result = MultiplyFunction(value) * yScale;
             dot.QueueAction((obj) =>
             {
                 Vector2 position = new(value, result);
@@ -68,19 +68,18 @@ public class Calculator : MonoBehaviour
         return x + a;//f(x) = x + a
     }
 
-    private float DivisiveFunction(float x)
+    private float MultiplyFunction(float x, float m = 2)
     {
-        return 1 / x;//f(x) = 1/x
+        return x * m;//f(x) = x * m
     }
 
-    private float ExponentialFunction(float x)
+    private float DivisiveFunction(float x, float d = 1)
     {
-        return Mathf.Pow(x, 2);//f(x) = x^2
+        return d / x;//f(x) = 1/x
     }
-
-    private float ReverseExponentialFunction(float x, float pow = 2)
+    private float ExponentialFunction(float x, float pow = 2)
     {
-        return Mathf.Pow(pow, x);//f(x) = pow^x
+        return Mathf.Pow(x, pow);//f(x) = pow^x
     }
 
     private float RootFunction(float x)
