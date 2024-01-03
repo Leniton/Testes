@@ -24,7 +24,7 @@ public class Calculator : MonoBehaviour
         {
             AddressableAsyncObject dot = new("Dot", transform);
             float value = (min + (interval * i)) * xScale;
-            float result = CossineFunction(value) * yScale;
+            float result = SineFunction(value) * yScale;
             dot.QueueAction((obj) =>
             {
                 Vector2 position = new(value, result);
@@ -86,6 +86,11 @@ public class Calculator : MonoBehaviour
     private float SineFunction(float x)
     {
         return Mathf.Sin(x);
+    }
+
+    private float TangentFunction(float x)
+    {
+        return Mathf.Tan(x);
     }
 
     private float CircleFunction(float x, float radius = 1)
