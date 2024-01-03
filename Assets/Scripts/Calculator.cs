@@ -4,6 +4,9 @@ using UnityEngine;
 public class Calculator : MonoBehaviour
 {
     [SerializeField] private float min, max, interval;
+    [Space]
+    [SerializeField] float xScale = 1;
+    [SerializeField] float yScale = 1;
     private List<GameObject> dots = new();
 
     public void Calculate()
@@ -20,11 +23,35 @@ public class Calculator : MonoBehaviour
         for (int i = 0; i <= n; i++)
         {
             AddressableAsyncObject dot = new("Dot", transform);
-            float value = (min + (interval * i));
-            float result = ReverseExponentialFunction(value);
+            float value = (min + (interval * i)) * xScale;
+            float result = CossineFunction(value) * yScale;
             dot.QueueAction((obj) =>
             {
                 Vector2 position = new(value, result);
+                obj.transform.position = position;
+                dots.Add(obj);
+            });
+        }
+    }
+
+    public void DrawCircle()
+    {
+        for (int i = 0; i < dots.Count; i++)
+        {
+            DestroyImmediate(dots[i]);
+        }
+        dots.Clear();
+
+        int n = Mathf.RoundToInt(360 / interval);
+        for (int i = 0; i <= n; i++)
+        {
+            AddressableAsyncObject dot = new("Dot", transform);
+            float value = (min + (interval * i)) * xScale;
+            float resultX = SineFunction(value) * yScale;
+            float resultY = CossineFunction(value) * yScale;
+            dot.QueueAction((obj) =>
+            {
+                Vector2 position = new(resultX, resultY);
                 obj.transform.position = position;
                 dots.Add(obj);
             });
@@ -49,5 +76,20 @@ public class Calculator : MonoBehaviour
     private float LogFunction(float x)
     {
         return Mathf.Log(x);//f(x) = log(x)
+    }
+
+    private float CossineFunction(float x)
+    {
+        return Mathf.Cos(x);
+    }
+
+    private float SineFunction(float x)
+    {
+        return Mathf.Sin(x);
+    }
+
+    private float CircleFunction(float x, float radius = 1)
+    {
+        return Mathf.Cos(x);
     }
 }
