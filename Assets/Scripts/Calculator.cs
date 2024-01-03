@@ -21,7 +21,7 @@ public class Calculator : MonoBehaviour
         {
             AddressableAsyncObject dot = new("Dot", transform);
             float value = (min + (interval * i));
-            float result = Function(value);
+            float result = ReverseExponentialFunction(value);
             dot.QueueAction((obj) =>
             {
                 Vector2 position = new(value, result);
@@ -31,8 +31,23 @@ public class Calculator : MonoBehaviour
         }
     }
 
-    private float Function(float x)
+    private float EqualFunction(float x)
     {
-        return x; //f(x) = x
+        return x;//f(x) = x
+    }
+
+    private float ExponentialFunction(float x)
+    {
+        return Mathf.Pow(x, 2);//f(x) = x^2
+    }
+
+    private float ReverseExponentialFunction(float x, float pow = 2)
+    {
+        return Mathf.Pow(pow, x);//f(x) = pow^x
+    }
+
+    private float LogFunction(float x)
+    {
+        return Mathf.Log(x);//f(x) = log(x)
     }
 }
