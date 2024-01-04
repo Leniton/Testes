@@ -21,14 +21,11 @@ public class Plataform_Script : MonoBehaviour
     PhysicsHandler physicsHandler;
 
     Vector3 finalVelocity;
-    bool canWalkRight = true, canWalkLeft = true;
     GameObject lastWall;
 
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-        physicsHandler.CollisionEnter += CollisionEnter;
-        physicsHandler.CollisionExit += CollisionExit;
         jump.Init(physicsHandler);
         movement.Init(physicsHandler);
     }
@@ -43,8 +40,6 @@ public class Plataform_Script : MonoBehaviour
         }
 #endif
         Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
-        if (xInput.x > 0 && !canWalkLeft) xInput.x = 0;
-        if (xInput.x < 0 && !canWalkRight) xInput.x = 0;
 
         finalVelocity = movement.Move(xInput);
         finalVelocity.y = physicsHandler.Velocity.y;
@@ -65,33 +60,6 @@ public class Plataform_Script : MonoBehaviour
         {
             input.y = 0;
             state = State.jumping;
-        }
-    }
-
-    void CollisionEnter(CollisionData data)
-    {
-        Vector3 hitNormal = data.contacts[0].normal;
-        if (hitNormal.y <= 0)
-        {
-            //Debug.Log("wall hit");
-            if (hitNormal.x < 0)
-            {
-                canWalkLeft = false;
-            }
-            else
-            {
-                canWalkRight = false;
-            }
-            lastWall = data.gameObject;
-        }
-    }
-    void CollisionExit(CollisionData data)
-    {
-        if (lastWall == data.gameObject)
-        {
-            canWalkLeft = true;
-            canWalkRight = true;
-            lastWall = null;
         }
     }
 }
