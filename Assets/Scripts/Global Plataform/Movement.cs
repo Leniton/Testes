@@ -50,18 +50,12 @@ public class Movement : Displacement
             if (Vector3.Angle(-lastCollision[i].contacts[0].normal, direction) < 90)
             {
                 if (collisionRule == CollisionRule.slide)
-                {
                     direction = AdjustToNormal(direction, lastCollision[i].contacts[0].normal);
-                }
                 else
-                {
                     direction = Vector3.zero;
-                }
                 break;
             }
         }
-
-        
 
         modifier *= elapsedTime;
         currentTime = Mathf.Clamp01(currentTime + modifier);
@@ -74,13 +68,11 @@ public class Movement : Displacement
         return direction;
     }
 
-    //to block movement against a wall, block movement in which the angle against -normal is < 90º ?
-
     public Vector3 AdjustToNormal(Vector3 input, Vector3 normal)
     {
-        if (input.x == 0 && input.z == 0) return Vector3.zero;
-        Vector3 direction = new Vector3(input.x, 0, input.z);
+        if (input == Vector3.zero) return Vector3.zero;
 
+        Vector3 direction = input;
         Vector3.OrthoNormalize(ref normal, ref direction);
         return direction;
     }
