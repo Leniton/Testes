@@ -106,10 +106,13 @@ public class Jump : Displacement
     void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
-        if (data.collider.gameObject.CompareTag("Chão") && data.contacts[0].normal.y > 0)
+        if (data.collider.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
+
+            floorNormal = data.contacts[0].normal;
+            OnLand?.Invoke(data);
 
             //test only
             //Debug.LogWarning($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
@@ -117,9 +120,6 @@ public class Jump : Displacement
             stopTime = 0;
             speedLost = 0;
         }
-
-        floorNormal = data.contacts[0].normal;
-        OnLand?.Invoke(data);
     }
     void CollisionExit(CollisionData data)
     {
