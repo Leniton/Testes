@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -11,10 +12,19 @@ public class Movement : Displacement
     private float currentTime = 0;
     private Vector3 lastDirection;
 
+    private List<CollisionData> lastCollision = new();
+
+    public override void Init(PhysicsHandler handler)
+    {
+        base.Init(handler);
+        physicsHandler.CollisionEnter += CollisionEnter;
+        physicsHandler.CollisionExit += CollisionExit;
+    }
+
     public override void CalculateParameters()
     {
         accelerationRate = timeToTopSpeed > 0 ? 1f / timeToTopSpeed : 999999999f;
-        decelerationRate = timeToStop > 0 ? 1f / timeToStop: 999999999f;
+        decelerationRate = timeToStop > 0 ? 1f / timeToStop : 999999999f;
     }
 
     public Vector3 Move(Vector3 direction)
@@ -43,5 +53,37 @@ public class Movement : Displacement
         if (currentTime <= 0 && modifier < 0) lastUpdateTime = -1;
 
         return direction;
+    }
+
+    public Vector3 AdjustToNormal(Vector3 input, Vector3 normal)
+    {
+        if (input.x == 0 && input.z == 0) return Vector3.zero;
+        Vector3 direction = new Vector3(input.x, 0, input.z);
+
+        Vector3.OrthoNormalize(ref normal, ref direction);
+        return direction;
+    }
+
+    void CollisionEnter(CollisionData data)
+    {
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if (data.gameObject == lastCollision[i].gameObject)
+            {
+                break;
+            }
+        }
+        lastCollision.Add(data);
+    }
+    void CollisionExit(CollisionData data)
+    {
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if(data.gameObject == lastCollision[i].gameObject)
+            {
+                lastCollision.RemoveAt(i);
+                break;
+            }
+        }
     }
 }

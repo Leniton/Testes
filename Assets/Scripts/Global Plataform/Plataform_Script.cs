@@ -21,11 +21,14 @@ public class Plataform_Script : MonoBehaviour
     PhysicsHandler physicsHandler;
 
     Vector3 finalVelocity;
+    bool canWalkRight = true, canWalkLeft = true;
+    GameObject lastWall;
 
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-
+        physicsHandler.CollisionEnter += CollisionEnter;
+        physicsHandler.CollisionExit += CollisionExit;
         jump.Init(physicsHandler);
         movement.Init(physicsHandler);
     }
@@ -39,7 +42,11 @@ public class Plataform_Script : MonoBehaviour
             movement.CalculateParameters();
         }
 #endif
-        finalVelocity = movement.Move(AdjustToNormal());
+        Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
+        if (xInput.x > 0 && !canWalkLeft) xInput.x = 0;
+        if (xInput.x < 0 && !canWalkRight) xInput.x = 0;
+
+        finalVelocity = movement.Move(xInput);
         finalVelocity.y = physicsHandler.Velocity.y;
         if (input.y > 0)
         {
@@ -54,7 +61,6 @@ public class Plataform_Script : MonoBehaviour
 
         physicsHandler.Velocity = finalVelocity;
 
-
         if (finalVelocity.y < 0)
         {
             input.y = 0;
@@ -62,13 +68,30 @@ public class Plataform_Script : MonoBehaviour
         }
     }
 
-    private Vector3 AdjustToNormal()
+    void CollisionEnter(CollisionData data)
     {
-        if (input.x == 0 && input.z == 0) return Vector3.zero;
-        Vector3 normal = jump.floorNormal;
-        Vector3 direction = new Vector3(input.x, 0, input.z);
-
-        Vector3.OrthoNormalize(ref normal, ref direction);
-        return direction;
+        Vector3 hitNormal = data.contacts[0].normal;
+        if (hitNormal.y <= 0)
+        {
+            //Debug.Log("wall hit");
+            if (hitNormal.x < 0)
+            {
+                canWalkLeft = false;
+            }
+            else
+            {
+                canWalkRight = false;
+            }
+            lastWall = data.gameObject;
+        }
+    }
+    void CollisionExit(CollisionData data)
+    {
+        if (lastWall == data.gameObject)
+        {
+            canWalkLeft = true;
+            canWalkRight = true;
+            lastWall = null;
+        }
     }
 }
