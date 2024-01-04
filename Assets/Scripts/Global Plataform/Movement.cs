@@ -11,7 +11,8 @@ public class Movement : Displacement
     private float lastUpdateTime = -1;
     private float currentTime = 0;
     private Vector3 lastDirection;
-
+    enum CollisionRule { block, slide }
+    [SerializeField] CollisionRule collisionRule;
     private List<CollisionData> lastCollision = new();
 
     public override void Init(PhysicsHandler handler)
@@ -44,6 +45,24 @@ public class Movement : Displacement
             lastDirection = direction;
         }
 
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if (Vector3.Angle(-lastCollision[i].contacts[0].normal, direction) < 90)
+            {
+                if (collisionRule == CollisionRule.slide)
+                {
+                    direction = AdjustToNormal(direction, lastCollision[i].contacts[0].normal);
+                }
+                else
+                {
+                    direction = Vector3.zero;
+                }
+                break;
+            }
+        }
+
+        
+
         modifier *= elapsedTime;
         currentTime = Mathf.Clamp01(currentTime + modifier);
         float ajustedSpeed = Mathf.Lerp(0, topSpeed, currentTime);
@@ -54,6 +73,8 @@ public class Movement : Displacement
 
         return direction;
     }
+
+    //to block movement against a wall, block movement in which the angle against -normal is < 90º ?
 
     public Vector3 AdjustToNormal(Vector3 input, Vector3 normal)
     {
