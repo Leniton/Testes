@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class AbilityTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Dash dash = new();
+    Plataform_Script plataform;
+
+    private void Awake()
     {
-        
+        plataform = GetComponent<Plataform_Script>();
+
+        PhysicsHandler physicsHandler = GetComponent<PhysicsHandler>();
+        dash.Init(physicsHandler);
+        dash.doneDashing += () =>
+        {
+            plataform.hasControl = true;
+            plataform.useGravity = true;
+        };
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            plataform.hasControl = false;
+            plataform.useGravity = false;
+            dash.StartDash(Vector3.right);
+        }
     }
 }

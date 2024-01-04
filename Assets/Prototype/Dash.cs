@@ -14,6 +14,14 @@ public class Dash : Displacement
     Coroutine coroutine;
     MonoBehaviour mono => physicsHandler;
 
+    public Action doneDashing;
+
+    public override void Init(PhysicsHandler handler)
+    {
+        base.Init(handler);
+        handler.CollisionEnter += CollisionEnter;
+    }
+
     public override void CalculateParameters()
     {
         dashSpeed = distance / duration;
@@ -45,10 +53,9 @@ public class Dash : Displacement
 
         Vector3 finalVelocity = saveVelocity ? currentVelocity : Vector3.zero;
         if (keepMomentum) finalVelocity += dashForce;
-        physicsHandler.Velocity = finalVelocity;        
+        physicsHandler.Velocity = finalVelocity;
 
-        coroutine = null;
-        dashing = false;
+        StopDash();
     }
 
     public void StopDash()
@@ -57,5 +64,11 @@ public class Dash : Displacement
         dashing = false;
         mono.StopCoroutine(coroutine);
         coroutine = null;
+        doneDashing?.Invoke();
+    }
+
+    private void CollisionEnter(CollisionData data)
+    {
+        StopDash();
     }
 }
