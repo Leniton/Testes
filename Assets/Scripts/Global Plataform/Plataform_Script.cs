@@ -8,7 +8,8 @@ public class Plataform_Script : MonoBehaviour
 #if UNITY_EDITOR
     public bool testMode = true;
 #endif
-
+    public bool hasControl = true;
+    public bool useGravity = true;
     public enum State { idle, walking, jumping }
     [SerializeField] public State state = new State();
 
@@ -39,20 +40,25 @@ public class Plataform_Script : MonoBehaviour
             movement.CalculateParameters();
         }
 #endif
-        Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
 
-        finalVelocity = movement.Move(xInput);
-        finalVelocity.y = physicsHandler.Velocity.y;
-        if (input.y > 0)
+        finalVelocity = physicsHandler.Velocity;
+        if (hasControl)
         {
-            if (jump.onGround)
+            Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
+            finalVelocity = movement.Move(xInput);
+            finalVelocity.y = physicsHandler.Velocity.y;
+
+            if (input.y > 0)
             {
-                finalVelocity.y = jump.JumpValue();
-                input.y = 0;
+                if (jump.onGround)
+                {
+                    finalVelocity.y = jump.JumpValue();
+                    input.y = 0;
+                }
             }
         }
 
-        finalVelocity.y -= jump.GravityForce();
+        if(useGravity) finalVelocity.y -= jump.GravityForce();
 
         physicsHandler.Velocity = finalVelocity;
 
