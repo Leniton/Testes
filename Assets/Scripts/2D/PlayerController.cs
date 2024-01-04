@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Plataform_Movement))]
 public class PlayerController : MonoBehaviour
 {
-
     Plataform_Movement mov;
     Animator anim;
 
