@@ -22,11 +22,12 @@ public class AbilityTrigger : MonoBehaviour
 
     void Update()
     {
+        dash.CalculateParameters();//test only
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             plataform.hasControl = false;
             plataform.useGravity = false;
-            dash.StartDash(Vector3.right);
+            dash.StartDash(plataform.input);
         }
     }
 }
