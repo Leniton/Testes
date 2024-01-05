@@ -8,12 +8,14 @@ public class AddressableAsyncObject
 {
     private GameObject gameObject;
     private Queue<Action<GameObject>> actionQueue;
+    private AssetReference reference;
 
     public AddressableAsyncObject(string address, Transform parent = null)
     {
         gameObject = null;
         actionQueue = new();
-        Addressables.InstantiateAsync(address, parent).Completed += EmptyQueue;
+        reference = new (address);
+        Addressables.InstantiateAsync(reference, parent).Completed += EmptyQueue;
     }
 
     public AddressableAsyncObject(GameObject instance)
@@ -37,5 +39,14 @@ public class AddressableAsyncObject
             actionQueue.Enqueue(action);
         else
             action?.Invoke(gameObject);
+    }
+
+    public void Destroy()
+    {
+        QueueAction((go) =>
+        {
+            reference.ReleaseInstance(gameObject);
+            actionQueue.Clear();
+        });
     }
 }
