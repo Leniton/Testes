@@ -7,7 +7,7 @@ public class Calculator : MonoBehaviour
     [Space]
     [SerializeField] float xScale = 1;
     [SerializeField] float yScale = 1;
-    private List<AddressableAsyncObject> dots = new();
+    private List<AddressableAsyncObject<Transform>> dots = new();
 
     public void Calculate()
     {
@@ -21,13 +21,13 @@ public class Calculator : MonoBehaviour
 
         for (int i = 0; i <= n; i++)
         {
-            AddressableAsyncObject dot = new("Dot", transform);
+            AddressableAsyncObject<Transform> dot = new("Dot", transform);
             float value = (min + (interval * i)) * xScale;
             float result = SineFunction(value) * yScale;
-            dot.QueueAction((obj) =>
+            dot.QueueAction((tr) =>
             {
                 Vector2 position = new(value, result);
-                obj.transform.position = position;
+                tr.position = position;
             });
             dots.Add(dot);
         }
@@ -44,14 +44,14 @@ public class Calculator : MonoBehaviour
         int n = Mathf.RoundToInt(360 / interval);
         for (int i = 0; i <= n; i++)
         {
-            AddressableAsyncObject dot = new("Dot", transform);
+            AddressableAsyncObject<Transform> dot = new("Dot", transform);
             float value = (min + (interval * i)) * xScale;
             float resultX = SineFunction(value) * yScale;
             float resultY = CossineFunction(value) * yScale;
-            dot.QueueAction((obj) =>
+            dot.QueueAction((tr) =>
             {
                 Vector2 position = new(resultX, resultY);
-                obj.transform.position = position;
+                tr.position = position;
             });
             dots.Add(dot);
         }

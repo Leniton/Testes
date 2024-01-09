@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class AddressableAsyncObject
+public class AddressableAsyncObject<T> where T : Component
 {
-    private GameObject gameObject;
-    private Queue<Action<GameObject>> actionQueue;
+    private T component;
+    private Queue<Action<T>> actionQueue;
     private AssetReference reference;
 
     public AddressableAsyncObject(string address, Transform parent = null)
     {
-        gameObject = null;
+        component = null;
         actionQueue = new();
         reference = new (address);
         Addressables.InstantiateAsync(reference, parent).Completed += EmptyQueue;
@@ -20,33 +20,39 @@ public class AddressableAsyncObject
 
     public AddressableAsyncObject(GameObject instance)
     {
-        gameObject = instance;
+        component = instance.GetComponent<T>();
     }
 
     private void EmptyQueue(AsyncOperationHandle<GameObject> handle)
     {
-        gameObject = handle.Result;
+        component = handle.Result.GetComponent<T>();
         while (actionQueue.Count > 0)
         {
-            Action<GameObject> current = actionQueue.Dequeue();
-            current?.Invoke(gameObject);
+            Action<T> current = actionQueue.Dequeue();
+            current?.Invoke(component);
+            if(current == DestroyAsyncObject)
+            {
+                Debug.LogWarning("object destroyed, canceling further actions");
+                break;
+            }
         }
     }
-
-    public void QueueAction(Action<GameObject> action)
+    public void QueueAction(Action<T> action)
     {
-        if (gameObject == null)
+        if (component == null)
             actionQueue.Enqueue(action);
         else
-            action?.Invoke(gameObject);
+            action?.Invoke(component);
     }
 
     public void Destroy()
     {
-        QueueAction((go) =>
-        {
-            reference.ReleaseInstance(gameObject);
-            actionQueue.Clear();
-        });
+        QueueAction(DestroyAsyncObject);
+    }
+
+    private void DestroyAsyncObject(T _component)
+    {
+        reference.ReleaseInstance(_component.gameObject);
+        actionQueue.Clear();
     }
 }
