@@ -8,10 +8,13 @@ using Random = UnityEngine.Random;
 public class TestA : MonoBehaviour
 {
     [SerializeField] private string a;
+
+
     private void PrivateNoParam()
     {
         Debug.Log("invoking privateNoParam method");
     }
+
     [SerializeMethod]
     int WithReturnType()
     {
@@ -19,8 +22,11 @@ public class TestA : MonoBehaviour
         return Random.Range(0,10);
     }
 
+    [SerializeMethod]
     public void WithParams(string s, float f = 0, int i = 2, bool b = false)
     {
         Debug.Log($"invoking WithParams method.\n params: i={i} | n={f} | s=\"{s}\" | b={b}");
     }
+
+    public GameObject TestReturnObject() => gameObject;
 }
