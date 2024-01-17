@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using Random = UnityEngine.Random;
+using SerializableMethods;
 
 public class TestA : MonoBehaviour
 {
