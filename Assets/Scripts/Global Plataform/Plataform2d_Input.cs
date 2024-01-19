@@ -40,5 +40,8 @@ public class Plataform2d_Input : MonoBehaviour
         {
             plataform.input.x -= 1;
         }
+
+        if (Input.GetKey(KeyCode.LeftShift)) plataform.levelOfControl = 0;
+        else plataform.levelOfControl = Mathf.Clamp01(plataform.levelOfControl + Time.deltaTime);
     }
 }
