@@ -8,7 +8,7 @@ public class Plataform_Script : MonoBehaviour
 #if UNITY_EDITOR
     public bool testMode = true;
 #endif
-    public bool hasControl = true;
+    public float levelOfControl = 1;//change to float level of control?(0 no control, 1 full control)
     public bool useGravity = true;
     public enum State { idle, walking, jumping }
     [SerializeField] public State state = new State();
@@ -42,12 +42,12 @@ public class Plataform_Script : MonoBehaviour
 #endif
 
         finalVelocity = physicsHandler.Velocity;
-        if (hasControl)
-        {
-            Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
-            finalVelocity = movement.Move(xInput);
-            finalVelocity.y = physicsHandler.Velocity.y;
+        Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
+        finalVelocity = (finalVelocity * (1 - levelOfControl)) + (movement.Move(xInput) * levelOfControl);
+        finalVelocity.y = physicsHandler.Velocity.y;
 
+        if (levelOfControl >= 1)
+        {
             if (input.y > 0)
             {
                 if (jump.onGround)
