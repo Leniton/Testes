@@ -15,7 +15,7 @@ public class AbilityTrigger : MonoBehaviour
         dash.Init(physicsHandler);
         dash.doneDashing += () =>
         {
-            plataform.hasControl = true;
+            plataform.levelOfControl = 1;
             plataform.useGravity = true;
         };
     }
@@ -25,7 +25,7 @@ public class AbilityTrigger : MonoBehaviour
         dash.CalculateParameters();//test only
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            plataform.hasControl = false;
+            plataform.levelOfControl = 0;
             plataform.useGravity = false;
             dash.StartDash(plataform.input);
         }
