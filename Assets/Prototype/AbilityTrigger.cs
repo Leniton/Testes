@@ -20,15 +20,8 @@ public class AbilityTrigger : MonoBehaviour
             plataform.levelOfControl = 1;
             plataform.useGravity = true;
 
-            Debug.DrawRay(transform.position, Vector3.right, Color.magenta, 1);
-            Debug.DrawRay(transform.position, Vector3.left, Color.magenta, 1);
-            Debug.DrawRay(transform.position, Vector3.up, Color.magenta, 1);
-            Debug.DrawRay(transform.position, Vector3.down, Color.magenta, 1);
-
-            Debug.DrawRay(transform.position, (Vector3.up + Vector3.right).normalized, Color.magenta, 1);
-            Debug.DrawRay(transform.position, (Vector3.up + Vector3.left).normalized, Color.magenta, 1);
-            Debug.DrawRay(transform.position, (Vector3.down + Vector3.right).normalized, Color.magenta, 1);
-            Debug.DrawRay(transform.position, (Vector3.down + Vector3.left).normalized, Color.magenta, 1);
+            DebugDraw.Circle(transform.position,2,Color.magenta, 1);
+            DebugDraw.Square(transform.position,1, Color.magenta, 1);
         };
     }
 
