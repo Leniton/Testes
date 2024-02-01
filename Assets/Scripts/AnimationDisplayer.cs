@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationCurve : MonoBehaviour
+public class AnimationDisplayer : MonoBehaviour
 {
     [SerializeField] Transform movingObject;
     [SerializeField] Procedural_Animator animator;
