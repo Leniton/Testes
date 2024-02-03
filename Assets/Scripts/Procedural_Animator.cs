@@ -1,159 +1,76 @@
+using Newtonsoft.Json.Linq;
+using System;
 using UnityEngine;
 
 [ExecuteAlways]
 public class Procedural_Animator : MonoBehaviour
 {
+    [SerializeField] AnimationCurve curve;
     [SerializeField] Transform sampleParent;
-    [SerializeField, Range(-3, 0)] float yOffset;
-    [SerializeField, Range(-5, 0)] float xOffset;
-    [SerializeField, Range(0, 6)] float inputChange;
-    [SerializeField, Range(1, 14)] int changeID;
-    [SerializeField, Range(0, 7)] float timeRange;
-    [Space]
-    [Header("TimeToRespond")]
-    [SerializeField] Transform TTR_SampleParent;
-    [SerializeField, Range(0, 1)] float timeToReact;
-    [Range(.1f, .9f)] public float timeBalance;
-    float timeStep => (1f / (sampleParent.childCount / 3f));
-    float changeTime => timeStep * changeID;
+    [SerializeField, Range(-4.5f, 4.5f)] float yOffset;
+    [SerializeField, Range(-8, 8)] public float xOffset;
+    [SerializeField, Range(0, 9)] public float inputChange;
+    [SerializeField, Range(1, 16)] public float timeRange;
+
+    public Vector2 StartingPosition => new(xOffset, yOffset);
 
     void Update()
     {
         //startLine
-        Rect rect = new Rect(xOffset, yOffset, timeRange - xOffset, inputChange);
-        int sampleDivision = sampleParent.childCount / 3;
-        float step = 1f / sampleDivision;
-        sampleDivision *= 2;
-        for (int i = 0; i < sampleDivision; i++)
+        Color color = sampleParent.GetComponentInChildren<SpriteRenderer>().color;
+        float step = 1f / (sampleParent.childCount-1);
+        Vector2 previousPos = Vector2.right * xOffset + Vector2.up * yOffset;
+        for (int i = 0; i < sampleParent.childCount; i++)
         {
-            //code for initial straight line
-            sampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * step * i) +
-                Vector2.up*(GetX(i * step));
-        }
-        step = 1f / (sampleParent.childCount - sampleDivision-1);
-        for (int i = sampleDivision; i < sampleParent.childCount; i++)
-        {
-            //code for straight line towards change in input
-            sampleParent.GetChild(i).position = 
-                sampleParent.GetChild(Mathf.Clamp(changeID - 1,0,sampleParent.childCount)).position +
-                Vector3.up * ((rect.height) * step * (i - sampleDivision));
-        }
+            float currentTime = (step * i);
+            Vector3 pos = Vector3.zero;
+            pos.x = xOffset + (timeRange * currentTime);
+            pos.y = yOffset + (curve.Evaluate(currentTime) * inputChange);
+            sampleParent.GetChild(i).position = pos;
 
-        step = 1f / (TTR_SampleParent.childCount/2);
-
-        for (int i = 0; i < TTR_SampleParent.childCount; i++)
-        {
-            float time = step * i;
-            //Debug.Log($"input: {time} | output: {DetermineAlphaValue(time, 0, timeBalance, 1 - timeBalance)}");
-            TTR_SampleParent.GetChild(i).position = rect.min + (Vector2.right * rect.max * time) + Vector2.up * (GetY(time));
+            previousPos.x = pos.x;
+            Debug.DrawLine(previousPos, pos, color, .2f);
+            previousPos = pos;
         }
     }
 
-    float GetX(float time)
-    {
-        //Debug.Log($"{time} | {changeTime}");
-        return inputChange * Mathf.Clamp01(DetermineAlphaValue(time, changeTime, 99999, timeStep));
-    }
-
-    float GetY(float time)
-    {
-        time = time-1 == 0 ? .01f : time - 1;
-        //Debug.Log(time);
-        float y = inputChange * Mathf.Clamp01(DetermineAlphaValue(time, changeTime, 99999, timeStep));
-
-        return y;
-    }
-
-    public Vector2 initialPos()
-    {
-        return new Vector2(0, yOffset);
-    }
-
-    float NormalizedDistance(float value, float target, float range)
-    {
-        return Mathf.Clamp01(1 - Mathf.Abs(value - target) / range);
-    }
-    float WithinTargetDistance(float value, float min, float max)
-    {
-        return (value - min) / (max - min);
-    }
-    float DetermineAlphaValue(float value, float min, float max, float range)
-    {
-        float alphaValue = NormalizedDistance(value, min, range) +
-                Mathf.Clamp01(NormalizedDistance(value, max, range) +
-                Mathf.Ceil(NormalizedDistance(value, min + ((max - min) / 2), (max - min) / 2))) *
-                Mathf.Ceil(Mathf.Clamp01(WithinTargetDistance(value, min, max)));
-        return alphaValue;
-    }
-
-
+    public float GetInput(float time) => curve.Evaluate(time);
 }
 
-
-public struct InterpolationCurve
+[Serializable]
+public class InterpolationCurve
 {
-    //values used in movement
-    float currentValue;
-    float currentSpeed;
-    float currentAceleration;
+    private float StartTime;
+    private float StartValue;
+    private AnimationCurve curve;
+    public bool ended = false;
+    public static Action<InterpolationCurve> onEnd;//just for practical purposes, won't work in a realistic situation
 
-    //values used for changing the linear movement
-    float _acelerationRate;
-
-    public InterpolationCurve(float startValue, float endValue, float acelerationRate = 0)
+    public InterpolationCurve(AnimationCurve _curve)
     {
-        _acelerationRate = acelerationRate;
-
-        currentValue = startValue;
-        currentSpeed = endValue - startValue;
-        currentAceleration = currentSpeed * _acelerationRate;
+        StartTime = Time.time;
+        curve = _curve;
+        StartValue = curve.Evaluate(0);
     }
 
-    public float Step(float deltaTime)
-    {
-        currentSpeed += currentAceleration * deltaTime;
-        currentValue += currentSpeed * deltaTime;
-        return currentValue;
-    }
-}
+    public float currentValue => ValueAt(Time.time - StartTime, true);
 
-public struct bit
-{
-    private byte value;
-    public bit(bool on = false) => value = (byte)(on ? 1 : 0);
-    private static byte ToBit(byte by) => (byte)(by > 0 ? 1 : 0);
+    public float currentDelta => currentValue - StartValue;
 
-    public static implicit operator byte(bit bit) => bit.value;
-    public static implicit operator int(bit bit) => bit.value;
-    public static explicit operator bit(int n) => new bit(n > 0);
+    public float ValueAt(float time, bool triggerEnd = false)
+    {
+        if (triggerEnd) CheckEnd(time);
+        return curve.Evaluate(time);
+    }
 
-    public static bit operator +(bit b, byte by)
-    {
-        b.value = ToBit((byte)(b.value + by));
-        return b;
-    }
-    public static bit operator -(bit b, byte by)
-    {
-        b.value = ToBit((byte)(b.value - by));
-        return b;
-    }
-    public static bit operator |(bit b, byte by)
-    {
-        b.value = (byte)(ToBit(by) | b.value);
-        return b;
-    }
-    public static bit operator &(bit b, byte by)
-    {
-        b.value = (byte)(ToBit(by) & b.value);
-        return b;
-    }
-    public static bit operator ^(bit b, byte by)
-    {
-        b.value = (byte)(ToBit(by) ^ b.value);
-        return b;
-    }
-    public static bit operator ~(bit b) => b ^ 1;
-    public static bit operator !(bit b) => ~b;
+    public float DeltaAt(float time, bool triggerEnd = false) => ValueAt(time, triggerEnd) - StartValue;
 
-    public override string ToString() => value.ToString();
+    private void CheckEnd(float time) 
+    {
+        if (time >= 1)
+        {
+            onEnd?.Invoke(this);
+            ended = true;
+        }
+    }
 }
