@@ -64,6 +64,7 @@ public class AbilityTrigger : MonoBehaviour
 
         if (input.x != 0) lastXinput = input.x;
 
+        if (plataform.levelOfControl <= 0) return;
         dash.CalculateParameters();//test only
         if (Input.GetKeyDown(KeyCode.LeftShift) && !dash.dashing)
         {
@@ -75,11 +76,7 @@ public class AbilityTrigger : MonoBehaviour
 
     public void Recover(float time)
     {
-        //plataform.levelOfControl = 1;
         plataform.useGravity = true;
-
-        DebugDraw.Circle(transform.position, 2, Color.magenta, 1);
-        DebugDraw.Square(transform.position, 1, Color.magenta, 1);
         StartCoroutine(RecoverControl(time));
     }
 
