@@ -14,7 +14,7 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] public State state = new State();
 
     public Vector3 input = Vector3.zero;
-
+    [SerializeField] private float controlJumpThreshold;
     //Reference Parameters
     [SerializeField] Jump jump;
     [SerializeField] Movement movement;
@@ -46,7 +46,7 @@ public class Plataform_Script : MonoBehaviour
         finalVelocity = (finalVelocity * (1 - levelOfControl)) + (movement.Move(xInput) * levelOfControl);
         finalVelocity.y = physicsHandler.Velocity.y;
 
-        if (levelOfControl >= 1)
+        if (levelOfControl >= controlJumpThreshold)
         {
             if (input.y > 0)
             {
