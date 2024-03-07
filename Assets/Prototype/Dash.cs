@@ -8,13 +8,14 @@ public class Dash : Displacement
 {
     [SerializeField] float distance = .2f;
     [SerializeField] float duration = .2f;
-    [SerializeField] bool saveVelocity, keepMomentum;
+    [SerializeField, Range(0, 1)] float keptMomentum;
+    [SerializeField] float timeToRecover = 0;
     public bool dashing;
     float dashSpeed;
     Coroutine coroutine;
     MonoBehaviour mono => physicsHandler;
 
-    public Action doneDashing;
+    public Action<float> doneDashing;
 
     public override void Init(PhysicsHandler handler)
     {
@@ -51,11 +52,8 @@ public class Dash : Displacement
             physicsHandler.Velocity = dashForce;
         }
 
-        Vector3 finalVelocity = saveVelocity ? currentVelocity : Vector3.zero;
-        direction.x = Mathf.Abs(direction.x);
-        direction.y = Mathf.Abs(direction.y);
-        finalVelocity.Scale(direction);
-        if (keepMomentum) finalVelocity += dashForce;
+        Vector3 finalVelocity = Vector3.zero;
+        finalVelocity += dashForce * keptMomentum;
         physicsHandler.Velocity = finalVelocity;
 
         Debug.Log($"start: {currentVelocity} | end: {finalVelocity}");
@@ -69,7 +67,7 @@ public class Dash : Displacement
         dashing = false;
         mono.StopCoroutine(coroutine);
         coroutine = null;
-        doneDashing?.Invoke();
+        doneDashing?.Invoke(timeToRecover);
     }
 
     private void CollisionEnter(CollisionData data)

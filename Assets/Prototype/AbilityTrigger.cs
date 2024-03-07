@@ -15,14 +15,7 @@ public class AbilityTrigger : MonoBehaviour
 
         PhysicsHandler physicsHandler = GetComponent<PhysicsHandler>();
         dash.Init(physicsHandler);
-        dash.doneDashing += () =>
-        {
-            plataform.levelOfControl = 1;
-            plataform.useGravity = true;
-
-            DebugDraw.Circle(transform.position,2,Color.magenta, 1);
-            DebugDraw.Square(transform.position,1, Color.magenta, 1);
-        };
+        dash.doneDashing += Recover;
     }
 
     void Update()
@@ -72,11 +65,34 @@ public class AbilityTrigger : MonoBehaviour
         if (input.x != 0) lastXinput = input.x;
 
         dash.CalculateParameters();//test only
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !dash.dashing)
         {
             plataform.levelOfControl = 0;
             plataform.useGravity = false;
             dash.StartDash(input);
         }
+    }
+
+    public void Recover(float time)
+    {
+        //plataform.levelOfControl = 1;
+        plataform.useGravity = true;
+
+        DebugDraw.Circle(transform.position, 2, Color.magenta, 1);
+        DebugDraw.Square(transform.position, 1, Color.magenta, 1);
+        StartCoroutine(RecoverControl(time));
+    }
+
+    IEnumerator RecoverControl(float time)
+    {
+        float currentTime = 0;
+        while (currentTime < time)
+        {
+            yield return null;
+            currentTime += Time.deltaTime;
+            plataform.levelOfControl = currentTime / time;
+        }
+
+        plataform.levelOfControl = 1;
     }
 }
