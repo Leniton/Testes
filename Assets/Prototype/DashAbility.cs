@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityTrigger : MonoBehaviour
+public class DashAbility : MonoBehaviour
 {
     [SerializeField] Dash dash = new();
     Plataform_Script plataform;
