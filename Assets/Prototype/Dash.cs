@@ -52,8 +52,13 @@ public class Dash : Displacement
         }
 
         Vector3 finalVelocity = saveVelocity ? currentVelocity : Vector3.zero;
+        direction.x = Mathf.Abs(direction.x);
+        direction.y = Mathf.Abs(direction.y);
+        finalVelocity.Scale(direction);
         if (keepMomentum) finalVelocity += dashForce;
         physicsHandler.Velocity = finalVelocity;
+
+        Debug.Log($"start: {currentVelocity} | end: {finalVelocity}");
 
         StopDash();
     }
