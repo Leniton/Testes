@@ -246,18 +246,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testMode: 1
+  levelOfControl: 1
+  useGravity: 1
   state: 0
   input: {x: 0, y: 0, z: 0}
+  controlJumpThreshold: 0.1
   jump:
+    orientation: {x: 0, y: 1, z: 0}
     jumpHeight: 5
     timeToMaxHeight: 0.5
     timeToFall: 0.4
     gravityCompensation: 2.58
     maxSlopeAngle: 0
   movement:
+    orientation: {x: 0, y: 1, z: 0}
     timeToTopSpeed: 0
     topSpeed: 4
     timeToStop: 0
+    collisionRule: 0
 --- !u!114 &4477279677991117514
 MonoBehaviour:
   m_ObjectHideFlags: 0
