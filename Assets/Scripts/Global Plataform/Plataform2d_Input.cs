@@ -24,21 +24,9 @@ public class Plataform2d_Input : MonoBehaviour
             plataform.input.y = 0;
         }
 
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            plataform.input.x -= 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            plataform.input.x += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            plataform.input.x += 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            plataform.input.x -= 1;
-        }
+        plataform.input.x = Input.GetAxis("Horizontal");
+
+        if (Input.GetKey(KeyCode.LeftShift)) plataform.levelOfControl = 0;
+        else plataform.levelOfControl = Mathf.Clamp01(plataform.levelOfControl + Time.deltaTime);
     }
 }
