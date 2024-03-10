@@ -19,6 +19,20 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] Jump jump;
     [SerializeField] Movement movement;
 
+    private Jump jumpOverride;
+    public Jump Jump
+    {
+        get { return jumpOverride ?? jump; }
+        set { jumpOverride = value; }
+    }
+
+    Movement movementOverride;
+    public Movement Movement
+    {
+        get { return movementOverride ?? movement; }
+        set { movementOverride = value; }
+    }
+
     PhysicsHandler physicsHandler;
 
     Vector3 finalVelocity;
@@ -42,23 +56,23 @@ public class Plataform_Script : MonoBehaviour
 #endif
 
         finalVelocity = physicsHandler.Velocity;
-        Vector3 xInput = movement.AdjustToNormal(input, jump.floorNormal);
-        finalVelocity = (finalVelocity * (1 - levelOfControl)) + (movement.Move(xInput) * levelOfControl);
+        Vector3 xInput = Movement.AdjustToNormal(input, Jump.floorNormal);
+        finalVelocity = (finalVelocity * (1 - levelOfControl)) + (Movement.Move(xInput) * levelOfControl);
         finalVelocity.y = physicsHandler.Velocity.y;
 
         if (levelOfControl >= controlJumpThreshold)
         {
             if (input.y > 0)
             {
-                if (jump.onGround)
+                if (Jump.onGround)
                 {
-                    finalVelocity.y = jump.JumpValue();
+                    finalVelocity.y = Jump.JumpValue();
                     input.y = 0;
                 }
             }
         }
 
-        if(useGravity) finalVelocity.y -= jump.GravityForce();
+        if(useGravity) finalVelocity.y -= Jump.GravityForce();
 
         physicsHandler.Velocity = finalVelocity;
 

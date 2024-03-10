@@ -6,7 +6,8 @@ using UnityEngine;
 public class Movement : Displacement
 {
     //movement parameters
-    [SerializeField, Min(0)] float timeToTopSpeed, topSpeed, timeToStop;
+    [Min(0)] public float topSpeed;
+    [SerializeField, Min(0)] float timeToTopSpeed, timeToStop;
     private float accelerationRate, decelerationRate;
     private float lastUpdateTime = -1;
     private float currentTime = 0;
