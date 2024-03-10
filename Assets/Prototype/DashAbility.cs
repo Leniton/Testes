@@ -1,76 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Windows;
 
-public class DashAbility : MonoBehaviour
+public class DashAbility : Ability
 {
     [SerializeField] Dash dash = new();
-    Plataform_Script plataform;
-    Vector2 currentInput = Vector2.zero;
-    float lastXinput = 1;
 
-    private void Awake()
+    protected override void Awake()
     {
-        plataform = GetComponent<Plataform_Script>();
-
-        PhysicsHandler physicsHandler = GetComponent<PhysicsHandler>();
+        base.Awake();
         dash.Init(physicsHandler);
         dash.doneDashing += Recover;
     }
 
-    void Update()
+    protected override void TriggerAbility(Vector3 direction)
     {
-        Vector2 input = currentInput;
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            input.y += 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            input.y -= 1;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            input.y -= 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            input.y += 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            input.x -= 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            input.x += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            input.x += 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            input.x -= 1;
-        }
-
-        currentInput = input;
-
-        if (input == Vector2.zero)
-        {
-            input.x = lastXinput;
-        }
-
-        if (input.x != 0) lastXinput = input.x;
-
-        if (plataform.levelOfControl <= 0) return;
-        dash.CalculateParameters();//test only
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !dash.dashing)
-        {
-            plataform.levelOfControl = 0;
-            plataform.useGravity = false;
-            dash.StartDash(input);
-        }
+        if (dash.dashing) return;
+        dash.CalculateParameters(); //test only
+        plataform.levelOfControl = 0;
+        plataform.useGravity = false;
+        dash.StartDash(direction);
     }
 
     public void Recover(float time)
