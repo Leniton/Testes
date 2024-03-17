@@ -35,13 +35,12 @@ public class HoverKeyword : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             int intersectingLink = TMP_TextUtilities.FindIntersectingLink(textHandler.Text, mousePosition, _cameraToUse);
 
             if (lastId == intersectingLink) continue;
+            lastId = intersectingLink;
             if (intersectingLink < 0)
             {
                 PopUpComponent.instance.Hide();
-                lastId = -1;
                 continue;
             }
-            lastId = intersectingLink;
 
             TMP_LinkInfo linkInfo = textHandler.Text.textInfo.linkInfo[intersectingLink];
             int id = -1;
