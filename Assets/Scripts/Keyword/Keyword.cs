@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
 public class Keyword 
 {
     public string str;
-    public string description;
     public Color color;
+    [Multiline]public string description;
+    private string coloredText => $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{str}</color>";
 
     public Keyword(string _str, string _description, Color? _color = null)
     {
@@ -16,5 +17,5 @@ public class Keyword
         color = _color ?? Color.white;
     }
 
-    public static implicit operator string(Keyword keyword) => keyword.str;
+    public static implicit operator string(Keyword keyword) => keyword.coloredText;
 }
