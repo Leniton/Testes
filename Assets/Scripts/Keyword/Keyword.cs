@@ -5,14 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Keyword 
 {
-    public string str;
-    public Color color;
+    public string word;
+    public Color color = Color.white;
     [Multiline]public string description;
-    private string coloredText => $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{str}</color>";
+    private string coloredText => $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{word}</color>";
 
-    public Keyword(string _str, string _description, Color? _color = null)
+    public Keyword(string _word, string _description, Color? _color = null)
     {
-        str = _str;
+        word = _word;
         description = _description;
         color = _color ?? Color.white;
     }

@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class KeywordDictionary 
+[DefaultExecutionOrder(-1)]
+public class KeywordDictionary : MonoBehaviour
 {
-    protected static Dictionary<string, Keyword> dictionary = new();
+    [SerializeField] protected List<Keyword> dictionary = new();
 
-    public static bool Has(string key)
+    public static KeywordDictionary instance;
+
+    public Keyword Get(int index)
     {
-        return dictionary.ContainsKey(key);
+        if (index < 0 || index >= dictionary.Count) return null;
+        return dictionary[index];
     }
-    protected Keyword Get(Keyword keyword)
+
+    private void Awake()
     {
-        if(Has(keyword)) dictionary[keyword] = keyword;
-        return dictionary[keyword];
+        if (instance != this)
+        {
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(instance);
+            }
+            else Destroy(gameObject);
+        }
     }
 }

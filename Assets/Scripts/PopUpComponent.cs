@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class PopUpComponent : MonoBehaviour
 {
     [SerializeField] GameObject window;

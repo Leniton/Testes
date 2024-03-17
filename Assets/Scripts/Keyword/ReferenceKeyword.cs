@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ReferenceKeyword<T> : Keyword
 {
     public T reference;
