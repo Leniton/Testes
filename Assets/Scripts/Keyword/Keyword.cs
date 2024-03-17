@@ -18,4 +18,6 @@ public class Keyword
     }
 
     public static implicit operator string(Keyword keyword) => keyword.coloredText;
+
+    public override string ToString() => this;
 }

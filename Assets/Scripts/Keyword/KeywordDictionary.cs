@@ -9,10 +9,10 @@ public class KeywordDictionary : MonoBehaviour
 
     public static KeywordDictionary instance;
 
-    public Keyword Get(int index)
+    public static Keyword Get(int index)
     {
-        if (index < 0 || index >= dictionary.Count) return null;
-        return dictionary[index];
+        if (index < 0 || index >= instance.dictionary.Count) return null;
+        return instance.dictionary[index];
     }
 
     private void Awake()

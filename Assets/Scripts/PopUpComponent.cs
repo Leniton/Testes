@@ -18,7 +18,6 @@ public class PopUpComponent : MonoBehaviour
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(instance);
             }
             else Destroy(gameObject);
         }
