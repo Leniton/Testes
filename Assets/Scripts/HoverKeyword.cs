@@ -43,14 +43,9 @@ public class HoverKeyword : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
 
             TMP_LinkInfo linkInfo = textHandler.Text.textInfo.linkInfo[intersectingLink];
-            int id = -1;
-            if (!int.TryParse(linkInfo.GetLinkID(), out id))
-            {
-                PopUpComponent.instance.Hide();
-                continue;
-            }
-
-            PopUpComponent.instance.Show(KeywordDictionary.Get(id).description);
+            Keyword keyword = KeywordDictionary.Get(linkInfo.GetLinkID());
+            if (keyword == null) continue;
+            PopUpComponent.instance.Show(KeywordDictionary.Get(linkInfo.GetLinkID()).description);
         }
     }
 }

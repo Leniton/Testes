@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -8,34 +9,55 @@ public class KeywordTextHandler : MonoBehaviour
 {
     [SerializeField] TMP_Text uiText;
     public TMP_Text Text => uiText;
+    StringBuilder sb;
     public string text
     {
         get => uiText.text;
-        set => uiText.text = ApplyText(value);
+        set
+        {
+            sb.Clear();
+            sb.Append(value);
+            List<Table> tables = KeywordDictionary.Tables;
+            for (int i = 0; i < tables.Count; i++)
+            {
+                ApplyText(tables[i]);
+            }
+            uiText.text = sb.ToString();
+        }
     }
     private void Awake()
     {
         if(uiText == null) uiText = GetComponent<TMP_Text>();
         uiText.richText = true;
+        sb = new StringBuilder(text);
         text = uiText.text;
     }
 
-    private string ApplyText(string value, int startIndex = 0)
+    private void ApplyText(Table table ,int startIndex = 0)
     {
-        int index = value.IndexOf('{', startIndex);
+        string value = sb.ToString();
+        int codeIndex = value.IndexOf(table.code.StartCode, startIndex);
         int id;
-        if (!ValidKey(value, index, out id)) return value;
+        if (!ValidKey(table.code, codeIndex, out id)) return;
         //print($"id is {id}");
-        Keyword keyword = KeywordDictionary.Get(id);
-        string newValue = keyword == null ? value : value.Replace($"{{{id}}}", $"<link=\"{id}\">{keyword}</link>");
-        return ApplyText(newValue, index + 1);
+        if(id > 0 || id < table.elements.Count)
+        {
+            Keyword keyword = table.elements[id];
+            if (keyword != null)
+            {
+                string code = $"{table.code.StartCode}{id}{table.code.EndCode}";
+                sb.Replace($"{code}", $"<link=\"{KeywordDictionary.TableIdToCode(table, id)}\">{keyword}</link>");
+            }
+        }
+        ApplyText(table,codeIndex + 1);
     }
 
-    private bool ValidKey(string value, int startIndex, out int index)
+    private bool ValidKey(StringCode code, int startIndex, out int index)
     {
+        string value = sb.ToString();
         index = -1;
         if(startIndex < 0 || value.Length - startIndex < 3) return false;
-        int id = value.IndexOf('}', startIndex);
+        int id = value.IndexOf(code.EndCode, startIndex);
         if (id < 0) return false;
         string keyString = value.Substring(startIndex + 1, id - startIndex - 1);
         //print($"keystring is {keyString}");
