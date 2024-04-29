@@ -27,7 +27,7 @@ public static class TextureHelper
     public static void MergeTexture(Texture2D baseTexture, Texture2D insertedTexture, Vector2Int offset)
     {
         Color[] baseColor = baseTexture.GetPixels();
-        Color[] insertColor = baseTexture.GetPixels();
+        Color[] insertColor = insertedTexture.GetPixels();
 
         for (int x = 0; x < insertedTexture.width; x++)
         {
