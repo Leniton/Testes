@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -97,8 +96,8 @@ namespace SerializableMethods
         public static void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
         {
             string key = ParameterKey(method, parameter);
-            if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.ParameterType.Default());
-            if (methodParameters[key] == null) methodParameters[key] = parameter.ParameterType.Default();
+            if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.RawDefaultValue);
+            if (methodParameters[key] == null) methodParameters[key] = parameter.RawDefaultValue;
 
             string label = parameter.Name;
             object returnObject = methodParameters[key];

@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public static class StructSerializer
 {
@@ -31,7 +28,7 @@ public static class StructSerializer
     public static object DeserializeStruct(object[] data)
     {
         Type valueType = Type.GetType(data[0].ToString());
-        object returnValue = valueType.Default();
+        object returnValue = default;
 
         //Debug.Log($"deserialized type is {valueType}");
         

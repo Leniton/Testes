@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 namespace SerializableMethods
 {
@@ -18,13 +15,14 @@ namespace SerializableMethods
         {
             VisualElement root = new();
             root.Add(new IMGUIContainer(OnInspectorGUI));
-
+            
             MethodInfo[] methods = SerializeMethodHelper.GetMethods(target.GetType());
             foreach (MethodInfo method in methods)
             {
-                if (method.HasAttribute<SerializeMethod>())
+                if (method.GetCustomAttribute<SerializeMethod>() != null)
                 {
-                    SerializeMethodHelper.ShowMethod(target.GameObject(), method, root);
+                    MonoBehaviour mono = (MonoBehaviour)target;
+                    SerializeMethodHelper.ShowMethod(mono.gameObject, method, root);
                 }
             }
 
