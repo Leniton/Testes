@@ -6,23 +6,23 @@ public class TestScript : MonoBehaviour
 {
     [SerializeField] private Texture2D tex;
     private RawImage image;
-    [SerializeField] private Vector2Int pos, size;
+    [SerializeField,Range(0,11)] private int index;
+    [SerializeField] private Sprite[] images;
+    [SerializeField] private TexData texData;
+    private bool isNumber => index < 10;
+
     void Awake()
     {
         image = GetComponent<RawImage>();
         //RenderTexture();
-        StartCoroutine(UpdateTexture());
+        //StartCoroutine(UpdateTexture());
+        //MountTexture();
+        StartCoroutine(TestNewTex());
     }
 
-    private void RenderTexture()
+    private void RenderTexture(Texture2D texture = null)
     {
-        pos.x = Mathf.Clamp(pos.x, 0, tex.width);
-        pos.y = Mathf.Clamp(pos.y, 0, tex.height);
-        size.x = Mathf.Clamp(size.x, 0, tex.width - pos.x);
-        size.y = Mathf.Clamp(size.y, 0, tex.height - pos.y);
-        Rect finalRect = new(pos.x,pos.y,size.x,size.y);
-        
-        image.texture = TextureHelper.GetTexPart(tex, finalRect);
+        image.texture = texture ?? tex;
         image.rectTransform.sizeDelta = new(image.texture.width, image.texture.height);
     }
 
@@ -30,8 +30,37 @@ public class TestScript : MonoBehaviour
     {
         while (true)
         {
-            RenderTexture();
-            yield return new WaitForSeconds(.6f);
+            Rect finalRect = images[index].rect;
+            RenderTexture(TextureHelper.GetTexPart(tex, finalRect));
+            yield return new WaitForSeconds(.4f);
         }
     }
+
+    IEnumerator TestNewTex()
+    {
+        while (true)
+        {
+            MountTexture(index);
+            yield return new WaitForSeconds(.4f);
+        }
+    }
+
+    private void MountTexture(int maxValue = 10)
+    {
+        Texture2D finalTex = new Texture2D((int)images[11].rect.width, maxValue * (int)images[11].rect.height);
+        Texture2D bg = TextureHelper.GetTexPart(tex, images[11].rect);
+
+        for (int i = 0; i < maxValue; i++)
+        {
+            TextureHelper.MergeTexture(finalTex, bg, new(0, bg.height * i));
+        }
+
+        RenderTexture(finalTex);
+    }
+}
+
+[System.Serializable]
+public struct TexData
+{
+    [SerializeField] int numberSpacing;
 }

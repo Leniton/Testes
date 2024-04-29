@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class TextureHelper
@@ -23,26 +24,49 @@ public static class TextureHelper
         return finalTex;
     }
 
-    public static int CoordinateToArray(Coordinate coordinate,Texture2D tex)
+    public static void MergeTexture(Texture2D baseTexture, Texture2D insertedTexture, Vector2Int offset)
+    {
+        Color[] baseColor = baseTexture.GetPixels();
+        Color[] insertColor = baseTexture.GetPixels();
+
+        for (int x = 0; x < insertedTexture.width; x++)
+        {
+            for (int y = 0; y < insertedTexture.height; y++)
+            {
+                Vector2Int coordinate = new Vector2Int(x, y);
+                Color color = insertColor[CoordinateToArray(coordinate,insertedTexture)];
+                if (color.a > 0.001)
+                {
+                    coordinate.x += offset.x;
+                    coordinate.y += offset.y;
+                    baseColor[CoordinateToArray(coordinate, baseTexture)] = color;
+                }
+            }
+        }
+
+        baseTexture.SetPixels(baseColor);
+        baseTexture.Apply();
+    }
+
+    public static int CoordinateToArray(Vector2Int coordinate,Texture2D tex)
     {
         int id = coordinate.x;
         id += coordinate.y * tex.width;
         return id;
     }
-
-    public static Coordinate ArrayToCoordinate(int id, int width)
+    public static int CoordinateToArray(int x, int y, Texture2D tex)
     {
-        return new(0, 0);
+        int id = x;
+        id += y * tex.width;
+        return id;
     }
-}
 
-public struct Coordinate
-{
-    public int x, y;
-
-    public Coordinate(int _x, int _y)
+    public static Vector2Int ArrayToCoordinate(int id, int width)
     {
-        x = _x;
-        y = _y;
+        Vector2Int coordinate = new Vector2Int();
+        coordinate.x = id % width;
+        coordinate.y = id / width;
+
+        return coordinate;
     }
 }

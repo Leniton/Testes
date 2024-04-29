@@ -428,8 +428,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tex: {fileID: 2800000, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
-  pos: {x: 0, y: 44}
-  size: {x: 32, y: 20}
+  index: 3
+  images:
+  - {fileID: 610641266, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: -1691760629, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: -410924038, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: -229479031, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 999502388, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 1372619619, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 1699623020, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: -328334474, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 1503563699, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 412976997, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: -577062189, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  - {fileID: 275244312, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
+  texData:
+    numberSpacing: 0
 --- !u!114 &1411974725
 MonoBehaviour:
   m_ObjectHideFlags: 0
