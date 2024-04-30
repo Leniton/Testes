@@ -39,7 +39,8 @@ public static class TextureHelper
                 {
                     coordinate.x += offset.x;
                     coordinate.y += offset.y;
-                    baseColor[CoordinateToArray(coordinate, baseTexture)] = color;
+                    int id = CoordinateToArray(coordinate, baseTexture);
+                    if(id > 0 && id < baseColor.Length) baseColor[id] = color;
                 }
             }
         }

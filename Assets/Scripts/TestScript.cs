@@ -48,11 +48,24 @@ public class TestScript : MonoBehaviour
     private void MountTexture(int maxValue = 10)
     {
         Texture2D finalTex = new Texture2D((int)images[11].rect.width, maxValue * (int)images[11].rect.height);
+        finalTex.filterMode = FilterMode.Point;
         Texture2D bg = TextureHelper.GetTexPart(tex, images[11].rect);
 
         for (int i = 0; i < maxValue; i++)
         {
             TextureHelper.MergeTexture(finalTex, bg, new(0, bg.height * i));
+        }
+
+        //for now clamped at 9
+        int values = Mathf.Min(maxValue, 9);
+        for (int i = 0; i < values; i++)
+        {
+            Texture2D number = TextureHelper.GetTexPart(tex, images[i + 1].rect);
+            Vector2Int offset = new Vector2Int(0, bg.height * i);// new((bg.width / 2), (bg.height / 2));
+            offset.x = (bg.width / 2) - (number.width/2);
+            offset.y += (bg.height / 2) - (number.height/2);
+
+            TextureHelper.MergeTexture(finalTex, number, offset);
         }
 
         RenderTexture(finalTex);
