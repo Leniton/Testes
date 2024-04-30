@@ -24,8 +24,9 @@ public static class TextureHelper
         return finalTex;
     }
 
-    public static void MergeTexture(Texture2D baseTexture, Texture2D insertedTexture, Vector2Int offset)
+    public static void MergeTexture(Texture2D baseTexture, Texture2D insertedTexture, Vector2Int offset, IColorMerger colorMerger = null)
     {
+        colorMerger = colorMerger ?? new OverrideColor();
         Color[] baseColor = baseTexture.GetPixels();
         Color[] insertColor = insertedTexture.GetPixels();
 
@@ -34,14 +35,11 @@ public static class TextureHelper
             for (int y = 0; y < insertedTexture.height; y++)
             {
                 Vector2Int coordinate = new Vector2Int(x, y);
-                Color color = insertColor[CoordinateToArray(coordinate,insertedTexture)];
-                if (color.a > 0.001)
-                {
-                    coordinate.x += offset.x;
-                    coordinate.y += offset.y;
-                    int id = CoordinateToArray(coordinate, baseTexture);
-                    if(id >= 0 && id < baseColor.Length) baseColor[id] = color;
-                }
+                Color color = insertColor[CoordinateToArray(coordinate, insertedTexture)];
+                coordinate.x += offset.x;
+                coordinate.y += offset.y;
+                int id = CoordinateToArray(coordinate, baseTexture);
+                if (id >= 0 && id < baseColor.Length) baseColor[id] = colorMerger.MergeColors(baseColor[id], color);
             }
         }
 
