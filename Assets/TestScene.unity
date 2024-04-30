@@ -428,7 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tex: {fileID: 2800000, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
-  index: 3
+  index: 100
+  min: 90
   images:
   - {fileID: 610641266, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
   - {fileID: -1691760629, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
@@ -442,8 +443,7 @@ MonoBehaviour:
   - {fileID: 412976997, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
   - {fileID: -577062189, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
   - {fileID: 275244312, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
-  texData:
-    numberSpacing: 0
+  numberSpacing: 1
 --- !u!114 &1411974725
 MonoBehaviour:
   m_ObjectHideFlags: 0
