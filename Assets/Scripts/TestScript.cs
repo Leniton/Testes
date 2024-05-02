@@ -47,11 +47,12 @@ public class TestScript : MonoBehaviour
 
     private void MountTexture(int maxValue = 10)
     {
-        Texture2D finalTex = new Texture2D((int)images[11].rect.width, (maxValue-min) * (int)images[11].rect.height);
+        int cellWidth = (int)images[11].rect.width;
+        Texture2D finalTex = new Texture2D(cellWidth + (int)images[10].rect.width, (1+maxValue - min) * (int)images[11].rect.height);
         finalTex.filterMode = FilterMode.Point;
         Texture2D bg = TextureHelper.GetTexPart(tex, images[11].rect);
 
-        for (int i = min; i < maxValue; i++)
+        for (int i = min; i <= maxValue; i++)
         {
             TextureHelper.MergeTexture(finalTex, bg, new(0, bg.height * (i-min)));
         }
@@ -60,9 +61,10 @@ public class TestScript : MonoBehaviour
         int values = maxValue;//Mathf.Min(maxValue, 9);
         int width = (int)images[0].rect.width;
         int height = (int)images[0].rect.height;
-        for (int i = min; i < values; i++)
+        for (int i = min; i <= values; i++)
         {
-            Vector2Int offset = new Vector2Int(0, bg.height * (i-min));
+            int inverted = Mathf.Abs(i - values - min);
+            Vector2Int offset = new Vector2Int(0, bg.height * (inverted-min));
             offset.x = (bg.width / 2);// - (number.width/2);
             offset.y += (bg.height / 2) - (height/2);
 
@@ -73,7 +75,7 @@ public class TestScript : MonoBehaviour
             //verify up to 100000
             for (int o = 0; o < 5; o++)
             {
-                if ((i+1) / ten > 0)
+                if (i / ten > 0)
                 {
                     numbers++;
                 }
@@ -86,11 +88,18 @@ public class TestScript : MonoBehaviour
             offset.x -= initialOffset;
             for (int s = numbers-1; s >= 0; s--)
             {
-                Texture2D number = TextureHelper.GetTexPart(tex, images[GetDigit(i + 1, s)].rect);
+                Texture2D number = TextureHelper.GetTexPart(tex, images[GetDigit(i, s)].rect);
                 TextureHelper.MergeTexture(finalTex, number, offset);
                 offset.x += spacing;
             }
 
+        }
+
+        bg = TextureHelper.GetTexPart(tex, images[10].rect);
+
+        for (int i = min; i <= maxValue; i++)
+        {
+            TextureHelper.MergeTexture(finalTex, bg, new(cellWidth, bg.height * (i - min)));
         }
 
         RenderTexture(finalTex);

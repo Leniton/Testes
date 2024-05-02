@@ -404,7 +404,7 @@ RectTransform:
   m_GameObject: {fileID: 1411974722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 278115228}
@@ -428,8 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tex: {fileID: 2800000, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
-  index: 100
-  min: 90
+  index: 10
+  min: 1
   images:
   - {fileID: 610641266, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
   - {fileID: -1691760629, guid: f3969f46fc9b6f14b88eeaaabbfae672, type: 3}
