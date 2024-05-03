@@ -23,7 +23,6 @@ public static class TextureHelper
         finalTex.Apply();
         return finalTex;
     }
-
     public static void MergeTexture(Texture2D baseTexture, Texture2D insertedTexture, Vector2Int offset, IColorMerger colorMerger = null)
     {
         colorMerger = colorMerger ?? new OverrideColor();
@@ -46,7 +45,6 @@ public static class TextureHelper
         baseTexture.SetPixels(baseColor);
         baseTexture.Apply();
     }
-
     public static int CoordinateToArray(Vector2Int coordinate,Texture2D tex)
     {
         int id = coordinate.x;
@@ -59,7 +57,6 @@ public static class TextureHelper
         id += y * tex.width;
         return id;
     }
-
     public static Vector2Int ArrayToCoordinate(int id, int width)
     {
         Vector2Int coordinate = new Vector2Int();
@@ -67,5 +64,31 @@ public static class TextureHelper
         coordinate.y = id / width;
 
         return coordinate;
+    }
+    public static Texture2D FlatTexture(int width, int height, Color color = default)
+    {
+        Texture2D texture = new Texture2D(width, height);
+        Color[] colors = new Color[width * height];
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i] = color;
+        }
+
+        texture.SetPixels(colors);
+        texture.Apply();
+        return texture;
+    }
+    public static void ApplyFilter(Texture2D texture, IColorFilter filter)
+    {
+        Color[] colors = texture.GetPixels();
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i] = filter.ApplyFilter(colors[i]);
+        }
+
+        texture.SetPixels(colors);
+        texture.Apply();
     }
 }

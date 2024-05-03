@@ -16,8 +16,8 @@ public class TestScript : MonoBehaviour
         image = GetComponent<RawImage>();
         //RenderTexture();
         //StartCoroutine(UpdateTexture());
-        //MountTexture();
-        StartCoroutine(TestNewTex());
+        MountTexture();
+        //StartCoroutine(TestNewTex());
     }
 
     private void RenderTexture(Texture2D texture = null)
