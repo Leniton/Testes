@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class Gravity : Displacement
 {
-    [SerializeField] float referenceHeight;
+    [SerializeField] float referenceHeight = 1;
     [SerializeField, Min(.2f)] float timeToLand;
     float fallGravity;
     float terminalVelocity;
