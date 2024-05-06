@@ -7,11 +7,10 @@ public class Jump : Displacement
     //Jump parameters
     [SerializeField] float jumpHeight; //the height the jump will reach
     [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
-    [SerializeField, Min(.2f)] float timeToFall; //the time it will take to get to the ground from max jump height
+    [SerializeField] Gravity gravity;
     [SerializeField] float gravityCompensation;
     [SerializeField] float maxSlopeAngle;
     float jumpSpeed;
-    float fallGravity;
     float terminalVelocity;
     public bool onGround { get; private set; }
     public Vector3 floorNormal {  get; private set; }
@@ -22,6 +21,7 @@ public class Jump : Displacement
     public override void Init(PhysicsHandler handler)
     {
         base.Init(handler);
+        gravity.Init(handler);
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
     }
@@ -33,10 +33,7 @@ public class Jump : Displacement
         jumpSpeed *= 1f + gravityCompensation;
 
         //gravity calculations. jump and fall gravity are different
-        fallGravity = (2 * jumpHeight) / (Mathf.Pow(timeToFall, 2));
-
-        //print($"jump: {jumpSpeed}");
-        //print($"gravity: {gravity}");
+        gravity.CalculateParameters();
     }
 
     public float JumpValue()
@@ -72,8 +69,7 @@ public class Jump : Displacement
         }
         else
         {
-            gravityGuess = fallGravity * Time.fixedDeltaTime;
-            currentGravity = gravityGuess;
+            currentGravity = gravity.GravityForce();
         }
 
         //test only

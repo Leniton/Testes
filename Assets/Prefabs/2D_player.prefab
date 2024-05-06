@@ -255,13 +255,16 @@ MonoBehaviour:
     orientation: {x: 0, y: 1, z: 0}
     jumpHeight: 5
     timeToMaxHeight: 0.5
-    timeToFall: 0.4
+    gravity:
+      orientation: {x: 0, y: 1, z: 0}
+      referenceHeight: 5
+      timeToLand: 0.4
     gravityCompensation: 2.58
     maxSlopeAngle: 0
   movement:
     orientation: {x: 0, y: 1, z: 0}
-    timeToTopSpeed: 0
     topSpeed: 4
+    timeToTopSpeed: 0
     timeToStop: 0
     collisionRule: 0
 --- !u!114 &4477279677991117514
