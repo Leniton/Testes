@@ -18,7 +18,8 @@ public class InfiniteScroll : MonoBehaviour
 
     private float totalSize;
     private float stepValue;
-    private float deadZone; //space used by padding; FOR NOW JUST USING ONE, BUT NEED TWO FOR EACH ONE
+    private float topPadding; //space used by padding; FOR NOW JUST USING ONE, BUT NEED TWO FOR EACH ONE
+    private float bottomPadding;
     private int totalInstances;
     private int firstDataID = 0;
     private int lastDataID = 0;
@@ -53,16 +54,21 @@ public class InfiniteScroll : MonoBehaviour
             totalHeight += height + spacing;
         }
 
-        totalInstances += 3; //initial plus two extra to guarantee no empty space
+        totalInstances += 3; //initial plus two extras to guarantee no empty space
 
         Vector2 contentSize = Vector2.zero;
         contentSize.x = scrollRect.content.sizeDelta.x;
         contentSize.y = padding + ((height + spacing) * totalInstances);
         scrollRect.content.sizeDelta = contentSize;
 
-        deadZone = padding / (contentSize.y - totalSize); //estimate for current size: 0.2f
+        topPadding = layout.padding.top / (contentSize.y - totalSize) * 2;//estimate for current size: 0.05998791f at 333,4005 with 20 padding
+
+        bottomPadding = (totalHeight - totalSize + padding) / totalSize;
+
         stepValue = (height + spacing) / (contentSize.y - totalSize);
-        Debug.Log(deadZone);
+
+        Debug.Log($"totalSize: {(contentSize.y - totalSize)} | topPadding: {topPadding}");
+        Debug.Log($"totalSize: {totalSize} | bottomPadding: {bottomPadding}");
 
         FillData(0);
     }
@@ -87,34 +93,59 @@ public class InfiniteScroll : MonoBehaviour
     {
         float delta = position.y - lastPosition.y;
 
-        float offset = position.y - deadZone;
+        float offset = position.y - topPadding;
         float point = offset / stepValue;
-        int topValue = Mathf.CeilToInt(point);//upper limit is 2, lower is 2
+        int topValue = Mathf.CeilToInt(point);//upper limit is 3, lower is 1
         debugText.text = $"{topValue}\n{delta}";
 
-        if (topValue <= 1 && delta <= 0)
+        if (topValue <= 1 && delta < 0)
         {
             //seamlessly scroll back up
-            float newPos = (((1 - (point - topValue)) * stepValue) - deadZone);
-            //Debug.Log($"loop: {position.y} | {newPos}");
-            //scrollRect.content.anchoredPosition = Vector2.up * newPos;
+            firstDataID -= topValue - 2;
+            float newPos = (((1 - (point - topValue)) * stepValue) - topPadding);
             lastPosition = Vector2.up * (newPos * totalSize);
-            firstDataID += -(topValue - 2);
             StartCoroutine(InfiniteEffect(Mathf.Abs(newPos - 1), scrollRect.velocity));
             return;
         }
-        else if(topValue <= 0)
+        else if(delta > 0)
         {
-            debugText.text = $"pos: {position}\ndelta: {delta}\ntopValue: {topValue}";
+            offset = position.y;
+            point = offset / stepValue;
+            topValue = Mathf.CeilToInt(point);
+            debugText.text = $"{topValue}\n{delta}";
+            if (firstDataID > 0 && topValue >= 3)
+            {
+                //seamlessly scroll back down
+                firstDataID -= (topValue - 2);
+                firstDataID = Mathf.Max(firstDataID, 0);
+
+                float newPos = (((1 - (point - topValue)) * stepValue));
+                lastPosition = Vector2.up * (newPos * totalSize);
+                StartCoroutine(InfiniteEffect(Mathf.Abs(newPos - 1), scrollRect.velocity));
+                return;
+            }
         }
         lastPosition = position;
     }
 
     IEnumerator InfiniteEffect(float position, Vector2 velocity)
     {
+        bool holdingMouse = EventSystem.current.currentInputModule.input.GetMouseButton(0);
+
+        PointerEventData evt = new PointerEventData(EventSystem.current);
+        if (holdingMouse) scrollRect.OnEndDrag(evt);
+
         yield return new WaitForEndOfFrame();
         scrollRect.verticalNormalizedPosition = position;
         scrollRect.velocity = velocity;
+
+        if(holdingMouse)
+        {
+            evt.button = PointerEventData.InputButton.Left;
+            evt.position = EventSystem.current.currentInputModule.input.mousePosition;
+
+            scrollRect.OnBeginDrag(evt);
+        }
 
         FillData(firstDataID);
     }
