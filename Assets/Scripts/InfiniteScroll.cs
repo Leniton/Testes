@@ -18,11 +18,14 @@ public class InfiniteScroll : MonoBehaviour
 
     private float totalSize;
     private float stepValue;
-    private float topPadding; //space used by padding; FOR NOW JUST USING ONE, BUT NEED TWO FOR EACH ONE
-    private float bottomPadding;
     private int totalInstances;
     private int firstDataID = 0;
     private int lastDataID = 0;
+
+    private float topPadding; //space used by padding; FOR NOW JUST USING ONE, BUT NEED TWO FOR EACH ONE
+    private float bottomPadding;
+    private float cellProportion;
+    float overshoot;
 
     private Vector2 lastPosition = Vector2.one;
 
@@ -61,14 +64,21 @@ public class InfiniteScroll : MonoBehaviour
         contentSize.y = padding + ((height + spacing) * totalInstances);
         scrollRect.content.sizeDelta = contentSize;
 
-        topPadding = layout.padding.top / (contentSize.y - totalSize) * 2;//estimate for current size: 0.05998791f at 333,4005 with 20 padding
+        float totalMovement = (contentSize.y - totalSize);
 
-        bottomPadding = (totalHeight - totalSize + padding) / totalSize;
+        overshoot = (height - (totalHeight - totalSize)) / totalMovement;
 
-        stepValue = (height + spacing) / (contentSize.y - totalSize);
+        stepValue = (height + spacing) / totalMovement;
 
-        Debug.Log($"totalSize: {(contentSize.y - totalSize)} | topPadding: {topPadding}");
-        Debug.Log($"totalSize: {totalSize} | bottomPadding: {bottomPadding}");
+        topPadding = layout.padding.top / totalMovement * 2;//estimate for current size: 0.05998791f at 333,4005 with 20 padding
+
+        cellProportion = height / totalMovement;
+
+        bottomPadding = layout.padding.bottom / totalMovement;
+
+        //Debug.Log($"totalSize: {(contentSize.y - totalSize)} | topPadding: {topPadding}");
+        Debug.Log($"totalSize: {totalSize} | bottomPadding: {bottomPadding * totalMovement}");
+        Debug.Log($"totalSize: {totalSize} | height: {height} | overshoot: {overshoot * totalMovement}");
 
         FillData(0);
     }
@@ -93,36 +103,37 @@ public class InfiniteScroll : MonoBehaviour
     {
         float delta = position.y - lastPosition.y;
 
-        float offset = position.y - topPadding;
+        float offset = position.y - bottomPadding;
         float point = offset / stepValue;
-        int topValue = Mathf.CeilToInt(point);//upper limit is 3, lower is 1
-        debugText.text = $"{topValue}\n{delta}";
+        int topValue = Mathf.CeilToInt(point);//upper limit is 3, lower is 0
+        debugText.text = $"{topValue}\n{point}";
 
         if (topValue <= 1 && delta < 0)
         {
             //seamlessly scroll back up
             firstDataID -= topValue - 2;
-            float newPos = (((1 - (point - topValue)) * stepValue) - topPadding);
+            float newPos = (point * stepValue) - (bottomPadding + overshoot);//(((1f - (point - topValue)) * stepValue) - bottomPadding * 2);
+            Debug.Log($"offset: {offset} | point: {point} | topValue: {topValue} \n current: {point * stepValue} | new: {newPos}");
             lastPosition = Vector2.up * (newPos * totalSize);
             StartCoroutine(InfiniteEffect(Mathf.Abs(newPos - 1), scrollRect.velocity));
             return;
         }
         else if(delta > 0)
         {
-            offset = position.y;
+            offset = position.y - bottomPadding - overshoot;
             point = offset / stepValue;
             topValue = Mathf.CeilToInt(point);
-            debugText.text = $"{topValue}\n{delta}";
+            debugText.text = $"{topValue}\n{point}";
             if (firstDataID > 0 && topValue >= 3)
             {
                 //seamlessly scroll back down
                 firstDataID -= (topValue - 2);
                 firstDataID = Mathf.Max(firstDataID, 0);
 
-                float newPos = (((1 - (point - topValue)) * stepValue));
+                float newPos = (((1 - (point - topValue)) * stepValue) - bottomPadding);
                 lastPosition = Vector2.up * (newPos * totalSize);
-                StartCoroutine(InfiniteEffect(Mathf.Abs(newPos - 1), scrollRect.velocity));
-                return;
+                //StartCoroutine(InfiniteEffect(Mathf.Abs(newPos - 1), scrollRect.velocity));
+                //return;
             }
         }
         lastPosition = position;
