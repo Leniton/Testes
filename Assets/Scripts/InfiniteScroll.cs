@@ -8,7 +8,8 @@ public class InfiniteScroll : MonoBehaviour
 {
     [SerializeField] private DataInstancer instancer;
     [SerializeField] private ScrollRect scrollRect;
-    [SerializeField] VerticalLayoutGroup layout;
+    [SerializeField] private VerticalLayoutGroup layout;
+    private Scrollbar scrollbar;
     [Space]
     [SerializeField] private float padding;
     [SerializeField] private float spacing;
@@ -34,6 +35,9 @@ public class InfiniteScroll : MonoBehaviour
     private IEnumerator SetUp()
     {
         yield return new WaitForSeconds(.4f);
+        scrollbar = scrollRect.verticalScrollbar;
+        scrollRect.verticalScrollbar = null;
+        scrollbar.gameObject.SetActive(true);
 
         scrollRect.onValueChanged.AddListener(OnScrollMoved);
 
@@ -83,6 +87,7 @@ public class InfiniteScroll : MonoBehaviour
             }
             dataInstances[i].SetData(data);
         }
+        scrollbar.size = totalInstances / (float)(startingData + totalInstances);
     }
 
     private void OnScrollMoved(Vector2 position)
