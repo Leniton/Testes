@@ -11,7 +11,6 @@ public class CubeCoordinates : MonoBehaviour
     private void Awake()
     {
         Cube[] squares = GetComponentsInChildren<Cube>();
-        Debug.Log(squares.Length);
         int id = 0;
 
         for (int x = 0; x < coordinates.GetLength(0); x++)

@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICube
+public class UI_Cube : MonoBehaviour
 {
-    
+    private void Awake()
+    {
+        
+    }
 }
