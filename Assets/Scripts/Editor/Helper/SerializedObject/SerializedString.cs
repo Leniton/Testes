@@ -5,9 +5,9 @@ namespace SerializableMethods
 {
     public class SerializedString : ISerializedObject
     {
-        public Type[] usedTypes => new Type[] { typeof(string) };
+        public Type[] usedTypes => new [] { typeof(string) };
 
-        public VisualElement GetElement(string label, object value, Action<object> onValueChanged)
+        public VisualElement GetElement(string label, object value, Type type, Action<object> onValueChanged)
         {
             value = value == null ? string.Empty : value;
             TextField field = new TextField(label);

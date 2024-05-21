@@ -6,9 +6,9 @@ namespace SerializableMethods
 {
     public class SerializedInt: ISerializedObject
     {
-        public Type[] usedTypes => new Type[] { typeof(int) };
+        public Type[] usedTypes => new [] { typeof(int) };
         
-        public VisualElement GetElement(string label, object value, Action<object> onValueChanged)
+        public VisualElement GetElement(string label, object value, Type type, Action<object> onValueChanged)
         {
             IntegerField field = new IntegerField(label);
             field.value = (int)value;

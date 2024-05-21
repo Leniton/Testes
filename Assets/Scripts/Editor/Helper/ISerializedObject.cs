@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine.UIElements;
 
 namespace SerializableMethods
@@ -7,6 +6,6 @@ namespace SerializableMethods
     public interface ISerializedObject
     {
         public Type[] usedTypes { get; }
-        public VisualElement GetElement(string label, object value, Action<object> onValueChanged);
+        public VisualElement GetElement(string label, object value, Type type, Action<object> onValueChanged);
     }
 }

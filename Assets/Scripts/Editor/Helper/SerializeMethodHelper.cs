@@ -135,76 +135,14 @@ namespace SerializableMethods
                 {
                     if (type.IsAssignableFrom(t) || type.IsSubclassOf(t))
                     {
-                        return KnownTypes[t].GetElement(label, returnObject, value => SetValue(key, value));
+                        return KnownTypes[t].GetElement(label, returnObject, type, value => SetValue(key, value));
                     }
                 }
                 return new Label($"{type} is an unsupported type");
             }
             
             //Debug.Log(KnownTypes[type]);
-            return KnownTypes[type].GetElement(label, returnObject, value => SetValue(key, value));
-            
-            if (parameter.ParameterType == typeof(Color))
-            {
-                Color value = (returnObject as Color?).HasValue ? (Color)(returnObject as Color?) : default;
-                ColorField field = new ColorField();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Color>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType == typeof(Vector2))
-            {
-                Vector2 value = (returnObject as Vector2?).HasValue ? (Vector2)(returnObject as Vector2?) : Vector2.zero;
-                Vector2Field field = new Vector2Field();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Vector2>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType == typeof(Vector3))
-            {
-                Vector3 value = (returnObject as Vector3?).HasValue ? (Vector3)(returnObject as Vector3?) : Vector3.zero;
-                Vector3Field field = new Vector3Field();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Vector3>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType == typeof(Vector4))
-            {
-                Vector4 value = (returnObject as Vector4?).HasValue ? (Vector4)(returnObject as Vector4?) : Vector4.zero;
-                Vector4Field field = new Vector4Field();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Vector4>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType == typeof(Rect))
-            {
-                Rect value = (returnObject as Rect?).HasValue ? (Rect)(returnObject as Rect?) : Rect.zero;
-                RectField field = new RectField();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Rect>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType == typeof(Bounds))
-            {
-                Bounds value = (returnObject as Bounds?).HasValue ? (Bounds)(returnObject as Bounds?) : default;
-                BoundsField field = new BoundsField();
-                field.value = value;
-                field.RegisterCallback<ChangeEvent<Bounds>>(evt => SetValue(key, evt.newValue));
-                return field;
-            }
-            else if (parameter.ParameterType.IsAssignableFrom(typeof(Object)) || parameter.ParameterType.IsSubclassOf(typeof(Object)))
-            {
-                ObjectField field = new ObjectField(label);
-                field.objectType = parameter.ParameterType;
-                field.value = (Object)returnObject;
-                field.RegisterCallback<ChangeEvent<Object>>((evt) => SetValue(key, evt.newValue));
-                return field;
-            }
-            else
-            {
-                Label unsupported = new Label($"{parameter.ParameterType} is an unsupported type");
-                return unsupported;
-            }
+            return KnownTypes[type].GetElement(label, returnObject, type, value => SetValue(key, value));
         }
 
         private static void LoadKnownTypes()

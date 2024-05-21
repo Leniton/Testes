@@ -5,8 +5,8 @@ namespace SerializableMethods
 {
     public class SerializedBool: ISerializedObject
     {
-        public Type[] usedTypes => new Type[] { typeof(bool) };
-        public VisualElement GetElement(string label, object value, Action<object> onValueChanged)
+        public Type[] usedTypes => new [] { typeof(bool) };
+        public VisualElement GetElement(string label, object value, Type type, Action<object> onValueChanged)
         {
             Toggle field = new Toggle(label);
             field.value = (bool)value;

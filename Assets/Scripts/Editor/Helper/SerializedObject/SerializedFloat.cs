@@ -6,9 +6,9 @@ namespace SerializableMethods
 {
     public class SerializedFloat: ISerializedObject
     {
-        public Type[] usedTypes => new Type[] { typeof(float), typeof(decimal), typeof(double) };
+        public Type[] usedTypes => new [] { typeof(float), typeof(decimal), typeof(double) };
         
-        public VisualElement GetElement(string label, object value, Action<object> onValueChanged)
+        public VisualElement GetElement(string label, object value, Type type, Action<object> onValueChanged)
         {
             FloatField field = new FloatField(label);
             field.value = (float)Convert.ToDecimal(value);
