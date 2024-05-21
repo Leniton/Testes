@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,6 +12,30 @@ namespace SerializableMethods
     public static class SerializeMethodHelper
     {
         private const string ReturnValue = "Return value";
+        public static string RootPath
+        {
+            get
+            {
+                var g = AssetDatabase.FindAssets ( $"t:Script {nameof(SerializeMethodHelper)}" );
+                return AssetDatabase.GUIDToAssetPath ( g [ 0 ] );
+            }
+        }
+
+        private static Dictionary<Type, ISerializedObject> knownTypes;
+
+        public static Dictionary<Type, ISerializedObject> KnownTypes
+        {
+            get
+            {
+                if (knownTypes == null)
+                {
+                    knownTypes = new();
+                    LoadKnownTypes();
+                }
+
+                return knownTypes;
+            }
+        }
 
         public static MethodInfo[] GetMethods(Type targetClass,
             BindingFlags flags = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
@@ -34,6 +59,7 @@ namespace SerializableMethods
 
         public static void ShowMethod(GameObject target, MethodInfo method, VisualElement methodsArea)
         {
+            KnownTypes.GetType();
             VisualElement area = new VisualElement();
             float darkness = .18f;
             area.style.backgroundColor = new Color(darkness, darkness, darkness, 1);
@@ -55,7 +81,7 @@ namespace SerializableMethods
                 {
                     string key = ParameterKey(method, parameters[i]);
                     if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, null);
-                    CreateObjectField(method, parameters[i], area);
+                    area.Add(CreateObjectField(method, parameters[i]));
                 }
             }
 
@@ -93,54 +119,38 @@ namespace SerializableMethods
             }
         }
 
-        public static void CreateObjectField(MethodInfo method, ParameterInfo parameter, VisualElement objectParent)
+        public static VisualElement CreateObjectField(MethodInfo method, ParameterInfo parameter)
         {
             string key = ParameterKey(method, parameter);
             if (!methodParameters.ContainsKey(key)) methodParameters.Add(key, parameter.RawDefaultValue);
-            if (methodParameters[key] == null) methodParameters[key] = parameter.RawDefaultValue;
+            if (methodParameters[key] == null && parameter.RawDefaultValue.GetType() != typeof(DBNull)) methodParameters[key] = parameter.RawDefaultValue;
 
             string label = parameter.Name;
             object returnObject = methodParameters[key];
-            if (parameter.ParameterType == typeof(string) || parameter.ParameterType == typeof(char))
+            
+            Type type = parameter.ParameterType;
+            if (!KnownTypes.ContainsKey(type))
             {
-                returnObject = returnObject == null ? string.Empty : returnObject;
-                TextField field = new TextField(label);
-                field.value = returnObject.ToString();
-                //methodParameters[key] = field.value;
-                field.RegisterCallback<ChangeEvent<string>>((evt) => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                foreach (Type t in KnownTypes.Keys)
+                {
+                    if (type.IsAssignableFrom(t) || type.IsSubclassOf(t))
+                    {
+                        return KnownTypes[t].GetElement(label, returnObject, value => SetValue(key, value));
+                    }
+                }
+                return new Label($"{type} is an unsupported type");
             }
-            else if (parameter.ParameterType == typeof(int))
-            {
-                IntegerField field = new IntegerField(label);
-                field.value = (int)returnObject;
-                field.RegisterCallback<ChangeEvent<int>>((evt) => SetValue(key, evt.newValue));
-                objectParent.Add(field);
-                //returnObject = EditorGUILayout.IntField(label, (int)returnObject, width);
-            }
-            else if (parameter.ParameterType == typeof(float))
-            {
-                FloatField field = new FloatField(label);
-                field.value = (float)(Convert.ToDecimal(returnObject));
-                field.RegisterCallback<ChangeEvent<float>>((evt) => SetValue(key, evt.newValue));
-                objectParent.Add(field);
-                //returnObject = EditorGUILayout.FloatField(label, (float)returnObject, width);
-            }
-            else if (parameter.ParameterType == typeof(bool))
-            {
-                Toggle field = new Toggle(label);
-                field.value = (bool)returnObject;
-                field.RegisterCallback<ChangeEvent<bool>>((evt) => SetValue(key, evt.newValue));
-                objectParent.Add(field);
-                //returnObject = EditorGUILayout.Toggle(label, (bool)returnObject, width);
-            }
-            else if (parameter.ParameterType == typeof(Color))
+            
+            //Debug.Log(KnownTypes[type]);
+            return KnownTypes[type].GetElement(label, returnObject, value => SetValue(key, value));
+            
+            if (parameter.ParameterType == typeof(Color))
             {
                 Color value = (returnObject as Color?).HasValue ? (Color)(returnObject as Color?) : default;
                 ColorField field = new ColorField();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Color>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType == typeof(Vector2))
             {
@@ -148,7 +158,7 @@ namespace SerializableMethods
                 Vector2Field field = new Vector2Field();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Vector2>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType == typeof(Vector3))
             {
@@ -156,7 +166,7 @@ namespace SerializableMethods
                 Vector3Field field = new Vector3Field();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Vector3>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType == typeof(Vector4))
             {
@@ -164,7 +174,7 @@ namespace SerializableMethods
                 Vector4Field field = new Vector4Field();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Vector4>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType == typeof(Rect))
             {
@@ -172,7 +182,7 @@ namespace SerializableMethods
                 RectField field = new RectField();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Rect>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType == typeof(Bounds))
             {
@@ -180,7 +190,7 @@ namespace SerializableMethods
                 BoundsField field = new BoundsField();
                 field.value = value;
                 field.RegisterCallback<ChangeEvent<Bounds>>(evt => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else if (parameter.ParameterType.IsAssignableFrom(typeof(Object)) || parameter.ParameterType.IsSubclassOf(typeof(Object)))
             {
@@ -188,12 +198,32 @@ namespace SerializableMethods
                 field.objectType = parameter.ParameterType;
                 field.value = (Object)returnObject;
                 field.RegisterCallback<ChangeEvent<Object>>((evt) => SetValue(key, evt.newValue));
-                objectParent.Add(field);
+                return field;
             }
             else
             {
                 Label unsupported = new Label($"{parameter.ParameterType} is an unsupported type");
-                objectParent.Add(unsupported);
+                return unsupported;
+            }
+        }
+
+        private static void LoadKnownTypes()
+        {
+            string path = RootPath;
+            //Debug.Log(path);
+            path = path.Remove(path.IndexOf(nameof(SerializeMethodHelper)));
+            path += "SerializedObject/";
+            string[] assets = AssetDatabase.FindAssets("", new string[]{path});
+            //Debug.Log(path);
+            for (int i = 0; i < assets.Length; i++)
+            {
+                string p = AssetDatabase.GUIDToAssetPath(assets[i]);
+                MonoScript script = AssetDatabase.LoadAssetAtPath<MonoScript>(p);
+                ISerializedObject obj = (ISerializedObject)Activator.CreateInstance(script.GetClass());
+                foreach (var type in obj.usedTypes)
+                {
+                    KnownTypes[type] = obj;
+                }
             }
         }
     }
