@@ -157,22 +157,30 @@ namespace SerializableMethods
             {
                 string p = AssetDatabase.GUIDToAssetPath(assets[i]);
                 MonoScript script = AssetDatabase.LoadAssetAtPath<MonoScript>(p);
-                ISerializedObject obj = (ISerializedObject)Activator.CreateInstance(script.GetClass());
-                foreach (var type in obj.usedTypes)
-                {
-                    KnownTypes[type] = obj;
-                }
+                AddSerializedObject(script);
             }
 
             MonoScript[] editorScripts = Resources.LoadAll<MonoScript>("Editor/");
             for (int i = 0; i < editorScripts.Length; i++)
             {
-                Debug.Log(editorScripts[i].GetClass());
-                Debug.Log(editorScripts[i].GetClass().IsSubclassOf(typeof(ISerializedObject)));
-                if (editorScripts[i].GetClass().IsAssignableFrom(typeof(ISerializedObject)))
+                Type[] interfaces = editorScripts[i].GetClass().GetInterfaces();
+                for (int u = 0; u < interfaces.Length; u++)
                 {
-                    Debug.Log("valid");
+                    if (interfaces[u].IsAssignableFrom(typeof(ISerializedObject)))
+                    {
+                        AddSerializedObject(editorScripts[i]);
+                        break;
+                    }
                 }
+            }
+        }
+
+        private static void AddSerializedObject(MonoScript script)
+        {
+            ISerializedObject obj = (ISerializedObject)Activator.CreateInstance(script.GetClass());
+            foreach (var type in obj.usedTypes)
+            {
+                KnownTypes[type] = obj;
             }
         }
     }
