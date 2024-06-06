@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class HeroAbstraction : ParentAbstraction, ICodeAbstraction
+public class HeroAbstraction : ParentAbstraction
 {
     public string name { get; set; }
     public List<ICodeAbstraction> subAbstractions { get; set; }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TextAbstraction : MonoAbstraction, ICodeAbstraction
+public class TextAbstraction : MonoAbstraction
 {
     [SerializeField] string codeName;
     [SerializeField] TMP_InputField InputField;
