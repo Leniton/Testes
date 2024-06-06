@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a19f8afefc5ad4d91b00166c7f8432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dropdown: {fileID: 0}
 --- !u!114 &263102416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,6 +579,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 263102411}
     m_Modifications:
+    - target: {fileID: 2523221257555300702, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2523221257555300702, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2523221257555300702, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3837842405138823497, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
         type: 3}
       propertyPath: m_Pivot.x

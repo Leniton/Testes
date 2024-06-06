@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public static class GeneralDatabase
 {
+    public static Dictionary<string, Func<MonoAbstraction>> HeroPickOptions => heroPickOptions;
+
     public static MonoAbstraction Name(string name) 
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
@@ -12,5 +15,18 @@ public static class GeneralDatabase
 
         return text;
     }
-    public static ICodeAbstraction HP(int value) => new BaseAbstraction("hp", Math.Clamp(value, 0, 99));
+    public static MonoAbstraction HP(int value)
+    {
+        TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
+        text.gameObject.name = $"HP";
+        text.Config("n", value);
+
+        return text;
+    }
+
+    private static Dictionary<string, Func<MonoAbstraction>> heroPickOptions = new Dictionary<string, Func<MonoAbstraction>>
+    {
+        {"Name", () => Name("") },
+        {"HP", () => HP(1) }
+    };
 }

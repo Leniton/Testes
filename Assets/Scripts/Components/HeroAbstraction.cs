@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class HeroAbstraction : ParentAbstraction
 {
-    public string name { get; set; }
-    public List<ICodeAbstraction> subAbstractions { get; set; }
-
-    private void Awake()
+    protected void Awake()
     {
         subAbstractions = new();
-        MonoAbstraction text = GeneralDatabase.Name("name");
-        text.transform.SetParent(transform);
-        text.transform.SetSiblingIndex(transform.childCount - 2);
-        subAbstractions.Add(GeneralDatabase.Name("name"));
+        SetOptions(GeneralDatabase.HeroPickOptions);
+
+        //CreateAbstraction(() => GeneralDatabase.Name(""));
     }
 
     public override string GetCode()
