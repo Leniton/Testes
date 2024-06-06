@@ -4,7 +4,7 @@ using Object = UnityEngine.Object;
 
 public static class GeneralDatabase
 {
-    public static TextAbstraction Name(string name) 
+    public static MonoAbstraction Name(string name) 
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
         text.gameObject.name = $"Name: {name}";

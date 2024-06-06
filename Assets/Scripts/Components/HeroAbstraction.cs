@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class HeroAbstraction : MonoBehaviour, ICodeAbstraction
+public class HeroAbstraction : ParentAbstraction, ICodeAbstraction
 {
     public string name { get; set; }
     public List<ICodeAbstraction> subAbstractions { get; set; }
@@ -11,13 +11,13 @@ public class HeroAbstraction : MonoBehaviour, ICodeAbstraction
     private void Awake()
     {
         subAbstractions = new();
-        TextAbstraction text = GeneralDatabase.Name("name");
+        MonoAbstraction text = GeneralDatabase.Name("name");
         text.transform.SetParent(transform);
         text.transform.SetSiblingIndex(transform.childCount - 2);
         subAbstractions.Add(GeneralDatabase.Name("name"));
     }
 
-    public string GetCode()
+    public override string GetCode()
     {
         StringBuilder sb = new StringBuilder(name);
 
