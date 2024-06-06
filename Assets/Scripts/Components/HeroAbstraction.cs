@@ -11,6 +11,9 @@ public class HeroAbstraction : MonoBehaviour, ICodeAbstraction
     private void Awake()
     {
         subAbstractions = new();
+        TextAbstraction text = GeneralDatabase.Name("name");
+        text.transform.SetParent(transform);
+        text.transform.SetSiblingIndex(transform.childCount - 2);
         subAbstractions.Add(GeneralDatabase.Name("name"));
     }
 
