@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class HeroAbstraction : ParentAbstraction
 {
-    [SerializeField] Sprite[] sprites;
     protected void Awake()
     {
         subAbstractions = new();
         SetOptions(GeneralDatabase.HeroPickOptions);
-        //Debug.Log(DiceSideDatabase.Blank.sprite);
-        //CreateAbstraction(() => GeneralDatabase.Name(""));
     }
 
     [SerializableMethods.SerializeMethod]

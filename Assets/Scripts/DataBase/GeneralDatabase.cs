@@ -6,8 +6,6 @@ using Object = UnityEngine.Object;
 
 public static class GeneralDatabase
 {
-    public static Dictionary<string, Func<MonoAbstraction>> HeroPickOptions => heroPickOptions;
-
     public static MonoAbstraction Name(string name, Transform parent = null)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
@@ -16,7 +14,6 @@ public static class GeneralDatabase
 
         return text;
     }
-
     public static MonoAbstraction HP(int value, Transform parent = null)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
@@ -26,9 +23,14 @@ public static class GeneralDatabase
         return text;
     }
 
-    private static Dictionary<string, Func<MonoAbstraction>> heroPickOptions = new Dictionary<string, Func<MonoAbstraction>>
+    public static readonly Dictionary<string, Func<MonoAbstraction>> HeroPickOptions = new()
     {
         {"Name", () => Name("") },
         {"HP", () => HP(1) }
+    };
+    
+    public static readonly Dictionary<string, Func<MonoAbstraction>> ItemPickOptions = new()
+    {
+        {"Name", () => Name("") }
     };
 }
