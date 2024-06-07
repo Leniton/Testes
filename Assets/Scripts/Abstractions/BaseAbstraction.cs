@@ -18,8 +18,7 @@ public class BaseAbstraction : ICodeAbstraction
     public string GetCode()
     {
         StringBuilder sb = new StringBuilder(name);
-        Debug.Log($"data: {Data}");
-        sb.Append("." + Data.ToString());
+        sb.Append("." + Data);
 
         return sb.ToString();
     }
