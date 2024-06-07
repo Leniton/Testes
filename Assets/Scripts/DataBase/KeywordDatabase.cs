@@ -1,5 +1,5 @@
 
-public enum Keywords
+public enum Keyword
 {
     heavy,
     cantrip,

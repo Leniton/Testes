@@ -23,6 +23,15 @@ public static class GeneralDatabase
         return text;
     }
 
+    public static MonoAbstraction Keyword(Keyword keyword)
+    {
+        EnumAbstraction text = Object.Instantiate(Resources.Load<EnumAbstraction>("Prefabs/AbstractionTextWindow"));
+        text.gameObject.name = "HP";
+        text.Config("hp", keyword);
+
+        return text;
+    }
+
     public static readonly Dictionary<string, Func<MonoAbstraction>> HeroPickOptions = new()
     {
         {"Name", () => Name("") },
