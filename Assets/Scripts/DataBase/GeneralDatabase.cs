@@ -7,7 +7,7 @@ public static class GeneralDatabase
 {
     public static Dictionary<string, Func<MonoAbstraction>> HeroPickOptions => heroPickOptions;
 
-    public static MonoAbstraction Name(string name) 
+    public static MonoAbstraction Name(string name, Transform parent = null)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
         text.gameObject.name = $"Name: {name}";
@@ -15,11 +15,12 @@ public static class GeneralDatabase
 
         return text;
     }
-    public static MonoAbstraction HP(int value)
+
+    public static MonoAbstraction HP(int value, Transform parent = null)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
-        text.gameObject.name = $"HP";
-        text.Config("n", value);
+        text.gameObject.name = "HP";
+        text.Config("hp", value);
 
         return text;
     }

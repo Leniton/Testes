@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropdown: {fileID: 0}
+  sprites: []
 --- !u!114 &263102416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +594,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3160830309719344966, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3160830309719344966, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3160830309719344966, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 141.575
+      objectReference: {fileID: 0}
+    - target: {fileID: 3160830309719344966, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.940449
       objectReference: {fileID: 0}
     - target: {fileID: 3837842405138823497, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
         type: 3}

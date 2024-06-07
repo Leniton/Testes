@@ -10,7 +10,7 @@ public class HeroAbstraction : ParentAbstraction
     {
         subAbstractions = new();
         SetOptions(GeneralDatabase.HeroPickOptions);
-        Debug.Log(DiceSideDatabase.Blank.sprite);
+        //Debug.Log(DiceSideDatabase.Blank.sprite);
         //CreateAbstraction(() => GeneralDatabase.Name(""));
     }
 
