@@ -14,6 +14,7 @@ public class HeroAbstraction : ParentAbstraction
         //CreateAbstraction(() => GeneralDatabase.Name(""));
     }
 
+    [SerializableMethods.SerializeMethod]
     public override string GetCode()
     {
         StringBuilder sb = new StringBuilder(name);

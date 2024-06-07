@@ -43,6 +43,6 @@ public abstract class ParentAbstraction : MonoAbstraction
         MonoAbstraction abstraction = factory.Invoke();
         abstraction.transform.SetParent(transform,false);
         abstraction.transform.SetSiblingIndex(transform.childCount - 2);
-        subAbstractions.Add(GeneralDatabase.Name("name"));
+        subAbstractions.Add(abstraction);
     }
 }

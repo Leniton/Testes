@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -20,7 +21,7 @@ public static class GeneralDatabase
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
         text.gameObject.name = "HP";
-        text.Config("hp", value);
+        text.Config("hp", value, TMP_InputField.ContentType.IntegerNumber);
 
         return text;
     }
