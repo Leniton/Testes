@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ItemAbstraction : ParentAbstraction
 {
+    [SerializeField] DiceSideAbstraction diceSide;
+
     private void Awake()
     {
         SetOptions(GeneralDatabase.ItemPickOptions);
