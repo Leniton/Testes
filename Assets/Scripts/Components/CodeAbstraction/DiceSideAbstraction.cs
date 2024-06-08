@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Lenix.NumberUtilities;
 using Unity.VisualScripting;
+using System.Text;
 
 public class DiceSideAbstraction : MonoAbstraction
 {
@@ -73,11 +74,67 @@ public class DiceSideAbstraction : MonoAbstraction
         all.GetComponent<DualState>().SetState(all.State);
     }
 
+    [SerializableMethods.SerializeMethod]
     public override string GetCode()
     {
         //check if is composite
+        List<DiceSides> sides = new();
+        if(diceSides != DiceSides.all)
+        {
+            if(NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.topbot))
+            {
+                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.col))
+                {
+                    sides.Add(DiceSides.col);
+                }
+                else sides.Add(DiceSides.topbot);
+            }
+            else
+            {
+                AddSingleSides(sides, diceSides & ~DiceSides.row);
+            }
 
-        return "";
+            DiceSides ignoreSide = sides.Contains(DiceSides.col) ? DiceSides.col : DiceSides.topbot;
+            if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.right2))
+            {
+                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.row))
+                {
+                    sides.Add(DiceSides.row);
+                }
+                else
+                {
+                    sides.Add(DiceSides.right2);
+                    if (diceSides != DiceSides.right2)
+                    {
+                        ignoreSide |= DiceSides.right2;
+                        AddSingleSides(sides, diceSides & ~ignoreSide);
+                    }
+                }
+            }
+            else
+            {
+                AddSingleSides(sides, diceSides & ~ignoreSide);
+            }
+        }
+        else sides.Add(diceSides);
+
+        //placing logic
+        StringBuilder sb = new();
+        for (int i = 0; i < sides.Count; i++)
+        {
+            sb.Append($"{sides[i]}.");
+        }
+
+        return sb.ToString();
+    }
+
+    private void AddSingleSides(List<DiceSides> sides, DiceSides dice)
+    {
+        int[] singleSides = NumberUtil.SeparateBits((int)dice);
+        for (int i = 0; i < singleSides.Length; i++)
+        {
+            sides.Add((DiceSides)singleSides[i]);
+        }
     }
 }
 
