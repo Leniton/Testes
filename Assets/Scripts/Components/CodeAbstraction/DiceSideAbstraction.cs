@@ -119,7 +119,7 @@ public class DiceSideAbstraction : MonoAbstraction
             for (int u = 0; u < subAbstractions.Count; u++)
             {
                 sb.Append($".");
-                subAbstractions[i].GetCode(sb);
+                subAbstractions[u].GetCode(sb);
             }
         }
         if (sides.Count > 1) sb.Append(")");
