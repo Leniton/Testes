@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class MonoAbstraction : MonoBehaviour, ICodeAbstraction
 {
     public string name { get; set; }
-    public List<ICodeAbstraction> subAbstractions { get; set; }
+    public List<ICodeAbstraction> subAbstractions { get; set; } = new();
 
     public abstract string GetCode();
 }
