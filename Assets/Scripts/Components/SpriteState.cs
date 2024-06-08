@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpriteState : MonoBehaviour
+public class SpriteState : DualState
 {
     public Sprite onState, offState;
     [SerializeField] Image image;
 
-    public void SetState(bool state)
+    public override void SetState(bool state)
     {
         image.sprite = state ? onState : offState;
     }
