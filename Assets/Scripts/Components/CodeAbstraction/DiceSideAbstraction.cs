@@ -10,7 +10,10 @@ public class DiceSideAbstraction : MonoBehaviour
     [Header("Combination buttons"),SerializeField] private StateButton right2;
     [SerializeField] private StateButton topbot, row, col, all;
 
+    private void UpdateButtons()
+    {
 
+    }
 }
 
 public enum DiceSides
