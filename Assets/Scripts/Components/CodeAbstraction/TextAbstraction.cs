@@ -41,5 +41,5 @@ public class TextAbstraction : MonoAbstraction
     }
 
     [SerializableMethods.SerializeMethod]
-    public override string GetCode(StringBuilder sb = null) => baseAbstraction.GetCode(sb);
+    public override string GetCode(StringBuilder sb) => baseAbstraction.GetCode(sb);
 }
