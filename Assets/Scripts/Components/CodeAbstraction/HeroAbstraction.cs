@@ -12,13 +12,15 @@ public class HeroAbstraction : ParentAbstraction
     }
 
     [SerializableMethods.SerializeMethod]
-    public override string GetCode()
+    public override string GetCode(StringBuilder sb = null)
     {
-        StringBuilder sb = new StringBuilder(name);
+        sb = sb ?? new StringBuilder();
+        sb.Append(name);
 
         for (int i = 0; i < subAbstractions.Count; i++)
         {
-            sb.Append($".{subAbstractions[i].GetCode()}");
+            sb.Append($".");
+            subAbstractions[i].GetCode(sb);
         }
 
         return sb.ToString();

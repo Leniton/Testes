@@ -75,32 +75,26 @@ public class DiceSideAbstraction : MonoAbstraction
     }
 
     [SerializableMethods.SerializeMethod]
-    public override string GetCode()
+    public override string GetCode(StringBuilder sb)
     {
         //check if is composite
         List<DiceSides> sides = new();
         if(diceSides != DiceSides.all)
         {
-            if(NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.topbot))
+            if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.topbot))
             {
                 if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.col))
-                {
                     sides.Add(DiceSides.col);
-                }
-                else sides.Add(DiceSides.topbot);
+                else 
+                    sides.Add(DiceSides.topbot);
             }
-            else
-            {
-                AddSingleSides(sides, diceSides & ~DiceSides.row);
-            }
+            else AddSingleSides(sides, diceSides & ~DiceSides.row);
 
             DiceSides ignoreSide = sides.Contains(DiceSides.col) ? DiceSides.col : DiceSides.topbot;
             if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.right2))
             {
                 if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.row))
-                {
                     sides.Add(DiceSides.row);
-                }
                 else
                 {
                     sides.Add(DiceSides.right2);
@@ -111,19 +105,24 @@ public class DiceSideAbstraction : MonoAbstraction
                     }
                 }
             }
-            else
-            {
-                AddSingleSides(sides, diceSides & ~ignoreSide);
-            }
+            else AddSingleSides(sides, diceSides & ~ignoreSide);
         }
         else sides.Add(diceSides);
 
         //placing logic
-        StringBuilder sb = new();
+        sb = sb ?? new();
+        if (sides.Count > 1) sb.Append("(");
         for (int i = 0; i < sides.Count; i++)
         {
-            sb.Append($"{sides[i]}.");
+            if(i > 0) sb.Append("#");
+            sb.Append(sides[i]);
+            for (int u = 0; u < subAbstractions.Count; u++)
+            {
+                sb.Append($".");
+                subAbstractions[i].GetCode(sb);
+            }
         }
+        if (sides.Count > 1) sb.Append(")");
 
         return sb.ToString();
     }

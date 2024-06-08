@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public abstract class MonoAbstraction : MonoBehaviour, ICodeAbstraction
@@ -7,5 +8,5 @@ public abstract class MonoAbstraction : MonoBehaviour, ICodeAbstraction
     public string name { get; set; }
     public List<ICodeAbstraction> subAbstractions { get; set; } = new();
 
-    public abstract string GetCode();
+    public abstract string GetCode(StringBuilder sb);
 }

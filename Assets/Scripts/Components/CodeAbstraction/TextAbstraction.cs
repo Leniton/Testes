@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Text;
 
 public class TextAbstraction : MonoAbstraction
 {
@@ -40,5 +41,5 @@ public class TextAbstraction : MonoAbstraction
     }
 
     [SerializableMethods.SerializeMethod]
-    public override string GetCode() => baseAbstraction.GetCode();
+    public override string GetCode(StringBuilder sb = null) => baseAbstraction.GetCode(sb);
 }

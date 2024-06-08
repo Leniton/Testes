@@ -6,14 +6,14 @@ using UnityEngine;
 
 public abstract class ParentAbstraction : MonoAbstraction 
 {
-    [SerializeField] private OptionPicker _dropdown;
+    [SerializeField] private OptionPicker _optionPick;
     protected Dictionary<string, Func<MonoAbstraction>> options;
-    protected OptionPicker Dropdown
+    protected OptionPicker OptionPick
     {
         get
         {
-            if(!_dropdown) _dropdown = GetComponentInChildren<OptionPicker>();
-            return _dropdown;
+            if(!_optionPick) _optionPick = GetComponentInChildren<OptionPicker>();
+            return _optionPick;
         }
     }
 
@@ -27,13 +27,13 @@ public abstract class ParentAbstraction : MonoAbstraction
             dropdownOptions.Add(option);
         }
 
-        Dropdown.SetOptions(dropdownOptions);
-        Dropdown.onPick += PickAbstraction;
+        OptionPick.SetOptions(dropdownOptions);
+        OptionPick.onPick += PickAbstraction;
     }
 
     protected void PickAbstraction(int index)
     {
-        string key = Dropdown.options[index].Text;
+        string key = OptionPick.options[index].Text;
 
         CreateAbstraction(options[key]);
     }
@@ -41,7 +41,7 @@ public abstract class ParentAbstraction : MonoAbstraction
     protected void CreateAbstraction(Func<MonoAbstraction> factory)
     {
         MonoAbstraction abstraction = factory.Invoke();
-        abstraction.transform.SetParent(transform,false);
+        abstraction.transform.SetParent(OptionPick.transform.parent, false);
         abstraction.transform.SetSiblingIndex(transform.childCount - 2);
         subAbstractions.Add(abstraction);
     }

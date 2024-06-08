@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using UnityEngine;
 
 public class EnumAbstraction : MonoAbstraction
@@ -30,5 +31,5 @@ public class EnumAbstraction : MonoAbstraction
         optionPicker.SetOptions(new(Enum.GetNames(data.GetType())));
     }
 
-    public override string GetCode() => baseAbstraction.GetCode();
+    public override string GetCode(StringBuilder sb = null) => baseAbstraction.GetCode(sb);
 }
