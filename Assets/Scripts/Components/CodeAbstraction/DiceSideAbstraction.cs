@@ -111,18 +111,20 @@ public class DiceSideAbstraction : MonoAbstraction
 
         //placing logic
         sb = sb ?? new();
-        if (sides.Count > 1) sb.Append("(");
+        if (sides.Count > 1) sb.Append('(');
         for (int i = 0; i < sides.Count; i++)
         {
             if(i > 0) sb.Append("#");
+            sb.Append('(');
             sb.Append(sides[i]);
             for (int u = 0; u < subAbstractions.Count; u++)
             {
                 sb.Append($".");
                 subAbstractions[u].GetCode(sb);
             }
+            sb.Append(')');
         }
-        if (sides.Count > 1) sb.Append(")");
+        if (sides.Count > 1) sb.Append(')');
 
         return sb.ToString();
     }

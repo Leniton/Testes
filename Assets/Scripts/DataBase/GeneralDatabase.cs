@@ -25,11 +25,11 @@ public static class GeneralDatabase
 
     public static MonoAbstraction Keyword(Keyword keyword)
     {
-        EnumAbstraction text = Object.Instantiate(Resources.Load<EnumAbstraction>("Prefabs/AbstractionTextWindow"));
-        text.gameObject.name = "HP";
-        text.Config("hp", keyword);
+        EnumAbstraction enumerator = Object.Instantiate(Resources.Load<EnumAbstraction>("Prefabs/AbstractionEnumWindow"));
+        enumerator.gameObject.name = "Keyword";
+        enumerator.Config("k", keyword);
 
-        return text;
+        return enumerator;
     }
 
     public static readonly Dictionary<string, Func<MonoAbstraction>> HeroPickOptions = new()

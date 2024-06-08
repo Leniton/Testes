@@ -15,7 +15,7 @@ public class BaseAbstraction : ICodeAbstraction
         Data = data;
     }
 
-    public string GetCode(StringBuilder sb = null)
+    public string GetCode(StringBuilder sb)
     {
         sb = sb ?? new StringBuilder();
         sb.Append(name);

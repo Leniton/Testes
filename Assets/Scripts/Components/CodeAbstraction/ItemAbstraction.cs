@@ -2,15 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 
 public class ItemAbstraction : ParentAbstraction
 {
+    MonoAbstraction item;
     [SerializeField] DiceSideAbstraction diceSide;
     public override List<ICodeAbstraction> subAbstractions { get => diceSide.subAbstractions; set => diceSide.subAbstractions = value; }
 
     private void Awake()
     {
+        name = "i";
+        item = GeneralDatabase.Keyword(Keyword.cantrip);
+        item.transform.SetParent(transform.GetChild(0), false);
+        ((RectTransform)item.transform).anchoredPosition = Vector3.zero;
+        subAbstractions.Add(item);
+
         SetOptions(GeneralDatabase.ItemPickOptions);
     }
 
@@ -19,13 +27,9 @@ public class ItemAbstraction : ParentAbstraction
     {
         sb = sb ?? new StringBuilder();
         sb.Append(name);
+        sb.Append('.');
         diceSide.GetCode(sb);
-        /*for (int i = 0; i < subAbstractions.Count; i++)
-        {
-            sb.Append($".");
-            subAbstractions[i].GetCode(sb);
-        }*/
-
+        Debug.Log(sb.ToString());
         return sb.ToString();
     }
 }
