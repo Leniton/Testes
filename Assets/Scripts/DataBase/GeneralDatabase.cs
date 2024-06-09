@@ -23,11 +23,11 @@ public static class GeneralDatabase
         return text;
     }
 
-    public static MonoAbstraction Keyword(Keyword keyword)
+    public static MonoAbstraction Keyword()
     {
-        EnumAbstraction enumerator = Object.Instantiate(Resources.Load<EnumAbstraction>("Prefabs/AbstractionEnumWindow"));
+        SugestTextAbstraction enumerator = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
         enumerator.gameObject.name = "Keyword";
-        enumerator.Config("k", keyword);
+        enumerator.Config("k", KeywordDatabase.keywords);
 
         return enumerator;
     }

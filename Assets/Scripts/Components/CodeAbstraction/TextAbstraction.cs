@@ -8,13 +8,13 @@ public class TextAbstraction : MonoAbstraction
     [SerializeField] string codeName;
     [SerializeField] TMP_InputField InputField;
 
-    public string name
+    public override string name
     {
         get => baseAbstraction.name;
         set => baseAbstraction.name = value;
     }
 
-    public List<ICodeAbstraction> subAbstractions
+    public override List<ICodeAbstraction> subAbstractions
     {
         get => baseAbstraction.subAbstractions;
         set => baseAbstraction.subAbstractions = value;

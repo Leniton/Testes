@@ -1,6 +1,17 @@
 
-public enum Keyword
+using System.Collections.Generic;
+
+public static class KeywordDatabase
 {
-    heavy,
-    cantrip,
+    public static readonly List<string> keywords = new()
+    {
+        "cantrip",
+        "chain",
+        "cleanse",
+        "cleave",
+        "copycat",
+        "cruel",
+        "death",
+        "deathwish",
+    };
 }

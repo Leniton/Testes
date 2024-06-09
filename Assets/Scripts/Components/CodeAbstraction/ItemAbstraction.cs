@@ -14,7 +14,7 @@ public class ItemAbstraction : ParentAbstraction
     private void Awake()
     {
         name = "i";
-        item = GeneralDatabase.Keyword(Keyword.cantrip);
+        item = GeneralDatabase.Keyword();
         item.transform.SetParent(transform.GetChild(0), false);
         ((RectTransform)item.transform).anchoredPosition = Vector3.zero;
         subAbstractions.Add(item);
