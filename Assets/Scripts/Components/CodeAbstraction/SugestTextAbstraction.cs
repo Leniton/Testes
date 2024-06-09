@@ -68,7 +68,6 @@ public class SugestTextAbstraction : MonoAbstraction
         OpenOptions();
         SetOptions(sugestions);
     }
-
     public void Config(string Name, List<string> data)
     {
         baseAbstraction = new BaseAbstraction(Name, data);
@@ -79,12 +78,10 @@ public class SugestTextAbstraction : MonoAbstraction
     {
         scroll.gameObject.SetActive(true);
     }
-
     public void CloseOptions()
     {
         scroll.gameObject.SetActive(false);
     }
-
     public void SetOptions(List<string> _options)
     {
         //refactor: only delete the not needed ones
@@ -100,13 +97,11 @@ public class SugestTextAbstraction : MonoAbstraction
             options.Add(item);
         }
     }
-
     private void PickOption(int id)
     {
         inputField.text = options[id].Text;
         CloseOptions();
     }
-
     public void ClearOptions()
     {
         int childs = options.Count;
