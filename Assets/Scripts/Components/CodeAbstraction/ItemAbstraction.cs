@@ -7,19 +7,22 @@ using UnityEngine;
 
 public class ItemAbstraction : ParentAbstraction
 {
-    MonoAbstraction item;
+    [SerializeField] private RectTransform typeSlot;
     [SerializeField] DiceSideAbstraction diceSide;
+    MonoAbstraction item;
     public override List<ICodeAbstraction> subAbstractions { get => diceSide.subAbstractions; set => diceSide.subAbstractions = value; }
 
     private void Awake()
     {
-        name = "i";
-        item = GeneralDatabase.Keyword();
-        item.transform.SetParent(transform.GetChild(0), false);
-        ((RectTransform)item.transform).anchoredPosition = Vector3.zero;
-        subAbstractions.Add(item);
-
         SetOptions(GeneralDatabase.ItemPickOptions);
+    }
+
+    public void SetItem(MonoAbstraction newItem)
+    {
+        item = newItem;
+        name = "i";
+        newItem.transform.SetParent(typeSlot);
+        subAbstractions.Add(item);
     }
 
     [SerializableMethods.SerializeMethod]

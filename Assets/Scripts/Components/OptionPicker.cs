@@ -33,10 +33,12 @@ public class OptionPicker : MonoBehaviour
             return;
         }
         scroll.gameObject.SetActive(true);
+        scroll.transform.SetParent(transform.parent);
     }
     
     public void CloseOptions()
     {
+        scroll.transform.SetParent(transform);
         scroll.gameObject.SetActive(false);
     }
 
