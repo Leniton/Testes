@@ -28,7 +28,7 @@ public class ItemAbstraction : ParentAbstraction
     [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
-        sb = sb ?? new StringBuilder();
+        sb ??= new StringBuilder();
         sb.Append(name);
         sb.Append('.');
         diceSide.GetCode(sb);
