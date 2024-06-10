@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class DiceSideDatabase
@@ -17,17 +18,12 @@ public static class DiceSideDatabase
         }
     }
 
-    public static SideData Blank => new(0, nameof(Blank));
-    public static int Blank_Unset => 1;
-    public static int Blank_Petrified => 2;
-    public static int Blank_Used => 3;
-    public static int Blank_Item => 4;
-    public static int Blank_Curse => 5;
-    public static int Blank_Stasis => 6;
-    public static int Blank_Sticky => 7;
-    public static int Blank_Exert => 8;
-    public static int Blank_Fumble => 9;
-    public static int Add_Cleanse_SelfCleanse => 10;
+    public static List<SideData> sidesData = new()
+    {
+        new(0, "blank"),
+        new(1, "blank (unset)"),
+        new(2, "blank (petrified)"),
+    };
 }
 
 public struct SideData
