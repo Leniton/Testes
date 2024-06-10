@@ -20,7 +20,7 @@ public class DatabaseSetup
         //1: id | 2: name | 3: usePips(FALSE,TRUE)
         for (int i = startingIndex; i < length; i++)
         {
-            int id = int.Parse(idSideData[i, 1]);
+            int.TryParse(idSideData[i, 1], out int id);
             string name = idSideData[i, 2];
             DiceSideDatabase.sidesData.Add(new SideData(id, name));
         }
