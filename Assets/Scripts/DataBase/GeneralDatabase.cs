@@ -31,6 +31,15 @@ public static class GeneralDatabase
 
         return enumerator;
     }
+    
+    public static MonoAbstraction Generated(string name)
+    {
+        TextAbstraction enumerator = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/HexAbstractionWindow"));
+        enumerator.gameObject.name = "Generated";
+        enumerator.Config(name, "", TMP_InputField.ContentType.Custom);
+
+        return enumerator;
+    }
 
     public static readonly Dictionary<string, Func<MonoAbstraction>> HeroPickOptions = new()
     {

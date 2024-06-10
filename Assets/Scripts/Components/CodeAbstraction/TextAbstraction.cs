@@ -27,8 +27,6 @@ public class TextAbstraction : MonoAbstraction
         if (!InputField) InputField = GetComponentInChildren<TMP_InputField>();
 
         InputField.onValueChanged.AddListener(UpdateData);
-
-        Config(codeName, InputField.text);
     }
 
     private void UpdateData(string data) => baseAbstraction.Data = data;

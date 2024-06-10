@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed94a1eae0622354493f3090b8015ff6, type: 3}
+  m_Name: HexCode Field Validator
+  m_EditorClassIdentifier: 
+  CaseSensitive: 0
+  AllowedChars: 3100320033003400350036003700380039003000610062006300640065006600
