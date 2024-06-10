@@ -2,14 +2,14 @@
 using UnityEditor;
 using UnityEngine;
 
-public class LocaleCreatorWindow : EditorWindow
+public class SaveCsvWindow : EditorWindow
 {
     private string csvPath = string.Empty;
 
     [MenuItem("Tools/CSV Loader")]
     public static void ShowWindow()
     {
-        GetWindow<LocaleCreatorWindow>("CSV Loader");
+        GetWindow<SaveCsvWindow>("CSV Loader");
     }
 
     private void OnGUI()
@@ -31,28 +31,15 @@ public class LocaleCreatorWindow : EditorWindow
     {
         var data = CSVLoader.LoadCSV(csvPath);
 
-        /*Locale newLocale = CreateInstance<Locale>();
-
-        var texts = new List<TextKeyValue>();
-
-        foreach (var entry in data)
-        {
-            TextKeyValue textKeyValue = new TextKeyValue
-            {
-                key = entry["Key"],
-                value = entry[keyName]
-            };
-
-            texts.Add(textKeyValue);
-        }
-
-        newLocale.SetTexts(texts);
+        CSV_String_Values newData = CreateInstance<CSV_String_Values>();
+        newData.Values = data;
+        
         string savePath =
-            EditorUtility.SaveFilePanelInProject("Save Locale of " + keyName, "New Locale", "asset", "Save locale");
+            EditorUtility.SaveFilePanelInProject("Save Csv of ", "New Csv", "asset", "Save locale");
         if (string.IsNullOrEmpty(savePath)) return;
 
-        AssetDatabase.CreateAsset(newLocale, savePath);*/
-        //AssetDatabase.SaveAssets();
-        //AssetDatabase.Refresh();
+        AssetDatabase.CreateAsset(newData, savePath);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 }

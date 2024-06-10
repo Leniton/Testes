@@ -1,0 +1,190 @@
+ID,,,
+,ID,Description,Has Pips?
+0: Blank,0,Blank,FALSE
+1: Blank (Unset),1,Blank (Unset),FALSE
+2: Blank (Petrified),2,Blank (Petrified),FALSE
+3: Blank (Used),3,Blank (Used),FALSE
+4: Blank (Item),4,Blank (Item),FALSE
+5: Blank (Curse),5,Blank (Curse),FALSE
+6: Blank (Stasis),6,Blank (Stasis),FALSE
+7: Blank (Sticky),7,Blank (Sticky),FALSE
+8: Blank (Exert),8,Blank (Exert),FALSE
+9: Blank (Fumble),9,Blank (Fumble),FALSE
+10: Add Cleanse and SelfCleanse,10,Add Cleanse and SelfCleanse,FALSE
+11: Damage to Ally Mandatory Generous Stasis,11,Damage to Ally Mandatory Generous Stasis,TRUE
+12: Self damage Cantrip,12,Self damage Cantrip,TRUE
+13: I Die Cantrip,13,I Die Cantrip,FALSE
+14: Self damage Mandatory,14,Self damage Mandatory,TRUE
+15: Damage,15,Damage,TRUE
+16: Damage Growth,16,Damage Growth,TRUE
+17: Damage Engage,17,Damage Engage,TRUE
+18: Damage Managain,18,Damage Managain,TRUE
+19: Damage Pain,19,Damage Pain,TRUE
+20: Damage Deathwish,20,Damage Deathwish,TRUE
+21: Damage Death,21,Damage Death,TRUE
+22: Damage serrated,22,Damage serrated,TRUE
+23: Damage Exert,23,Damage Exert,TRUE
+24: Damage DoubleUse,24,Damage DoubleUse,TRUE
+25: Damage QuadUse,25,Damage QuadUse,TRUE
+26: Damage Bloodlust,26,Damage Bloodlust,TRUE
+27: Damage Copycat,27,Damage Copycat,TRUE
+28: Damage Pristine,28,Damage Pristine,TRUE
+29: Damage Guilt,29,Damage Guilt,TRUE
+30: Damage Cruel,30,Damage Cruel,TRUE
+31: Damage Shifter,31,Damage Shifter,TRUE
+32: Damage Focus,32,Damage Focus,TRUE
+33: Damage Inspired,33,Damage Inspired,TRUE
+34: Damage to all,34,Damage to all,TRUE
+35: Revive Managain,35,Revive Managain,TRUE
+36: Damage Cleave,36,Damage Cleave,TRUE
+37: Damage Descend,37,Damage Descend,TRUE
+38: Damage Cleave Chain,38,Damage Cleave Chain,TRUE
+39: Damage Heavy,39,Damage Heavy,TRUE
+40: Damage InflictSingleUse,40,Damage InflictSingleUse,TRUE
+41: Damage Steel,41,Damage Steel,TRUE
+42: Damage Charged,42,Damage Charged,TRUE
+43: Stun Bully,43,Stun Bully,FALSE
+44: Damage Vulnerable,44,Damage Vulnerable,TRUE
+45: Damage Era,45,Damage Era,TRUE
+46: Damage Ranged,46,Damage Ranged,TRUE
+47: Damage Ranged Poison,47,Damage Ranged Poison,TRUE
+48: Damage Ranged Duplicate,48,Damage Ranged Duplicate,TRUE
+49: Damage Ranged Cleave,49,Damage Ranged Cleave,TRUE
+50: Damage Ranged Copycat,50,Damage Ranged Copycat,TRUE
+51: Damage SelfShield,51,Damage SelfShield,TRUE
+52: Damage SelfHeal,52,Damage SelfHeal,TRUE
+53: Damage Poison,53,Damage Poison,TRUE
+54: Damage to ALL Poison,54,Damage to ALL Poison,TRUE
+55: Damage Poison Plague,55,Damage Poison Plague,TRUE
+56: Shield,56,Shield,TRUE
+57: Shield flesh,57,Shield flesh,TRUE
+58: Shield Growth,58,Shield Growth,TRUE
+59: Shield Engage,59,Shield Engage,TRUE
+60: Shield Enduring Death,60,Shield Enduring Death,TRUE
+61: Shield ManaGain,61,Shield ManaGain,TRUE
+62: Shield DoubleUse,62,Shield DoubleUse,TRUE
+63: Shield Steel,63,Shield Steel,TRUE
+64: Shield Rescue,64,Shield Rescue,TRUE
+65: Shield Pristine,65,Shield Pristine,TRUE
+66: Shield Cantrip,66,Shield Cantrip,TRUE
+67: Shield Copycat,67,Shield Copycat,TRUE
+68: Shield Focus,68,Shield Focus,TRUE
+69: Shield Cleave,69,Shield Cleave,TRUE
+70: Shield Charged,70,Shield Charged,TRUE
+71: Shield Cleanse,71,Shield Cleanse,TRUE
+72: Shield to all,72,Shield to all,TRUE
+73: Shield to all Cantrip,73,Shield to all Cantrip,TRUE
+74: Shield and Heal,74,Shield and Heal,TRUE
+75: Shield Smith,75,Shield Smith,TRUE
+76: Mana,76,Mana,TRUE
+77: Mana Cantrip,77,Mana Cantrip,TRUE
+78: Mana Cantrip Boned,78,Mana Cantrip Boned,TRUE
+79: Mana Growth,79,Mana Growth,TRUE
+80: Mana Decay,80,Mana Decay,TRUE
+81: Mana Death,81,Mana Death,TRUE
+82: Mana Pain,82,Mana Pain,TRUE
+83: Mana Bloodlust,83,Mana Bloodlust,TRUE
+84: Mana Pair,84,Mana Pair,TRUE
+85: Mana trio,85,Mana trio,TRUE
+86: Heal Shield ManaGain,86,Heal Shield ManaGain,TRUE
+87: Mana Charged,87,Mana Charged,TRUE
+88: Damage Single-use Charged,88,Damage Single-use Charged,TRUE
+89: Damage SIngle-use InflictPain,89,Damage SIngle-use InflictPain,TRUE
+90: Damage SIngle-use Cruel,90,Damage SIngle-use Cruel,TRUE
+91: Damage Single-use Poison,91,Damage Single-use Poison,TRUE
+92: Damage Single-use SelfHeal,92,Damage Single-use SelfHeal,TRUE
+93: Mana Single-use,93,Mana Single-use,TRUE
+94: Shield Single-use PermaBoost,94,Shield Single-use PermaBoost,TRUE
+95: Damage Single-use Weaken,95,Damage Single-use Weaken,TRUE
+96: Damage Single-use Fierce,96,Damage Single-use Fierce,TRUE
+97: Damage Single-use Echo,97,Damage Single-use Echo,TRUE
+98: Damage Single-use Dispel,98,Damage Single-use Dispel,TRUE
+99: Damage Single-use InflictExert,99,Damage Single-use InflictExert,TRUE
+100: Stun Single-use,100,Stun Single-use,FALSE
+101: Damage Singleuse Weaken Vulnerable Cleave Engage Selfheal - [Chaos Wand],101,Damage Singleuse Weaken Vulnerable Cleave Engage Selfheal - [Chaos Wand],TRUE
+102: Damage Lead,102,Damage Lead,TRUE
+103: Heal,103,Heal,TRUE
+104: Heal Single-use,104,Heal Single-use,TRUE
+105: Heal Vitality,105,Heal Vitality,TRUE
+106: Heal Rescue,106,Heal Rescue,TRUE
+107: Heal All,107,Heal All,TRUE
+108: Heal Boost,108,Heal Boost,TRUE
+109: Heal Cleave,109,Heal Cleave,TRUE
+110: Heal Regen,110,Heal Regen,TRUE
+111: Heal Cleanse,111,Heal Cleanse,TRUE
+112: Heal ManaGain,112,Heal ManaGain,TRUE
+113: Heal Groooooowth,113,Heal Groooooowth,TRUE
+114: Heal DoubleUse,114,Heal DoubleUse,TRUE
+115: Damage Single-use,115,Damage Single-use,TRUE
+116: Kill if less than hp ,116,Kill if less than hp ,TRUE
+117: Undying,117,Undying,FALSE
+118: Redirect SelfShield,118,Redirect SelfShield,TRUE
+119: Shield Repel,119,Shield Repel,TRUE
+120: Shield Repel Rampage Rescue,120,Shield Repel Rampage Rescue,TRUE
+121: Shield Pain,121,Shield Pain,TRUE
+122: Kill if less than hp Ranged,122,Kill if less than hp Ranged,TRUE
+123: Dodge,123,Dodge,FALSE
+124: Dodge Cantrip,124,Dodge Cantrip,FALSE
+125: Reroll Cantrip,125,Reroll Cantrip,TRUE
+126: Damage Cantrip,126,Damage Cantrip,TRUE
+127: Damage Sticky Mandatory Death,127,Damage Sticky Mandatory Death,TRUE
+128: Damage to all Rampage Pain,128,Damage to all Rampage Pain,TRUE
+129: Damage Charged Rampage Pain,129,Damage Charged Rampage Pain,TRUE
+130: Reuse,130,Reuse,FALSE
+131: Damage Weaken,131,Damage Weaken,TRUE
+132: Damage Duplicate,132,Damage Duplicate,TRUE
+133: Shield Duplicate,133,Shield Duplicate,TRUE
+134: Mana Duplicate,134,Mana Duplicate,TRUE
+135: Damage Ranged Engage,135,Damage Ranged Engage,TRUE
+136: Revive,136,Revive,TRUE
+137: Damage Rampage,137,Damage Rampage,TRUE
+138: Add DoubleUse,138,Add DoubleUse,FALSE
+139: Add Cantrip,139,Add Cantrip,FALSE
+140: Add Nothing,140,Add Nothing,FALSE
+141: Add Copycat,141,Add Copycat,FALSE
+142: Add Cleave Single-use,142,Add Cleave Single-use,FALSE
+143: Add Cruel Deathwish,143,Add Cruel Deathwish,FALSE
+144: Add ManaGain,144,Add ManaGain,FALSE
+145: Add Poison,145,Add Poison,FALSE
+146: Add SelfShield,146,Add SelfShield,FALSE
+147: Add SeflHeal,147,Add SeflHeal,FALSE
+148: Add SelfHeal SelfShield,148,Add SelfHeal SelfShield,FALSE
+149: Add Pain ManaGain,149,Add Pain ManaGain,FALSE
+150: Add Engage,150,Add Engage,FALSE
+151: Add Growth,151,Add Growth,FALSE
+152: Blank (Shield),152,Blank (Shield),FALSE
+153: Blank (Damage),153,Blank (Damage),FALSE
+154: Blank (Mana),154,Blank (Mana),FALSE
+155: Blank (Summon),155,Blank (Summon),FALSE
+156: Blank (Heal),156,Blank (Heal),FALSE
+157: Redirect Cleave - [Red Flag],157,Redirect Cleave - [Red Flag],FALSE
+158: Damage to ALL Rampage - [Spinning Scythe],158,Damage to ALL Rampage - [Spinning Scythe],TRUE
+159: Damage Flesh Pain - [Viscera],159,Damage Flesh Pain - [Viscera],TRUE
+160: Damage to ALL Charged ManaCost - [Mana Bomb],160,Damage to ALL Charged ManaCost - [Mana Bomb],TRUE
+161: Damage SingleUse InflictSingleUse - [Wand of Wand],161,Damage SingleUse InflictSingleUse - [Wand of Wand],TRUE
+162: Heal Boost InflictPain - [Demon Horn],162,Heal Boost InflictPain - [Demon Horn],TRUE
+163: Damage Heavy Charged - [Charged Hammer],163,Damage Heavy Charged - [Charged Hammer],TRUE
+164: Heal Regen Cleanse ManaCost - [Infused Herbs],164,Heal Regen Cleanse ManaCost - [Infused Herbs],TRUE
+165: Damage Pain Drink - [Potion Shard],165,Damage Pain Drink - [Potion Shard],TRUE
+166: Revive Drink - [Revive Potion],166,Revive Drink - [Revive Potion],TRUE
+167: Mana Drink - [Mana Potion],167,Mana Drink - [Mana Potion],TRUE
+168: Damage Eliminate,168,Damage Eliminate,TRUE
+169: Damage Poison (Enemy),169,Damage Poison (Enemy),TRUE
+170: Damage (Enemy),170,Damage (Enemy),TRUE
+171: Damage Cleave (Enemy),171,Damage Cleave (Enemy),TRUE
+172: Summon Dragons Death,172,Summon Dragons Death,TRUE
+173: Damage Cleave Trio,173,Damage Cleave Trio,TRUE
+174: Damage Defy,174,Damage Defy,TRUE
+175: Damage Critical,175,Damage Critical,TRUE
+176: Target Ally,176,Target Ally,FALSE
+177: Target Ally (Pips),177,Target Ally (Pips),TRUE
+178: All Allies (Pips),178,All Allies (Pips),TRUE
+179: All Allies ,179,All Allies ,FALSE
+180: Target Enemy,180,Target Enemy,FALSE
+181: Target Enemy (Pips),181,Target Enemy (Pips),TRUE
+182: All Enemies (Pips),182,All Enemies (Pips),TRUE
+183: All Enemies,183,All Enemies,FALSE
+184: Target ALL (Pips),184,Target ALL (Pips),TRUE
+185: Target ALL,185,Target ALL,FALSE
+186: Target Self,186,Target Self,FALSE
+187: Target Self (Pips),187,Target Self (Pips),TRUE

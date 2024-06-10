@@ -8,13 +8,13 @@ using UnityEngine;
         
         public static string[,] LoadCSV(string filePath)
         {
-            var data = new List<string[]>();
+            var rawData = new List<string[]>();
 
             //read all data
             using StreamReader reader = new StreamReader(filePath);
             cashedLine = "";
             var headers = reader.ReadLine()?.Split(',');
-            data.Add(headers);
+            rawData.Add(headers);
             bool reachedEnd = false;
 
             while (!reachedEnd)
@@ -32,26 +32,23 @@ using UnityEngine;
                             entry[i] = values[i];
                         } 
                     }
-                    data.Add(entry);
+                    rawData.Add(entry);
                 }
             }
             
             //fill matrix
-            string[,] returnValue = new string[data.Count, headers.Length];
-            int rows = data.Count;
+            string[,] data = new string[rawData.Count, headers.Length];
+            int rows = rawData.Count;
             int collumns = headers.Length;
-            Debug.Log($"({returnValue.GetLength(0)},{returnValue.GetLength(1)})");
-            Debug.Log($"({rows},{collumns})");
             for (int x = 0; x < rows; x++)
             {
                 for (int y = 0; y < collumns; y++)
                 {
-                    Debug.Log($"({y},{x}) - {data[x][y]}");
-                    returnValue[x, y] = data[x][y];
+                    data[x, y] = rawData[x][y];
                 }
             }
 
-            return new string[1,1];
+            return data;
         }
 
         private static string[] Split(StreamReader reader, int collumnCount)
