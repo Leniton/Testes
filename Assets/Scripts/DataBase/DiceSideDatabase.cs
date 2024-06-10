@@ -18,12 +18,7 @@ public static class DiceSideDatabase
         }
     }
 
-    public static List<SideData> sidesData = new()
-    {
-        new(0, "blank"),
-        new(1, "blank (unset)"),
-        new(2, "blank (petrified)"),
-    };
+    public static List<SideData> sidesData = new();
 }
 
 public struct SideData

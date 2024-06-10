@@ -6,12 +6,11 @@ using UnityEngine;
     {
         private static string cashedLine;
         
-        public static string[,] LoadCSV(string filePath)
+        public static string[,] LoadCSV(StreamReader reader)
         {
             var rawData = new List<string[]>();
 
             //read all data
-            using StreamReader reader = new StreamReader(filePath);
             cashedLine = "";
             var headers = reader.ReadLine()?.Split(',');
             rawData.Add(headers);
@@ -147,5 +146,15 @@ using UnityEngine;
                 }
                 else cashedLine = raw;
             }
+        }
+
+        public static StreamReader GetReaderFromString(string text)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(text);
+            writer.Flush();
+            stream.Position = 0;
+            return new StreamReader(stream);
         }
     }

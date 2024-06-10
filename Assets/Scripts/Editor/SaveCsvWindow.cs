@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class SaveCsvWindow : EditorWindow
 
     private void GenerateLocale()
     {
-        var data = CSVLoader.LoadCSV(csvPath);
+        var data = CSVLoader.LoadCSV(new StreamReader(csvPath));
 
         CSV_String_Values newData = CreateInstance<CSV_String_Values>();
         newData.Values = data;
