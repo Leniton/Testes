@@ -41,8 +41,9 @@ public abstract class ParentAbstraction : MonoAbstraction
     protected void CreateAbstraction(Func<MonoAbstraction> factory)
     {
         MonoAbstraction abstraction = factory.Invoke();
-        abstraction.transform.SetParent(OptionPick.transform.parent, false);
-        abstraction.transform.SetSiblingIndex(transform.childCount - 2);
+        Transform parent = OptionPick.transform.parent;
+        abstraction.transform.SetParent(parent, false);
+        abstraction.transform.SetSiblingIndex(parent.childCount - 2);
         subAbstractions.Add(abstraction);
     }
 }
