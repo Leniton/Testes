@@ -6,13 +6,15 @@ using UnityEngine;
     {
         private static string cashedLine;
         
-        public static List<Dictionary<string, string>> LoadCSV(string filePath)
+        public static string[,] LoadCSV(string filePath)
         {
-            var data = new List<Dictionary<string, string>>();
+            var data = new List<string[]>();
 
+            //read all data
             using StreamReader reader = new StreamReader(filePath);
             cashedLine = "";
             var headers = reader.ReadLine()?.Split(',');
+            data.Add(headers);
             bool reachedEnd = false;
 
             while (!reachedEnd)
@@ -21,23 +23,37 @@ using UnityEngine;
                 if (headers != null)
                 {
                     var values = Split(reader, headers.Length);
-                    var entry = new Dictionary<string, string>();
+                    var entry = new string[headers.Length];
                 
                     if (values != null)
                     {
                         for (int i = 0; i < headers.Length && i < values.Length; i++)
                         {
-                            entry[headers[i]] = values[i];
+                            entry[i] = values[i];
                         } 
                     }
                     data.Add(entry);
                 }
             }
+            
+            //fill matrix
+            string[,] returnValue = new string[data.Count, headers.Length];
+            int rows = data.Count;
+            int collumns = headers.Length;
+            Debug.Log($"({returnValue.GetLength(0)},{returnValue.GetLength(1)})");
+            Debug.Log($"({rows},{collumns})");
+            for (int x = 0; x < rows; x++)
+            {
+                for (int y = 0; y < collumns; y++)
+                {
+                    Debug.Log($"({y},{x}) - {data[x][y]}");
+                    returnValue[x, y] = data[x][y];
+                }
+            }
 
-            return data;
+            return new string[1,1];
         }
 
-        //Note: this will still cause errors if the last collumn contains a line jump (\n)
         private static string[] Split(StreamReader reader, int collumnCount)
         {
             int currentID = 0;
@@ -56,7 +72,6 @@ using UnityEngine;
                     if (raw[i] == ',' && !foundQuote)
                     {
                         splitData[currentID] = data;
-                        Debug.Log($"[{currentID}] {data}");
                         currentID++;
                         data = "";
                     }

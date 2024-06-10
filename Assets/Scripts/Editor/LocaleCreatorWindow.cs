@@ -9,12 +9,12 @@ public class LocaleCreatorWindow : EditorWindow
     [MenuItem("Tools/CSV Loader")]
     public static void ShowWindow()
     {
-        GetWindow<LocaleCreatorWindow>("Locale Creator");
+        GetWindow<LocaleCreatorWindow>("CSV Loader");
     }
 
     private void OnGUI()
     {
-        GUILayout.Label("Load Locale From CSV", EditorStyles.boldLabel);
+        GUILayout.Label("Load CSV", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Load CSV"))
         {
@@ -24,11 +24,10 @@ public class LocaleCreatorWindow : EditorWindow
         if (!string.IsNullOrEmpty(csvPath) && GUILayout.Button("Generate Scriptable Object"))
         {
             GenerateLocale();
-            GenerateLocale("Portuguese(pt)");
         }
     }
 
-    private void GenerateLocale(string keyName = "English(en)")
+    private void GenerateLocale()
     {
         var data = CSVLoader.LoadCSV(csvPath);
 
@@ -53,7 +52,7 @@ public class LocaleCreatorWindow : EditorWindow
         if (string.IsNullOrEmpty(savePath)) return;
 
         AssetDatabase.CreateAsset(newLocale, savePath);*/
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+        //AssetDatabase.SaveAssets();
+        //AssetDatabase.Refresh();
     }
 }
