@@ -1,9 +1,8 @@
-
 using System.Collections.Generic;
 
 public static class KeywordDatabase
 {
-    public static readonly List<string> keywords = new()
+    public static List<string> keywords = new()
     {
         "cantrip",
         "chain",
