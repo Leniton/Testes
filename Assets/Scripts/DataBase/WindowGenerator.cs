@@ -84,4 +84,12 @@ public static class WindowGenerator
 
         return item;
     }
+
+    public static MonoAbstraction Hero_Reference()
+    {
+        HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
+        hero.gameObject.name = "Hero";
+
+        return hero;
+    }
 }
