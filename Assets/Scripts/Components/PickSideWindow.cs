@@ -6,10 +6,12 @@ using UnityEngine;
 public class PickSideWindow : MonoBehaviour
 {
     [SerializeField] private SideOption side;
+    public SideData sideData;
 
     private void Awake()
     {
-        side.SetUp(DiceSideDatabase.sidesData[0]);
+        sideData = DiceSideDatabase.sidesData[0];
+        side.SetUp(sideData);
         side.OnSelect += PickOption;
     }
 
@@ -20,6 +22,7 @@ public class PickSideWindow : MonoBehaviour
 
     private void OnPick(SideData data)
     {
+        sideData = data;
         side.SetUp(data, data.pips);
     }
 }
