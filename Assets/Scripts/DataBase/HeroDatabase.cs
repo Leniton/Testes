@@ -7,3 +7,13 @@ public static class HeroDatabase
         "lost",
     };
 }
+
+public enum HeroColor
+{
+    n,
+    o,
+    y,
+    g,
+    r,
+    b
+}

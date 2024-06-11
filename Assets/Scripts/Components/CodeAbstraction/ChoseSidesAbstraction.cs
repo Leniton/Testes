@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ChoseSidesAbstraction : MonoAbstraction
 {
+    public bool isActive => button.State;
     [SerializeField] private StateButton button;
     [SerializeField] private PickSideWindow[] options;
 

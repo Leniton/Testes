@@ -26,8 +26,8 @@ public class HeroAbstraction : ParentAbstraction
     {
         sb ??= new StringBuilder();
         hero.GetCode(sb);
-        sb.Remove(0, 1);
-        sb.Append('.');
+        if (sb.ToString()[0] == '.') sb.Remove(0, 1);
+        if(sides.isActive) sb.Append('.');
         sides.GetCode(sb);
 
         for (int i = 0; i < subAbstractions.Count; i++)
@@ -36,6 +36,7 @@ public class HeroAbstraction : ParentAbstraction
             subAbstractions[i].GetCode(sb);
         }
 
+        Debug.Log(sb.ToString());
         return sb.ToString();
     }
 }

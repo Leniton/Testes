@@ -30,7 +30,6 @@ public static class WindowGenerator
 
         return reference;
     }
-
     public static MonoAbstraction Keyword()
     {
         SugestTextAbstraction keyword = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
@@ -39,7 +38,6 @@ public static class WindowGenerator
 
         return keyword;
     }
-    
     public static MonoAbstraction Generated(string name)
     {
         TextAbstraction generated = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/HexAbstractionWindow"));
@@ -57,7 +55,14 @@ public static class WindowGenerator
 
         return item;
     }
-    
+    public static MonoAbstraction Item_Keyword()
+    {
+        ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
+        item.gameObject.name = "Item";
+        item.SetItem(Keyword());
+
+        return item;
+    }
     public static MonoAbstraction Item_Generated()
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
@@ -66,21 +71,11 @@ public static class WindowGenerator
 
         return item;
     }
-    
     public static MonoAbstraction Item_GeneratedX()
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
         item.SetItem(Generated("ritemx"));
-
-        return item;
-    }
-    
-    public static MonoAbstraction Item_Keyword()
-    {
-        ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
-        item.gameObject.name = "Item";
-        item.SetItem(Keyword());
 
         return item;
     }
@@ -90,6 +85,14 @@ public static class WindowGenerator
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
         hero.SetHero(Reference(HeroDatabase.Heroes));
+
+        return hero;
+    }
+    public static MonoAbstraction Hero_Generated(HeroColor color, int tier)
+    {
+        HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
+        hero.gameObject.name = "Hero";
+        hero.SetHero(Generated($"{color.ToString()}{tier}"));
 
         return hero;
     }

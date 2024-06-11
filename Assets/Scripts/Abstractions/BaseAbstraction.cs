@@ -20,7 +20,6 @@ public class BaseAbstraction : ICodeAbstraction
         sb ??= new StringBuilder();
         sb.Append(name);
         sb.Append("." + Data);
-
         return sb.ToString();
     }
 }
