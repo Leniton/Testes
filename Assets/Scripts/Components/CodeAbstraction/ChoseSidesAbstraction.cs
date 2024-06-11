@@ -9,8 +9,8 @@ public class ChoseSidesAbstraction : MonoAbstraction
     [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
-        if (!button.State) return sb.ToString();
         sb ??= new StringBuilder();
+        if (!button.State) return sb.ToString();
         sb.Append("sd.");
         for (int i = 0; i < 6; i++)
         {

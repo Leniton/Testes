@@ -22,11 +22,11 @@ public static class WindowGenerator
         return text;
     }
 
-    public static MonoAbstraction Reference_Item()
+    public static MonoAbstraction Reference(List<string> referencePool)
     {
         SugestTextAbstraction reference = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
-        reference.gameObject.name = "Item";
-        reference.Config("", ItemDatabase.Items);
+        reference.gameObject.name = "Reference";
+        reference.Config("", referencePool);
 
         return reference;
     }
@@ -53,7 +53,7 @@ public static class WindowGenerator
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
-        item.SetItem(Reference_Item());
+        item.SetItem(Reference(ItemDatabase.Items));
 
         return item;
     }
@@ -89,6 +89,7 @@ public static class WindowGenerator
     {
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
+        hero.SetHero(Reference(HeroDatabase.Heroes));
 
         return hero;
     }

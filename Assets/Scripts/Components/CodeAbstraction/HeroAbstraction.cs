@@ -5,17 +5,30 @@ using UnityEngine;
 
 public class HeroAbstraction : ParentAbstraction
 {
+    [SerializeField] private RectTransform typeSlot;
+    [SerializeField] private ChoseSidesAbstraction sides;
+    MonoAbstraction hero;
+    
     protected void Awake()
     {
-        subAbstractions = new();
+        name = "";
         SetOptions(GeneralDatabase.HeroPickOptions);
+    }
+    
+    public void SetHero(MonoAbstraction newHero)
+    {
+        hero = newHero;
+        hero.transform.SetParent(typeSlot);
     }
 
     [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
         sb ??= new StringBuilder();
-        sb.Append(name);
+        hero.GetCode(sb);
+        sb.Remove(0, 1);
+        sb.Append('.');
+        sides.GetCode(sb);
 
         for (int i = 0; i < subAbstractions.Count; i++)
         {
