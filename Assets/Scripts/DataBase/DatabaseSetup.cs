@@ -22,7 +22,7 @@ public class DatabaseSetup
         {
             int.TryParse(idSideData[i, 1], out int id);
             string name = idSideData[i, 2];
-            DiceSideDatabase.sidesData.Add(new SideData(id, name));
+            DiceSideDatabase.sidesData.Add(new SideData(id, name, idSideData[i, 3] == "TRUE" ? 0 : -1));
         }
     }
 }
