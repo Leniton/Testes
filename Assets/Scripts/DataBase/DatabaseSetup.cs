@@ -14,6 +14,7 @@ public class DatabaseSetup
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/IDs Sides - Helpsheet");
         string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        DiceSideDatabase.sidesData.Clear();
         int startingIndex = 2;
         int length = idSideData.GetLength(0);
 

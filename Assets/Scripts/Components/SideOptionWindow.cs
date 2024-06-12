@@ -32,7 +32,7 @@ public class SideOptionWindow : MonoBehaviour
         
         SetUp(DiceSideDatabase.sidesData[0]);
         pipValue.onValueChanged += ChangePips;
-        for (int i = 0; i < DiceSideDatabase.sides.Length; i++)
+        for (int i = 0; i < DiceSideDatabase.sidesData.Count; i++)
         {
             SideData data = DiceSideDatabase.sidesData[i];
 
