@@ -38,7 +38,7 @@ public static class WindowGenerator
     {
         TextAbstraction generated = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/HexAbstractionWindow"));
         generated.gameObject.name = "Generated";
-        generated.Config(name, "", TMP_InputField.ContentType.Custom, limit);
+        generated.Config(name, "", TMP_InputField.ContentType.Standard, limit);
         generated.Style("Gen.");
 
         return generated;
