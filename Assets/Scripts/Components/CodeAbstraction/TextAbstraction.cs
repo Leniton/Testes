@@ -31,11 +31,12 @@ public class TextAbstraction : MonoAbstraction
 
     private void UpdateData(string data) => baseAbstraction.Data = data;
 
-    public void Config(string Name, object data, TMP_InputField.ContentType type = TMP_InputField.ContentType.Standard)
+    public void Config(string Name, object data, TMP_InputField.ContentType type = TMP_InputField.ContentType.Standard, int characterLimit = 99999)
     {
         baseAbstraction = new BaseAbstraction(Name, data);
         codeName = name;
         InputField.contentType = type;
+        InputField.characterLimit = characterLimit;
     }
 
     [SerializableMethods.SerializeMethod]

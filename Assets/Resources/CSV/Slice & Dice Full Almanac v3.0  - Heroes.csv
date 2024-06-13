@@ -1,0 +1,135 @@
+128 normal heroes (+2 special cases),,,,,,,,,,,,,
+Color,Tier,Icon,Hero,HP,Sides,,,,,,Ability,Passive Ability,Note
+,,,,,L,M,T,B,R,RM,,,
+Orange,1,,Thief,4,,,,,,,,,
+Orange,1,,Scoundrel,6,,,,,,,,,
+Orange,1,,Lost,3,,,,,,,,,"Complete ""victory"" achievement to unlock"
+Orange,1,,Dabble,6,,,,,,,,,"Complete ""10 Achievements"" achievement to unlock"
+Orange,1,,Clumsy,5,,,,,,,,,"Complete ""20 Achievements"" achievement to unlock"
+Orange,2,,Spellblade,7,,,,,,,,,"Complete ""Caster"" achievement to unlock"
+Orange,2,,Trapper,8,,,,,,,,,
+Orange,2,,Juggler,7,,,,,,,,,
+Orange,2,,Ninja,6,,,,,,,,,"Complete ""Chaos+"" achievement to unlock"
+Orange,2,,Rogue,7,,,,,,,,,
+Orange,2,,Dabbler,9,,,,,,,,,
+Orange,2,,Ranger,7,,,,,,,,,
+Orange,2,,Gambler,7,,,,,,,,,
+Orange,3,,Venom,8,,,,,,,,,
+Orange,3,,Assassin,9,,,,,,,,,
+Orange,3,,Dancer,8,,,,,,,,,
+Orange,3,,Roulette,8,,,,,,,,,"Complete ""100 Deaths"" achievement to unlock"
+Orange,3,,Ludus,6,,,,,,,,,
+Orange,3,,Fencer,9,,,,,,,,,
+Orange,3,,Dabblest,9,,,,,,,,,"Complete ""Dabbler-Pick"" achievement to unlock"
+Orange,3,,Sharpshot,8,,,,,,,,,
+Orange,3,,Agent,9,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Yellow,1,,Fighter,5,,,,,,,,,
+Yellow,1,,Brigand,5,,,,,,,,,"Complete ""victory"" achievement to unlock"
+Yellow,1,,Ruffian,4,,,,,,,,,"Complete ""10 Achievements"" achievement to unlock"
+Yellow,1,,Hoarder,6,,,,,,,,,"Complete ""20 Achievements"" achievement to unlock"
+Yellow,1,,Lazy,5,,,,,,,,rolling blanks lol,
+Yellow,2,,Berserker,8,,,,,,,,,
+Yellow,2,,Scrapper,8,,,,,,,,,
+Yellow,2,,Brute,8,,,,,,,,,
+Yellow,2,,Sinew,8,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Yellow,2,,Gladiator,7,,,,,,,,,
+Yellow,2,,Whirl,7,,,,,,,,,
+Yellow,2,,Collector,8,,,,,,,,,"Complete ""Chaos"" achievement to unlock"
+Yellow,2,,Soldier,7,,,,,,,,,
+Yellow,3,,Barbarian,12,,,,,,,,,
+Yellow,3,,Brawler,9,,,,,,,,,
+Yellow,3,,Eccentric,8,,,,,,,,,
+Yellow,3,,Leader,9,,,,,,,,,
+Yellow,3,,Wanderer,10,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Yellow,3,,Bash,10,,,,,,,,,
+Yellow,3,,Veteran,11,,,,,,,,,
+Yellow,3,,Curator,9,,,,,,,,,
+Yellow,3,,Captain,10,,,,,,,,,"Complete ""40 Achievements"" achievement to unlock"
+Grey,1,,Defender,7,,,,,,,,,
+Grey,1,,Buckle,6,,,,,,,,,
+Grey,1,,Squire,5,,,,,,,,,"Complete ""10 Achievements"" achievement to unlock"
+Grey,1,,Alloy,4,,,,,,,,,"Complete ""20 Achievements"" achievement to unlock"
+Grey,1,,Wallop,5,,,,,,,,,"Complete ""victory"" achievement to unlock"
+Grey,2,,Knight,9,,,,,,,,,"Complete ""40 Achievements"" achievement to unlock"
+Grey,2,,Warden,10,,,,,,,,,
+Grey,2,,Armorer,9,,,,,,,,,
+Grey,2,,Monk,9,,,,,,,,,
+Grey,2,,Cleric,8,,,,,,,,,
+Grey,2,,Guardian,8,,,,,,,,,
+Grey,2,,Bard,6,,,,,,,,,"Complete ""40 Achievements"" achievement to unlock"
+Grey,2,,Pilgrim,9,,,,,,,,,
+Grey,3,,Valkyrie,9,,,,,,,,,
+Grey,3,,Keeper,10,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Grey,3,,Prince,11,,,,,,,,,"Complete ""40 Achievements"" achievement to unlock"
+Grey,3,,Stoic,15,,,,,,,,,
+Grey,3,,Paladin,11,,,,,,,,,
+Grey,3,,Poet,9,,,,,,,,,
+Grey,3,,Stalwart,11,,,,,,,,,
+Red,1,,Healer,5,,,,,,,,,
+Red,1,,Acolyte,5,,,,,,,,,"Complete ""victory"" achievement to unlock"
+Red,1,,Mystic,4,,,,,,,,,"Complete ""10 Achievements"" achievement to unlock"
+Red,1,,Splint,4,,,,,,,,,
+Red,1,,Gardener,5,,,,,,,,,"Complete ""20 Achievements"" achievement to unlock"
+Red,2,,Druid,7,,,,,,,,,
+Red,2,,Herbalist,7,,,,,,,,,
+Red,2,,Fey,5,,,,,,,,,
+Red,2,,Disciple,8,,,,,,,,,
+Red,2,,Vampire,7,,,,,,,,,
+Red,2,,Medic,7,,,,,,,,,
+Red,2,,Priestess,5,,,,,,,,,
+Red,2,,Enchanter,6,,,,,,,,,"Complete ""Chaos++"" achievement to unlock"
+Red,3,,Doctor,10,,,,,,,,,
+Red,3,,Fate,8,,,,,,,,,
+Red,3,,Surgeon,10,,,,,,,,,
+Red,3,,Witch,10,,,,,,,,,
+Red,3,,Prophet,8,,,,,,,,,
+Red,3,,Forsaken,9,,,,,,,,,
+Red,3,,Wraith,9,,,,,,,,,"Complete ""50 Deaths"" achievement to unlock"
+Red,3,,Shaman,11,,,,,,,,,
+Blue,1,,Mage,4,,,,,,,,,
+Blue,1,,Student,5,,,,,,,,,"Complete ""victory"" achievement to unlock"
+Blue,1,,Initiate,4,,,,,,,,,"Complete ""10 Achievements"" achievement to unlock"
+Blue,1,,Cultist,5,,,,,,,,,"Complete ""20 Achievements"" achievement to unlock"
+Blue,1,,Prodigy,4,,,,,,,,,
+Blue,1,,Meddler,6,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Blue,2,,Caldera,6,,,,,,,,,
+Blue,2,,Fiend,6,,,,,,,,,
+Blue,2,,Jester,6,,,,,,,,,
+Blue,2,,Myco,8,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Blue,2,,Sparky,7,,,,,,,,,
+Blue,2,,Glacia,9,,,,,,,,,
+Blue,2,,Seer,7,,,,,,,,,
+Blue,2,,Evoker,8,,,,,,,,,
+Blue,3,,Artificer,8,,,,,,,,,
+Blue,3,,Sorcerer,7,,,,,,,,,
+Blue,3,,Wizard,9,,,,,,,,,
+Blue,3,,Warlock,8,,,,,,,,,
+Blue,3,,Weaver,10,,,,,,,,,
+Blue,3,,Chronos,7,,,,,,,,,
+Blue,3,,Ace,8,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Blue,3,,Ghast,8,,,,,,,,,"Complete ""30 Achievements"" achievement to unlock"
+Green,1,,Tinder,5,,,,,,,,,
+Green,1,,Reflection,2,,,,,,,,,
+Green,1,,Housecat,3,,,,,,,,,"Cannot be targeted by levelup phase (unless there is no valid hero for the levelup phase), but can be leveled up by level up blessings"
+Green,1,,Spade,7,,,,,,,,,
+Green,1,,Pockets,4,,,,,,,,,The items will stay even if Pockets is leveled up
+Green,1,,Primrose,5,,,,,,,,,
+Green,2,,Presence,8,,,,,,,,,
+Green,2,,Spine,8,,,,,,,,,
+Green,2,,Coffin,7,,,,,,,,,
+Green,2,,Sphere,10,,,,,,,,,
+Green,2,,Granite,5,,,,,,,,,
+Green,2,,Mimic,10,,,,,,,,,
+Green,2,,Alien ,8,,,,,,,,,
+Green,2,,Statue,20,,,,,,,,,
+Green,3,,Robot,14,,,,,,,,,
+Green,3,,Luggage,5,,,,,,,,,The items will stay even if Luggage is leveled up
+Green,3,,Vessel,5,,,,,,,,,The blessing will stay even if Vessel is leveled up
+Green,3,,Dice,12,,,,,,,,,
+Green,3,,Jumble,10,,,,,,,,,
+Green,3,,Tainted,13,,,,,,,,,The curse will stay even if Tainted is leveled up
+Green,3,,Twin,4,,,,,,,,,
+,,,,,,,,,,,,,
+Special heroes,,,,,,,,,,,,,
+Green,3,,Tw1n,4,,,,,,,,,Twin's copy
+Violet,-1,,Glitch,6,,,,,,,,,Failsafe hero

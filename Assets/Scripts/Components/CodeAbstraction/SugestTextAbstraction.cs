@@ -52,7 +52,7 @@ public class SugestTextAbstraction : MonoAbstraction
 
         for (int i = 0; i < lines.Count; i++)
         {
-            if (lines[i].Contains(data))
+            if (lines[i].ToLower().Contains(data.ToLower()))
             {
                 inputField.textComponent.color = lines[i] == data ? Color.green : Color.white;
                 sugestions.Add(lines[i]);

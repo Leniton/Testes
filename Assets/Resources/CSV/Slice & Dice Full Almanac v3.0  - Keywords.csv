@@ -1,0 +1,198 @@
+191 keywords,,,,
+Keyword,Keyword Color,Icon,Effect,Note
+acidic,green,,+1 pip for each poison on me,
+affected,purple,,+1 pip for each 'thing' affecting me,
+alliteration,light,,"x2 vs targets with the same first letter as me 
+(Case-sensitive)",
+annul,grey,,targets lose all keywords this turn,
+antiDeathwish,purple,,x2 except if I am dying this turn,x2 if I am not dying this turn
+antiDog,yellow,,x2 except vs targets with equal hp to me,x2 vs targets not equal hp to me
+antiEngage,yellow,,x2 except vs targets with full hp,x2 vs targets that aren't at full hp
+antiPair,light,,x2 except if this has the same pips as the previous dice this turn,x2 if this has different pips as the previous dice this turn
+antiPristine,light,,x2 except if I have full hp,x2 if I am not at full hp
+armoured,light,,x2 if I have shields,
+bloodlust,red,,bonus equal to the number of damaged enemies,
+boned,light,,Summon a bones,
+boost,blue,,target gets +N to all sides this turn,
+buffed,light,,+1 pip for each buff I have,
+bully,orange,,x2 if I have the most hp of all,
+cantrip,pink,,activates during rolling if it lands face-up,"Whilst rolling dice, if this side lands face-up, it gets used instantly without taking up that hero's turn. Target chosen randomly. If you have a cantrip heal/shield, it will only target heroes who are missing hp/taking damage. You can still reroll it and use it as normal"
+century,grey,,x2 vs targets with 100+ hp,
+chain,pink,,x2 if this shares a keyword with the previous dice this turn,
+channel,green,,costs -1 mana each time it is cast (minimum 1),
+charged,blue,,+1 pip for each stored mana,
+cleanse,light,,reduce target's negative effects by N ,"Negative effects: poisoned, weakened, petrified and inflicted. Can cleanse incoming negative effects. Always cleanse current negative effects before incoming negative effects"
+cleave,light,,also hits both sides of the target,
+cooldown,orange,,can only be cast once each turn,
+copycat,light,,copy the keywords from the previous dice this turn,
+critical,yellow,,"50% chance for +1, rechecks each turn",
+cruel,orange,,x2 vs targets on half or less hp,
+cruesh,orange,,"If cruel's condition is met, gain the effects of flesh",+1 pip for each hp I have vs targets on half or less hp
+damage,orange,,damage the target for N,
+death,light,,I die,everyone has to some day
+deathlust,purple,,"If deathwish's condition is met, gain the effects of bloodlust",bonus equal to the number of damaged enemies if I am dying this turn
+deathwish,purple,,x2 if I am dying this turn,
+decay,purple,,gets -1 this fight after use,
+defy,yellow,,+1 pip for each incoming damage,
+dejavu,pink,,copy the keywords from the sides I used last turn,
+deplete,orange,,costs +1 mana each time it is cast,
+descend,light,,also hits below the target,
+dispel,pink,,Remove all traits from the target this fight,"Only remove innate traits, traits from modifiers/items will not be removed. Abilities counts as trait"
+dog,yellow,,x2 vs targets with equal hp to me,
+dogma,yellow,,Only pips change when the side is replaced,
+doubDiff,yellow,,doubled pip delta,Everything that give +N pips will now give +2N pips and vice versa
+doublegrowth,green,,Like growth but activates twice,gets +2 this fight after use
+doubled,blue,,Other keywords see colored N as 2N,
+doubleUse,orange,,can be used twice in a turn,
+duegue,blue,,"If duel's condition is met, gain the effects of plague",+1 pip for each poison on all characters vs those targeting me this turn
+duel,blue,,x2 vs those targeting me this turn,
+duplicate,blue,,copy this onto all allied sides this turn,
+echo,blue,,copy the pips of previous dice this turn,
+ego,yellow,,x2 vs myself,
+eliminate,red,,target must have the least hp,"Does not take back-row enemies into account, unless the side also has ranged"
+enduring,grey,,keywords remain when the side is changed (if possible),
+engage,yellow,,x2 vs targets with full hp,
+engarged,yellow,,"If engage's condition is met, gain the effects of charged",+1 pip for each stored mana vs targets with full hp
+engine,yellow,,x4 if the conditions of both engage and pristine are met,x4 vs targets with full hp if I have full hp
+equipped,grey,,+1 pip for each item I have equipped,
+era,blue,,+1 pip for each elapsed turn,
+evil,red,,"if this saves a hero, I die",
+exert,purple,,replace all sides with blanks (exerted) until the end of next turn,
+fashionable,blue,,bonus pips equal to the total tier of all items I have equipped,
+fault,blue,,Other keywords see colored N as -1,
+fierce,yellow,,target flees if they have N or less hp,Also works on heal/shield sides. Fled heroes come back next fight with full hp
+first,light,,x2 if no dice have been used this turn,
+fizz,blue,,+1 pip for each ability used this turn,
+flesh,red,,+1 pip for each hp I have,
+fluctuate,blue,,"changes to a random side each turn, retaining keywords and pips",
+flurry,orange,,+1 pip for each time I have been used this turn,
+focus,orange,,x2 vs the target of the previous dice this turn,
+fumble,grey,,50% chance to be blank each turn,
+future,blue,,effect is delayed until the start of next turn,
+generous,light,,cannot target myself,
+groooooowth,green,,"After use, all my sides get +1 this fight after use",
+groupDecay,purple,,The keyword 'decay' activates for all allies,"When a character use a dice with this keyword, they and their allies will get -1 to the dice face that has the same position as the user"
+groupExert,purple,,The keyword 'exert' activates for all allies,"When a character use a dice with this keyword, they and their allies will be exerted"
+groupGroooooowth,green,,The keyword 'groooooowth' activates for all allies,"When a character use a dice with this keyword, they and their allies will get +1 to all sides"
+groupGrowth,green,,The keyword 'growth' activates for all allies,"When a character use a dice with this keyword, they and their allies will get +1 to the dice face that has the same position as the user"
+groupSingleUse,orange,,The keyword 'singleUse' activates for all allies,"When a character use a dice with this keyword, they and their allies' dice face that has the same position as the user will be replaced by blank (used)"
+growth,green,,gets +1 this fight after use,
+guilt,orange,,"if this is lethal, I die",
+halveDeathwish,purple,,x0.5 (rounded down) if I am dying this turn,
+halveDuel,blue,,x0.5 (rounded down) vs those targeting me this turn,
+halveEngage,yellow,,x0.5 (rounded down) vs targets with full hp,
+heal,red,,heal the target for N,
+heavy,yellow,,target must have the most hp,"Does not take back-row enemies into account, unless the side also has ranged"
+hoard,orange,,+1 pip for each unequipped items,
+hyena,yellow,,x2 vs targets with whom our hp is co-prime,
+hyperBoned,light,,Summon N bones,
+hyperGrowth,green,,gets +N this fight after use,
+hyperUse,orange,,can be used N times in a turn,
+hypnotise,orange,,set target's damage sides to 0,
+inflictBoned,light,,add boned to target's sides for a turn,
+inflictDeath,light,,add death to target's sides for a turn,
+inflictExert,purple,,add exert to target's sides for a turn,
+inflictInflictDeath,light,,add inflictDeath to target's sides for a turn,
+inflictInflictNothing,grey,,add inflictNothing to target's sides for a turn,
+inflictNothing,grey,,add nothing to target's sides for a turn,
+inflictPain,red,,add pain to target's sides for a turn,
+inflictSelfShield,grey,,add selfshield to target's sides for a turn,
+inflictSingleUse,orange,,add singleUse to target's sides for a turn,
+inspired,green,,x2 if the previous dice this turn was higher,
+lead,yellow,,"After use, other hero's sides that share a type with this get +N this turn","Type such as Damage side, Heal side, Shield side, Mana side,..."
+lucky,red,,"pips are randomised to between 0 and current pips, changes each turn",
+manacost,purple,,costs N mana,
+manaGain,blue,,gain N mana,
+mandatory,red,,must be used (if possible),
+minusEra,blue,,-1 pip for each elapsed turn,
+minusFlesh,red,,-1 pip for each hp I have,
+moxie,yellow,,x2 if I have the least hp of all,
+nothing,grey,,this keyword has no effect,
+onesie,grey,,Other keywords see colored N as 1,
+overdog,yellow,,x2 vs targets with less hp than me,
+pain,red,,I take N damage ,Pain damage can be blocked. Damage is resolved in an order favourable to the player
+pair,light,,x2 if this has the same value as the previous dice this turn,
+patient,light,,x2 if I I was not used last turn,
+paxin,light,,x3 if the conditions of pair xor chain is met,"x3 if this either has the same value as the previous dice this turn or shares a keyword with the previous dice this turn 
+(Will not work if you satisfy both condition or no condition)"
+permaBoost,pink,,target gets +N to all sides this fight,
+permissive,pink,,any keyword can be added to this,
+petrify,yellow,,"Transforms N sides to stone this fight
+","Can be cleansed. Lasts until the end of the fight or cleansed. Petrification order: Top, Left, Middle, Right, Rightmost, Bottom"
+picky,blue,,target must have exactly N hp,
+plague,grey,,+1 pip for each poison on all characters,
+plus,grey,,Other keywords see colored N as N+1,
+poison,green,,"also inflicts N unblockable damage at the end of each turn 
+",Can be cleansed. You can't prevent yourself from being poisoned except by using cleanse or killing the attacking monster. Lasts until the end of the fight or cleansed
+possessed,purple,,targets as if used by the other side,
+potion,purple,,I discard my topmost 'potion' item permanently,
+pristeel,light,,"If pristine's condition is met, gain the effects of steel",+1 pip for each shield I have if I have full hp
+pristine,light,,x2 if I have full hp,
+priswish,light,,x4 if the conditions of both pristine and deathwish are met,x4 if I have full hp and dying this turn
+quadUse,orange,,can be used 4 times in a turn,
+quin,light,,x5 if this has the same value as the 4 previous dice this turn,
+rainbow,light,,+1 pip for each keyword on this side,
+rampage,purple,,can be reused if it was lethal,This will proc for both hero and monster death
+ranged,light,,can target enemies in the back row and avoid on-hit passives,
+reborn,yellow,,x2 if I died this fight,
+regen,red,,heal for N at the end of each turn,
+removed,light,,"something has been removed, you probably shouldn't be seeing this...",
+repel,orange,,N damage to all enemies attacking the target,
+rescue,yellow,,this side can be used again if it saves a hero,
+resilient,orange,,pips remain when the side is replaced,
+resonate,pink,,"copy the effect of the previous dice this turn, retaining this side's pips and the resonate keyword",
+revDiff,red,,inverted pip delta,Everything that give +N pips will now give -N pips and vice versa
+rite,green,,"+1 for each unused ally, they become used",
+run,yellow,,x3 if this forms a straight of length 3+ with the dice used before it this turn,
+scared,purple,,target must have N or less hp,
+selfCleanse,light,,Like cleanse but hits me instead of the target,
+selfHeal,red,,heal myself for N,
+selfPetrify,yellow,,Like petrify but hits me instead of the target,
+selfPoison,green,,Like poison but hits me instead of the target,
+selfRegen,red,,Like regen but hits me instead of the target,
+selfRepel,orange,,Like repel but hits me instead of the target,
+selfShield,grey,,shield myself for N,
+selfVulnerable,orange,,Like vulnerable but hits me instead of the target,
+sept,light,,x7 if this has the same value as the 6 previous dice this turn,
+serrated,red,,x2 vs targets who have gained no shields this turn,
+share,light,,targets gain all my keywords this turn (except share),
+shield,grey,,shield the target for N,
+shifter,pink,,"this side has a random extra keyword, changes each turn",
+singleCast,purple,,can only be cast once each fight,
+singleUse,orange,,"after I use this side, replace it with a blank (used) this fight",
+sixth,orange,,x2 if this is the 6th dice you use this turn,
+skill,light,,bonus pips equal to my level,
+smith,light,,target gets +N to damage and shield sides this turn,
+spellRescue,yellow,,cost is refunded if it saves a hero,
+sprint,orange,,x5 if this forms a straight of length 5+ with the dice used before it this turn,
+spy,grey,,copy all keywords from the first enemy attack,
+squared,pink,,Other keywords see colored N as N-squared,
+squish,yellow,,x2 vs targets with the least hp of all,
+stasis,blue,,this side cannot change,Keyword bonuses/penalty will be negated
+steel,light,,+1 pip for each shield I have,
+step,grey,,x2 if this forms a straight of length 2+ with the dice used before it this turn,
+sticky,purple,,cannot be rerolled,"This keyword's effect can be negated by ""Cannot lock dice"" effect"
+swapCruel,orange,,x2 if I have half or less hp,
+swapDeathwish,purple,,x2 if target is dying this turn,
+swapEngage,yellow,,x2 if I have full hp,
+swapTerminal,purple,,x2 if I have 1 hp,
+tactical,orange,,counts twice for tactic costs,
+tall,orange,,x2 vs the topmost target,
+terminal,purple,,x2 vs targets on 1 hp,
+threesy,orange,,Other keywords see colored N as 3,
+treble,light,,Other keywords x2 -> x3,Keyword that gives x2 once you satisfy its condition will now give x3
+trill,light,,"If trio's condition is met, gain the effects of skill",bonus pips equal to my level if this has the same value as the 2 previous dice this turn
+trio,light,,x3 if this has the same value as the 2 previous dice this turn,
+underdog,yellow,,x2 vs targets with more hp than me,
+undergrowth,green,,"After use, the opposite side gets +1 this fight after use",
+underocus,yellow,,x4 if the conditions of both underdog and focus are met,x4 vs targets with more hp than me and is the target of the previous dice this turn
+unusable,grey,,cannot be used (manually),Cantrip is still allowed
+uppercut,orange,,x2 vs targets with the most hp of all,
+vigil,light,,+1 pip for each defeated ally,
+vitality,light,,grants the target +N empty max hp this fight,
+vulnerable,orange,,target takes +N damage from dice & abilities this turn,
+weaken,green,,"target gets -N to all sides this turn
+","Can be cleansed. If a monster has this side, then the weaken status lasts until the end of next turn or cleansed"
+wham,light,,x2 vs targets with shields,
+wither,green,,grants the target -N empty max hp this fight,
+zeroed,grey,,Other keywords see colored N as 0,

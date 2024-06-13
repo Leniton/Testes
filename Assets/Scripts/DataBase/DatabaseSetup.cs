@@ -8,6 +8,9 @@ public class DatabaseSetup
     public static void SetUp()
     {
         DiceSideSetup();
+        HeroesSetup();
+        ItemsSetup();
+        KeywordsSetup();
     }
 
     public static void DiceSideSetup()
@@ -24,6 +27,52 @@ public class DatabaseSetup
             int.TryParse(idSideData[i, 1], out int id);
             string name = idSideData[i, 2];
             DiceSideDatabase.sidesData.Add(new SideData(id, name, idSideData[i, 3] == "TRUE" ? 0 : -1));
+        }
+    }
+
+    public static void HeroesSetup()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Heroes");
+        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        int startingIndex = 4; //where data starts
+        int length = idSideData.GetLength(0);
+        HeroDatabase.Heroes.Clear();
+
+        //0: color | 1: tier | 3: name | 4: hp
+        for (int i = startingIndex; i < length; i++)
+        {
+            string name = idSideData[i, 3];
+            HeroDatabase.Heroes.Add(name);
+        }
+    }
+    public static void ItemsSetup()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Items");
+        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        int startingIndex = 3; //where data starts
+        int length = idSideData.GetLength(0);
+        ItemDatabase.Items.Clear();
+
+        //0: name | 2: tier | 4: effects
+        for (int i = startingIndex; i < length; i++)
+        {
+            string name = idSideData[i, 0];
+            ItemDatabase.Items.Add(name);
+        }
+    }
+    public static void KeywordsSetup()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Keywords");
+        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        int startingIndex = 3; //where data starts
+        int length = idSideData.GetLength(0);
+        KeywordDatabase.keywords.Clear();
+
+        //0: name | 2: color | 4: effects
+        for (int i = startingIndex; i < length; i++)
+        {
+            string name = idSideData[i, 0];
+            KeywordDatabase.keywords.Add(name);
         }
     }
 }

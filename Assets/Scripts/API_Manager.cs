@@ -8,7 +8,7 @@ public class API_Manager : MonoBehaviour
     private void Awake()
     {
         //Debug.Log(DiceSideDatabase.sides[1].name);
-        MonoAbstraction item = WindowGenerator.Hero_Generated(HeroColor.y, 2);
+        MonoAbstraction item = WindowGenerator.Item_Reference();
         item.transform.SetParent(MainParent, false);
     }
 }

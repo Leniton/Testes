@@ -1,0 +1,587 @@
+472 items,,,,,,,
+Item,Tier,Icon,Effect,Unlock condition,,,
+Dead Crow,-7,,"Must be equipped
+Start of turn 1: I die",None,,Tier,Number of item(s)
+Amnesia,-4,,"Must be equipped
+Replace all sides with 'blank'",None,,-50,1
+Backstab,-4,,"Must be equipped
+Replace the middle four sides with '4 damage to an ally mandatory generous stasis'",None,,-7,1
+Empathy,-4,,"Must be equipped
+When an enemy dies, i die",None,,-4,3
+Broken Spirit,-2,,"Must be equipped
+Immune to healing
+Immune to shields",None,,-2,9
+Compulsion,-2,,"Must be equipped
+Add mandatory and pain to all sides",None,,-1,13
+Conscience,-2,,"Must be equipped
+When an enemy dies, 1 self damage",None,,0,74
+Exhaustion,-2,,"Must be equipped
+Add exert to all sides",None,,1,48
+Parasite,-2,,"Must be equipped
+Set starting hp to 1",None,,2,45
+Pharaoh Curse,-2,,"Must be equipped
+-1 pip to all sides",None,,3,39
+Slimed,-2,,"Must be equipped
+Add 'sticky' to all sides",None,,4,48
+Soul Link,-2,,"Must be equipped
+When an ally dies, you die","Complete ""Encumbered"" achievement",,5,36
+Wretched Crown,-2,,"Must be equipped
+Upon death: kill all allies",None,,6,37
+Affliction,-1,,"Must be equipped
+Add pain to the two left sides",None,,7,30
+Barrel Hoops,-1,,"Must be equipped
+5 damage to adjacent allies upon death",None,,8,26
+Brittle,-1,,"Must be equipped
+Death is permanent",None,,9,16
+Broken Heart,-1,,"Must be equipped
+Immune to healing",None,,10,8
+Coiled Snake,-1,,"Must be equipped
+Start poisoned",None,,11,8
+Cursed Bolt,-1,,"Must be equipped
+After an ability is used, 1 self damage","Complete ""Cursed Bolt"" achievement",,12,6
+D4,-1,,"Must be equipped
+Replace the right side with '1 self damage cantrip'",None,,13,4
+Handcuffs,-1,,"Must be equipped
+-1 item slot",None,,14,6
+Lead Weight,-1,,"Must be equipped
+Replace the top and bottom sides with 'blank'",None,,15,7
+Martyr,-1,,"Must be equipped
+Add death & +2 pips to the two left sides","Complete ""Encumbered"" achievement",,16,5
+Mould,-1,,"Must be equipped
+Add decay to all sides",None,,17,3
+Tracked,-1,,"Must be equipped
+Upon death: summon a wolf",None,,,
+Weariness,-1,,"Must be equipped
+Add exert to the two left sides",None,,,
+Atlas Stone,0,,"+1 pip to the top and bottom sides
+-2 item slots",None,,,
+Banana Peel,0,,Replace the two right sides with 'Add cantrip to target's sides this turn',None,,,
+Bent Fork,0,,x1 the pips of the two right sides,"Complete ""I wish I could undo this achievement"" achievement",,,
+Bent Spoon,0,,+0 pips of the two left sides,"Complete ""Snake-eyes"" achievement",,,
+Bent Spork,0,,x-1 the pips of the middle column,None,,,
+Big Fish,0,,Add vitality to all damage sides,None,,,
+Bond Certificate,0,,The 15th turn: +15 pips on all sides,"Complete ""I wish I could undo this achievement"" achievement",,,
+Brick,0,,Add petrify to all basic shield sides,None,,,
+Burred Shield,0,,Replace the left side with 'Shield 5 pain',None,,,
+Camomile,0,,Remove cantrip from all sides,None,,,
+Can,0,,Add century to the two right sides,None,,,
+Card,0,,Add inflictinflictnothing to the two right sides,None,,,
+Chalk,0,,Replace curse blank sides with '3 mana death',None,,,
+Cholesterol,0,,"+5 empty max hp
+Immune to healing",None,,,
+Cigarette end,0,,Add doubleUse to all singleUse sides,None,,,
+Cracked Emerald,0,,Gain the effects of all tier 12 items on other heroes,"Complete ""Emerald Mirror-Pick"" achievement",,,
+Cracked Phylactery,0,,"Add selfheal to the two left sides
+-6 max hp","Complete ""Pocket Phylactery-Pick"" achievement",,,
+Cyanide Pill,0,,Add cantrip & death to the two right sides,None,,,
+Dead Branch,0,,Replace the bottom side with '1 damage singleUse',None,,,
+Dull Wit,0,,"Replace mana/manaGain sides with 'basic damage' sides, retaining their original pips and other
+keywords",None,,,
+Dusty Emerald,0,,Gain the effects of all tier 0 items on other heroes,None,,,
+Extra Pocket,0,,+1 item slot (max 4),None,,,
+False Idol,0,,+1 max hp for each 'z' in my name,None,,,
+Fidget Spinner,0,,Replace the middle side with 'Target hero can use their dice again duplicate',"Complete ""I wish I could undo this achievement"" achievement",,,
+Flea,0,,Add pain & +1 pip to all sides with exactly 0 pips,"Complete ""I wish I could undo this achievement"" achievement",,,
+Fly,0,,Add growth & decay to the left side,None,,,
+Grass,0,,Replace blank sides with 'blank (petrified)',"Complete ""I wish I could undo this achievement"" achievement",,,
+Hidden Strength,0,,Replace the bottom side with '10 damage to all enemies manacost',"Complete ""I wish I could undo this achievement"" achievement",,,
+Huge Scabbard,0,,+1 pip to all sides with exactly 10 pips,None,,,
+Idol of Pythagoras,0,,+1 max hp for each number in my name,None,,,
+Knot,0,,Add permissive to all blank sides,None,,,
+Lawnmower,0,,Remove green keywords from all sides,None,,,
+Learn Aid,0,,Learn the spell: Aid (Cost: 1 mana - Heal 2 to all enemies),None,,,
+Learn Bank,0,,Learn the spell: Bank (Cost: 4 mana - 3 mana future singleCast),None,,,
+Learn Betray,0,,Learn the spell: Betray (Cost: 2 mana - Kill an ally),None,,,
+Learn Burstic,0,,Learn the tactic: Burstic (Cost: 2x mana pips - 2 damage or shield 2),None,,,
+Learn Hinder,0,,Learn the spell: Hinder (Cost: 1 mana - 1 damage to an ally weaken),None,,,
+Learn Invoke,0,,Learn the spell: Invoke (Cost: 1 mana - Summon a demon),None,,,
+Learn Mana,0,,Learn the spell: Mana (Cost: 1 mana - +1 mana singleCast),None,,,
+Learn Niche,0,,Learn the spell: Niche (Cost: 2 mana - Kill an enemy with exactly 41 hp),None,,,
+Learn Oof,0,,Learn the tactic: Oof (Cost: 5x blank sides - 5 damage),None,,,
+Learn Tsrub,0,,Learn the spell: Tsrub (Cost: 2 mana - Shield 2 to an enemy or 2 damage to an ally),None,,,
+Learn Waste,0,,Learn the spell: Waste (Cost: 1 mana - Replace blank sides with '1 damage death' this turn),None,,,
+Monster Grin,0,,Add possessed to the top and bottom sides,None,,,
+Old Root,0,,+2 pips to all basic heal sides,None,,,
+Orbit,0,,Shift my row across by 1 x4,None,,,
+Overprepared,0,,The zeroth turn: +1 pip to all sides,None,,,
+Paper,0,,Add nothing to the left side,None,,,
+Peanut Shell,0,,"Must be equipped
++1 empty max hp",None,,,
+Pin,0,,Replace blank sides with '1 self damage cantrip',None,,,
+Potion Shard,0,,Replace the bottom side with '3 damage pain potion',"Complete ""Herbalist-Pick"" achievement",,,
+Refactor,0,,Replace recharge sides with 'Add doubleUse to target's sides this turn',"Complete ""70 Achievements"" achievement",,,
+Rorrim Tekcop,0,,Copy the rightmost side onto the left side,"Complete ""Pocket Mirror-Pick"" achievement",,,
+Rusty Longsword,0,,Replace the middle row with '1 damage',None,,,
+Scissors,0,,Add deathwish & pain to the middle side,None,,,
+Scoundrel Stash,0,,"Scoundrel only
++1 pip to the two left sides",None,,,
+Shroud,0,,Add reborn to the middle side,None,,,
+Sleeper Agent,0,,Replace the rightmost side with '5 damage to an ally mandatory generous stasis',None,,,
+Snake Oil,0,,Add engage to all basic heal sides,"Complete ""I wish I could undo this achievement"" achievement",,,
+Spanner,0,,"Revert all changes to the rightmost side
+(Replace rightmost side with my base rightmost side)","Complete ""I wish I could undo this achievement"" achievement",,,
+Splinter,0,,-1 max hp,None,,,
+Sprinkles,0,,"Violet hero only
++1 pip to the left side",None,,,
+Stake,0,,Add terminal to all damage sides,"Complete ""70 Achievements"" achievement",,,
+Stale Bread,0,,Replace the two left sides with 'Gain 0 rerolls cantrip' & 'blank',None,,,
+Stoneskin,0,,"+2 max hp
+Replace all sides with 'blank'",None,,,
+Taxes,0,,Add mandatory to all sides,None,,,
+Tin Foil Hat,0,,See the hidden reality behind some sides,None,,,
+Toy Sword,0,,Replace the rightmost side with '0 damage',"Complete ""I wish I could undo this achievement"" achievement",,,
+Trick Deck,0,,Add sept to the left side,"Complete ""I wish I could undo this achievement"" achievement",,,
+Twiddle,0,,Swap the top side with the bottom side,None,,,
+Two of Clubs,0,,"+1 to the rightmost side
+-1 to other sides","Complete ""7 Damage!"" achievement",,,
+Void,0,,does absolutely n o t h i n g (but hey this item is good for hoard),None,,,
+Wooden Armour,0,,"+2 max hp
+-1 pip to all sides",None,,,
+Yearn,0,,Replace blank sides with 'Heal and shield 0 manaGain',None,,,
+Anchor,1,,Start of turn 1: self-shield 2,None,,,
+Arrow,1,,Replace damage sides with 'Kill an enemy with 2 or less hp ranged',"Complete ""70 Achievements"" achievement",,,
+Balisong,1,,Replace the left side with '1 damage cantrip',None,,,
+Ballet Shoes,1,,Swap the left side with the rightmost side,"Complete ""Dancer-Pick"" achievement",,,
+Barkskin,1,,"Immune to shields
++2 max hp",None,,,
+Basilisk Scale,1,,"Start petrified for 1
++3 pips to the top side","Complete ""Petrified"" achievement",,,
+Big Heart,1,,Replace the middle side with 'Heal 7',None,,,
+Big Shield,1,,Replace the left side with 'Shield 4',None,,,
+Bone Charm,1,,No hp penalty when defeated,None,,,
+Bowl,1,,"Revert all changes to the middle column
+(Replace middle column with my base middle column)","Complete ""70 Achievements"" achievement",,,
+Castor Root,1,,Replace blank sides with 'Heal 1',None,,,
+Change of Heart,1,,"Replace heal/selfheal sides with 'basic shield' sides, retaining their original pips and other keywords","Complete ""Change of Heart"" achievement",,,
+Cheating Sleeves,1,,Add quin to the top and bottom sides,"Complete ""Ace-Pick"" achievement",,,
+Cloak,1,,Replace the middle side with 'Dodge all damage and enemy effects this turn',None,,,
+Clumsy Shoes,1,,Add heavy & eliminate & +1 pip to all targeted sides,"Complete ""70 Achievements"" achievement",,,
+Coin,1,,"+4 pips to the left side
+-1 reroll","Complete ""70 Achievements"" achievement",,,
+Compass,1,,"Rotate sides clockwise around the middle side
+(Left side moves to top side, top side moves to right side, right side moves to bottom side and bottom side moves to left side)","Complete ""45 Achievements"" achievement",,,
+Copper Ring,1,,"+1 empty max hp
++1 max stored mana",None,,,
+Corset,1,,"Replace the left side with 'blank'
++1 pip to the middle side",None,,,
+Courage Potion,1,,Add potion & +3 pips to the left side,"Complete ""Herbalist-Pick"" achievement",,,
+Doll,1,,"Replace the left side with the above hero's base side
+-1 pip to the five right sides","Complete ""70 Achievements"" achievement",,,
+Doom Blade,1,,Replace blank sides with '3 damage death',"Complete ""70 Achievements"" achievement",,,
+Emerald Shard,1,,"Gain the effects of all tier 2 items on other heroes
+(Can copy the effects of items that are exclusive to a certain hero color)","Complete ""Hidden Emerald"" achievement",,,
+Glass Helm,1,,"+3 max hp
+Death is permanent","Complete ""Oops+"" achievement",,,
+Healing Wand,1,,Replace the rightmost side with 'Heal 4 single-use',None,,,
+Infused Herbs,1,,Replace the bottom side with 'Heal 2 regen cleanse manacost',"Complete ""45 Achievements"" achievement",,,
+Iron Heart,1,,Add exert & +1 pip to all sides,"Complete ""70 Achievements"" achievement",,,
+Knife Bag,1,,"Replace blank sides with '1 damage cantrip, pain'","Complete ""Draw"" achievement",,,
+Learn Poultice,1,,Learn the spell: Poultice (Cost: 1 mana - Heal 2 singleCast),None,,,
+Leather Vest,1,,+1 max hp,None,,,
+Memory,1,,"Revert all changes to the left side
+(Replace left side with my base left side)","Complete ""45 Achievements"" achievement",,,
+Necromancer Tome,1,,"You can cast spells from defeated heroes
+Replace the left side with '3 mana pain'","Complete ""45 Achievements"" achievement",,,
+Pendulum,1,,Swap the left side with the middle side,"Complete ""70 Achievements"" achievement",,,
+Quiver,1,,Replace the five right sides with '1 damage ranged',None,,,
+Reagents,1,,Replace the two right sides with 'blank' & 'Heal 1 regen',None,,,
+Revive Potion,1,,Replace the right side with 'Revive the 5 top-most defeated allies potion',"Complete ""Herbalist-Pick"" achievement",,,
+Rusty Plate,1,,"Replace the middle side with 'blank'
++3 max hp",None,,,
+Scar,1,,+5 empty max hp,"Complete ""Heal"" achievement",,,
+Seedling,1,,Replace the left side with '2 damage growth',None,,,
+Sorcery Notes,1,,Replace the two left sides with '+1 mana cantrip' & 'blank',"Complete ""45 Achievements"" achievement",,,
+Tankard,1,,Add acidic to the middle side,"Complete ""45 Achievements"" achievement",,,
+Tattered Robes,1,,"Replace the three right sides with '+1 mana'
++1 max stored mana",None,,,
+Tincture,1,,Add cleanse to the rightmost side,"Complete ""45 Achievements"" achievement",,,
+Titanbane Potion,1,,Add dispel & potion to the middle side,"Complete ""Herbalist-Pick"" achievement",,,
+Trowel,1,,Replace the left side with 'Revive the top-most defeated ally',None,,,
+Wand of Wand,1,,Replace the middle side with '1 damage singleUse inflictsingleUse',"Complete ""Wand Regret"" achievement",,,
+Whey,1,,Add vitality to the left side,"Complete ""70 Achievements"" achievement",,,
+Wolf Ears,1,,Set max hp to 6,None,,,
+Ace of Spades,2,,"+2 to the left side
+-2 to the five right sides","Complete ""Gambler-Pick"" achievement",,,
+Autumn Leaf,2,,Add growth to the rightmost side,None,,,
+Big Hammer,2,,Replace the two left sides with '5 damage heavy' & 'blank',None,,,
+Blessed Ring,2,,Replace the rightmost side with 'Shield 1 rescue',"Complete ""Blessed Ring"" achievement",,,
+Blessed Water,2,,Replace the rightmost side with 'Heal 3 vitality',None,,,
+Buckler,2,,Replace the middle side with 'Shield 3 bloodlust',None,,,
+Burning Blade,2,,"Replace the left side with '4 damage'
+-2 max hp",None,,,
+Citrine Ring,2,,+1 pip to the rightmost side,None,,,
+Clef,2,,Add treble to the left side,"Complete ""70 Achievements"" achievement",,,
+Clumsy Hammer,2,,Replace the top side with '4 damage heavy eliminate',"Complete ""70 Achievements"" achievement",,,
+Faint Halo,2,,+1 max hp this fight whenever I save a hero,None,,,
+First aid Kit,2,,"Orange heroes only
+Replace the bottom side with 'Heal 2 cleanse'","Complete ""45 Achievements"" achievement",,,
+Fletching,2,,Add ranged to the left side,None,,,
+Flickering Blade,2,,Replace the rightmost side with '1 damage copycat',"Complete ""70 Achievements"" achievement",,,
+Foil,2,,Replace the right side with '0 damage skill',"Complete ""70 Achievements"" achievement",,,
+Friendship Bracelet,2,,"+2 empty max hp
+Monsters flee if you have 5x as much hp as them instead of 10x","Complete ""Benevolence"" achievement",,,
+Garnet,2,,+1 to incoming healing,None,,,
+Golden Thread,2,,"Yellow heroes only
++1 pip to all non-damage sides","Complete ""70 Achievements"" achievement",,,
+Ice Cube,2,,Add stasis to the left side,"Complete ""45 Achievements"" achievement",,,
+Kilt,2,,Copy the right side onto the rightmost side,None,,,
+Learn Remedy,2,,Learn the spell: Remedy (Cost: 1 mana - Heal 1 cleanse singleCast),"Complete ""45 Achievements"" achievement",,,
+Learn Wings,2,,Learn the spell: Wings (Cost: 2 mana - Heal 3 to the top and bottom allies),None,,,
+Leather Gloves,2,,Copy the rightmost side onto the top and bottom sides,"Complete ""45 Achievements"" achievement",,,
+Liqueur,2,,"Swap the top side with the rightmost side
++2 max stored mana","Complete ""70 Achievements"" achievement",,,
+Needle,2,,Add picky & +2 pips to all targeted sides,"Complete ""70 Achievements"" achievement",,,
+Origami,2,,"Swap each side with its opposite
+(Swap top side with bottom side, left side with right side, middle side with rightmost side)","Complete ""45 Achievements"" achievement",,,
+Peaked Cap,2,,Copy the middle side onto the left side,None,,,
+Pillow,2,,Add patient to the left side,None,,,
+Polearm,2,,Replace damage sides with my top side,"Complete ""70 Achievements"" achievement",,,
+Powdered Mana,2,,Replace blank sides with '+1 mana',None,,,
+Quicksilver,2,,Keep unused shields,"Complete ""Ironclad"" achievement",,,
+Rain of Arrows,2,,Replace the top side with '1 damage ranged duplicate',None,,,
+Rejuvenation Wand,2,,Replace the top and bottom sides with 'Heal 10 singleUse',None,,,
+Sapphire,2,,Replace the middle side with '+2 mana',None,,,
+Sapphire Skull,2,,Upon death: +2 mana,None,,,
+Silver Imp,2,,Replace the top and bottom sides with 'Gain 1 reroll cantrip pain',"Complete ""Spines+"" achievement",,,
+Spinach,2,,Start of turn 1: Self-heal 3,"Complete ""45 Achievements"" achievement",,,
+Square Wheel,2,,"Replace the three right sides with 'Gain 1 reroll cantrip', 'blank' & 'blank'","Complete ""70 Achievements"" achievement",,,
+Static Tome,2,,Replace the top and bottom sides with '+1 mana pair',"Complete ""70 Achievements"" achievement",,,
+Statuette,2,,"Replace the middle row with 'blank'
++6 max hp","Complete ""Statue-Pick"" achievement",,,
+Terrarium,2,,Replace the two right sides with 'Shield 2 growth' & '+1 mana growth',None,,,
+Tower Shield,2,,Replace the middle side with 'Shield 7 heavy',"Complete ""70 Achievements"" achievement",,,
+Twin Daggers,2,,Replace the top and bottom sides with '1 damage cantrip',None,,,
+Wandify,2,,Add singleUse & +1 pip to the two right sides,None,,,
+Worn Arms,2,,Replace the top and bottom sides with '2 damage' & Shield 2',None,,,
+Abacus,3,,"Shift my middle row across by 1
++1 max hp","Complete ""45 Achievements"" achievement",,,
+Aegis,3,,Replace the middle side with 'Shield 1 duplicate steel',"Complete ""70 Achievements"" achievement",,,
+Ash,3,,Add enduring to the middle two sides,"Complete ""45 Achievements"" achievement",,,
+Blood Chalice,3,,Self-shield 1 for each wasted point of healing I receive,None,,,
+Clover,3,,"+1 to the left side
+ -2 to the middle side",None,,,
+Diving Suit,3,,Replace the two right sides with the hero below's base sides,"Complete ""70 Achievements"" achievement",,,
+Droopy Hat,3,,"+2 max hp
++2 max stored mana",None,,,
+Duvet,3,,Add patient to the three right sides,"Complete ""45 Achievements"" achievement",,,
+Enchanted Shield,3,,"At the start of each turn, self-shield 1",None,,,
+Golden Cup,3,,"+100 empty max hp
++100 max stored mana","Complete ""45 Achievements"" achievement",,,
+Harpoon,3,,Replace the rightmost side with '1 damage vulnerable',None,,,
+Incense,3,,Add rite to the top side,"Complete ""45 Achievements"" achievement",,,
+Iron Pendant,3,,+1 to incoming shields,None,,,
+Juice,3,,Add selfcleanse to the left side,"Complete ""45 Achievements"" achievement",,,
+Ladder,3,,Replace the middle side with the hero above's base side,"Complete ""70 Achievements"" achievement",,,
+Lead Boots,3,,Add sticky & +1 pip to all sides,None,,,
+Learn Flare,3,,Learn the spell: Flare (Cost: 4 mana - 5 damage),None,,,
+Learn Heat,3,,Learn the spell: Heat (Cost: 3 mana - Heal 3 to all allies with shields cleanse),"Complete ""70 Achievements"" achievement",,,
+Learn Sprout,3,,Learn the spell: Sprout (Cost: 3 mana - Heal 3 channel),None,,,
+Lich Finger,3,,Add manaGain & death to the left side,"Complete ""Manastorm+"" achievement",,,
+Lightning Rod,3,,Replace the left side with '0 damage ranged charged rampage pain',"Complete ""Choose-Party 5x"" achievement",,,
+Longbow,3,,Replace the top and bottom sides with '2 damage ranged',None,,,
+Magnet,3,,Add wham to the two right sides,None,,,
+Mana Bomb,3,,Replace the rightmost side with '0 damage to all heroes and monsters charged manacost',"Complete ""70 Achievements"" achievement",,,
+Pocket Phylactery,3,,"Add pain to the two left sides
++6 max hp",None,,,
+Poem,3,,Add alliteration to all damage sides,"Complete ""Poet-Pick"" achievement",,,
+Pure Heart Pendant,3,,Replace the middle side with 'Heal 3 cleanse',None,,,
+Ritual Dagger,3,,Replace the rightmost side with 'Revive the 4 top-most defeated allies death',"Complete ""75 Deaths"" achievement",,,
+Scalpel,3,,"Red heroes only
++1 pip to all damage sides",None,,,
+Shortsword,3,,Replace the two right sides with '2 damage',None,,,
+Siphon,3,,Add pain & +1 pip to all mana/manaGain sides,"Complete ""70 Achievements"" achievement",,,
+Smelly Manure,3,,"Add growth to the top and bottom sides
+Add decay to the middle row","Complete ""Overgrowth"" achievement",,,
+Syringe,3,,Add cantrip to all sides if there are 2 or fewer living heroes,"Complete ""45 Achievements"" achievement",,,
+Three of a Kind,3,,Add trio to the rightmost side,"Complete ""45 Achievements"" achievement",,,
+Unholy Strength,3,,"Immune to shields
+Immune to healing
++1 pip to the middle row",None,,,
+Viscera,3,,Replace the middle side with '0 damage flesh pain',"Complete ""70 Achievements"" achievement",,,
+Whetstone,3,,+1 pip to all basic damage sides,None,,,
+Wild Seeds,3,,Add undergrowth to the two left sides,"Complete ""70 Achievements"" achievement",,,
+Wristblade,3,,Replace blank sides with '1 damage doubleUse',None,,,
+Alembic,4,,Replace the middle side with 'Add manaGain & pain to target's sides this turn',"Complete ""70 Achievements"" achievement",,,
+Antivenom,4,,Immune to poison,None,,,
+Apple,4,,Add ego to the two left sides,"Complete ""45 Achievements"" achievement",,,
+Bonesaw,4,,"Red heroes only
+Replace the top and bottom sides with '3 damage cruel'","Complete ""45 Achievements"" achievement",,,
+Cart,4,,"All heroes: +1 item slot (max 4)
+-2 item slots","Complete ""70 Achievements"" achievement",,,
+Chainmail,4,,+3 max hp,None,,,
+Chakram,4,,"Replace shield/selfshield sides with 'ranged damage' sides, retaining their original pips and other 
+keywords","Complete ""45 Achievements"" achievement",,,
+Charged Skull,4,,Upon death: +4 mana,None,,,
+Corruption,4,,Add evil & +1 pip to all heal/selfheal sides,"Complete ""45 Achievements"" achievement",,,
+Cracked Plate,4,,"-4 max hp
+At the start of each turn, self-shield 4",None,,,
+Demon Eye,4,,Add pain & +2 pips to the left side,None,,,
+Dragonhide Gloves,4,,Copy the middle side onto the top and bottom sides,None,,,
+Duelling Pistol,4,,Add duel to the left side,"Complete ""45 Achievements"" achievement",,,
+Dynamo,4,,Add singleUse & era to the two right sides,None,,,
+Eggshell,4,,Add zeroed to all sides,"Complete ""70 Achievements"" achievement",,,
+Eyepatch,4,,Remove all keywords from the left side,None,,,
+Faerie Pact,4,,"Replace the rightmost side with '+4 mana'
+-4 max hp",None,,,
+Fangs,4,,Add selfheal to the left side,None,,,
+Flawed Diamond,4,,"Add pristine to the two left sides
++4 empty max hp","Complete ""70 Achievements"" achievement",,,
+Full Moon,4,,Every 2nd turn: Replace all sides with wolf's sides,"Complete ""70 Achievements"" achievement",,,
+Glass Blade,4,,"Replace the left side with '5 damage'
+'Glass Blade' lost upon death","Complete ""70 Achievements"" achievement",,,
+Glowing Egg,4,,Add growth to the left side,None,,,
+Hissing Ring,4,,Replace the middle side with '2 damage poison',None,,,
+Idol of Aiiu,4,,+1 max hp for each vowel in my name,"Complete ""45 Achievements"" achievement",,,
+Ink Bottle,4,,Replace blank sides with 'Shield 1 cantrip',None,,,
+Inner Strength,4,,Remove red & purple keywords from all sides,"Complete ""70 Achievements"" achievement",,,
+Jester Cap,4,,Replace all sides with Jester's sides,"Complete ""Jester-Pick"" achievement",,,
+Learn Beam,4,,Learn the spell: Beam (Cost: 5 mana - 7 damage singleCast ranged),None,,,
+Learn Hack,4,,Learn the spell: Hack (Cost: 2 mana - Replace blank sides with '4 damage' this turn),"Complete ""45 Achievements"" achievement",,,
+Learn Hex,4,,Learn the spell: Hex (Cost: 3 mana - Kill an enemy with exactly 6 hp ranged singleCast),None,,,
+Learn Invest,4,,Learn the spell: Invest (Cost: 4 mana - +6 mana future cooldown),None,,,
+Learn Mark,4,,Learn the spell: Mark (Cost: 4 mana - 2 damage vulnerable),None,,,
+Life Bolt,4,,"After an ability is cast, self-heal 1",None,,,
+Magic Staff,4,,Set all mana/manaGain sides to 2,None,,,
+Mana Jelly,4,,Add single-use & cantrip to all mana/mana-gain sides,"Complete ""Manastorm"" achievement",,,
+Natural,4,,"Blue heroes only
+Replace the two right sides with '+2 mana'",None,,,
+Obol,4,,Add deathwish to the two right sides,None,,,
+PowerStone,4,,"Grey heroes only
+Replace the left side with '+0 mana steel'","Complete ""70 Achievements"" achievement",,,
+Pulley,4,,"Shift my column down by 1
+(Top side moves to middle side, middle side moves to bottom side, bottom side moves to top side)
++2 item slots","Complete ""70 Achievements"" achievement",,,
+Red flag,4,,"+3 max hp
+Replace the middle side with 'Redirect all enemy attacks and enemy effects from an ally to me cleave'","Complete ""Choose-Party 4x"" achievement",,,
+Relic,4,,Add swapterminal to all sides,"Complete ""Last Legs"" achievement",,,
+Shuriken,4,,Add ranged & chain to the two right sides,"Complete ""70 Achievements"" achievement",,,
+Soup,4,,"Replace shield/selfshield sides with 'heal and shield sides', retaining their original pips and other 
+keywords","Complete ""70 Achievements"" achievement",,,
+Splitting Arrows,4,,Replace the two right sides with '1 damage ranged cleave',None,,,
+Tiara,4,,Add selfheal to all mana/manaGain sides,None,,,
+Troll Nose,4,,Start with 1 regen,"Complete ""Troll Slayer"" achievement",,,
+Updog,4,,Add overdog to the top side,"Complete ""Sling-Pick"" achievement",,,
+Whiskers,4,,"Replace the three right sides with '1 damage ranged copycat', '1 damage copycat', 'Shield 1 copycat'","Complete ""45 Achievements"" achievement",,,
+Ambrosia,5,,Add rescue to the left side,None,,,
+Bag of Holding,5,,"+2 item slots (max 4)
++2 max hp",None,,,
+Bandana,5,,Add cantrip to all pipless sides,"Complete ""70 Achievements"" achievement",,,
+Cocoon,5,,Add era & -1 pip to all sides,"Complete ""45 Achievements"" achievement",,,
+Cracked Wheel,5,,"Add sticky to all sides
++1 reroll",None,,,
+Crystallise,5,,Add stasis to all sides,"Complete ""70 Achievements"" achievement",,,
+Decree,5,,Add dogma to all sides,"Complete ""70 Achievements"" achievement",,,
+Demon Horn,5,,Replace the rightmost side with 'Heal 2 boost inflictpain',"Complete ""70 Achievements"" achievement",,,
+Doomblade,5,,Add guilt & +1 pip to all damage sides,"Complete ""70 Achievements"" achievement",,,
+Door,5,,+2 pips to all shield/selfshield sides if there are 4 or more monsters,"Complete ""45 Achievements"" achievement",,,
+Early Grave,5,,Add pain & cantrip to all sides with 3 or more pips,"Complete ""25 Deaths"" achievement",,,
+Enchanted Harp,5,,Replace the middle side with 'Shield 2 to all allies',"Complete ""Bard-Pick"" achievement",,,
+Erythrocyte,5,,Replace the middle side with 'Shield 0 flesh',"Complete ""45 Achievements"" achievement",,,
+Fearless,5,,"+1 max hp
+Replace the rightmost side with 'Stun an enemy with equal or less hp than me'",None,,,
+Gizmo,5,,Add shifter to the two right sides,"Complete ""45 Achievements"" achievement",,,
+Glyph of Purity,5,,Add cleanse to the top and bottom sides,None,,,
+Lens,5,,Add focus to all heal/selfheal sides,"Complete ""45 Achievements"" achievement",,,
+Longsword,5,,Replace the middle row with '3 damage',None,,,
+Mini Crossbow,5,,"Replace the top side with '2 damage ranged, engage'",None,,,
+Monocle,5,,Add engage to the middle side,None,,,
+Nunchaku,5,,Add chain to the top and bottom sides,"Complete ""70 Achievements"" achievement",,,
+Ordinary Triangle,5,,+1 pip to all sides with exactly 3 pips,"Complete ""All 3"" achievement",,,
+Pauldron,5,,"+2 pips to the top side
+-2 pips to the bottom side",None,,,
+Polished Emerald,5,,"Gain the effects of all tier 2-4 items on other heroes
+(Can copy the effects of items that are exclusive to a certain hero color)","Complete ""Hidden Emerald"" achievement",,,
+Poodle,5,,Add dog to the middle column,"Complete ""Updog-Pick"" achievement",,,
+Ruby,5,,"+2 to incoming healing
++2 empty max hp",None,,,
+Sack of Mana,5,,"Replace the middle column with 'blank', '+4 mana' & 'blank'",None,,,
+Sceptre,5,,Replace the left side with '1 damage lead',"Complete ""45 Achievements"" achievement",,,
+Shimmering Halo,5,,+2 max hp this fight whenever you save a hero,"Complete ""Saviour"" achievement",,,
+Shining Bow,5,,Add ranged to all damage sides,None,,,
+Simplicity,5,,"+1 to all basic heal, mana, damage & shield sides",None,,,
+Sling,5,,Add underdog to the bottom side,"Complete ""45 Achievements"" achievement",,,
+Sponge,5,,"When an enemy dies, +1 pip to all sides this turn",None,,,
+Treasure Chest,5,,Add hoard & singleUse to the left side,"Complete ""Challenger+"" achievement",,,
+Wand Grips,5,,Add singleUse & +2 to the left side,None,,,
+Whiskey,5,,"+3 max hp
++6 empty max hp",None,,,
+Blindfold,6,,Remove all keywords from all sides,"Complete ""70 Achievements"" achievement",,,
+Blinding Bolt,6,,"After an ability is used, self-shield 2",None,,,
+Blood Amulet,6,,Add selfheal to the two left sides,None,,,
+Braids,6,,Copy the left side onto the middle side,None,,,
+Candle,6,,Add vigil to all sides,"Complete ""Survivor"" achievement",,,
+Catnip,6,,Add cantrip to the rightmost side,None,,,
+Cauldron,6,,Add rite & +1 pip to the middle side,None,,,
+Conduit,6,,Replace the middle side with '+2 mana duplicate',None,,,
+Crescent Shield,6,,Replace the left side with 'Shield 1 repel rampage rescue',"Complete ""45 Achievements"" achievement",,,
+Demonic Deal,6,,Add pain & +2 pips to all sides,"Complete ""Reaper"" achievement",,,
+Determination,6,,The 1st turn: Cannot die,"Complete ""70 Cheat Death"" achievement",,,
+Enhance Wand,6,,Replace the top side with 'Shield 1 singleUse permaBoost',None,,,
+Eucalyptus,6,,Replace the right side with 'Heal 1 cleanse quadUse',"Complete ""45 Achievements"" achievement",,,
+Ghost Shield,6,,"At the start of each turn, self-shield 2",None,,,
+Honeycomb,6,,Add sixth to the three right sides,"Complete ""70 Achievements"" achievement",,,
+Hourglass,6,,The 1st turn: +1 pip to all sides,"Complete ""Alpha Strike"" achievement",,,
+Idol of Chrzktx,6,,+1 max hp for each consonant in my nam',"Complete ""45 Achievements"" achievement",,,
+InfiniHeal,6,,"Replace the two right sides with 'heal all' sides, retaining their original value and keywords","Complete ""70 Achievements"" achievement",,,
+Jewel Loupe,6,,Add manaGain to all sides with exactly 1 pip,"Complete ""All 1"" achievement",,,
+Jump,6,,"Add all keywords from the left side to the top and bottom sides
+Replace the left side with 'blank'","Complete ""70 Achievements"" achievement",,,
+Karma,6,,"Add selfheal to all heal sides
+Add selfshield to all shield sides
+Add pain to all damage sides","Complete ""70 Achievements"" achievement",,,
+Kite Shield,6,,Set all shield/selfshield sides to 3,None,,,
+Leaden Handle,6,,Add heavy & +1 pip to all targeted sides,"Complete ""45 Achievements"" achievement",,,
+Learn Luck,6,,Learn the spell: Luck (Cost: 3 mana - Gain 8 rerolls future cooldown),None,,,
+Lich Eye,6,,Add manaGain & death & +2 pips to all sides,"Complete ""45 Achievements"" achievement",,,
+Ocular Amulet,6,,+1 pip to the left side,None,,,
+Scales,6,,Set the value of the rightmost side to the maximum of my other side's values,"Complete ""45 Achievements"" achievement",,,
+Silver Pendant,6,,+2 to incoming shields,None,,,
+Sparks,6,,Add cantrip to all sides with exactly 1 pip,None,,,
+Tie,6,,Add pristine to the middle side,None,,,
+Tooth Necklace,6,,Add cruel to the two left sides,None,,,
+Twisted Flax,6,,"+1 pip to the top and bottom sides
+ -1 pip to the middle side",None,,,
+Urn,6,,Add enduring to all sides,"Complete ""70 Achievements"" achievement",,,
+Wand of Stun,6,,Replace the middle side with 'Stun an enemy singleUse',"Complete ""NOT FAIR!"" achievement",,,
+Water,6,,"+1 pip to the left and right sides
+ -1 pip to the middle and rightmost sides",None,,,
+Wedding Rings,6,,Add pair to all heal/selfheal sides,"Complete ""70 Achievements"" achievement",,,
+Wrench,6,,+1 pip to the middle side,None,,,
+Anvil,7,,Add steel to the middle side,None,,,
+Boots of Speed,7,,"+1 reroll
+Replace the left side with 'Dodge all damage and enemy effects this turn'",None,,,
+Botany,7,,Add groupgrowth to all heal/selfheal sides,"Complete ""70 Achievements"" achievement",,,
+Broadsword,7,,Replace the middle column with '4 damage',None,,,
+Burning Halo,7,,1 damage to all enemies whenever I save a hero,None,,,
+Charge Link,7,,Add charged & singleUse to the top and bottom sides,None,,,
+Demon Claw,7,,Add rampage & -1 pip to the left side,None,,,
+Dragon Pipe,7,,+1 pip to all heal/selfheal sides,None,,,
+Duck,7,,Add echo to the two right sides,None,,,
+Flute,7,,Replace the rightmost side with 'Shield 1 to all allies cantrip',None,,,
+Glass Heart,7,,"Death is permanent
++1 pip to all sides",None,,,
+Ichor Chalice,7,,1 damage to the top-most enemy for each wasted point of healing I receive,"Complete ""Heal+"" achievement",,,
+Iron Helm,7,,+6 max hp,None,,,
+Learn Charge,7,,Learn the spell: Charge (Cost: 2 mana - Shield 2 boost singleCast),None,,,
+Metal Studs,7,,+1 pip to all shield/selfshield sides,None,,,
+Mushroom,7,,Add decay & +1 pip to all sides,None,,,
+Ogre Blood,7,,Add bloodlust to the middle side,None,,,
+Ornate Hilt,7,,Add selfshield to all damage sides,None,,,
+Pair of Kings,7,,Add pair to the top and bottom sides,None,,,
+Pocket Mirror,7,,Copy the left side onto the rightmost side,None,,,
+Second Chance,7,,Replace the rightmost side with 'Target hero can use their dice again',None,,,
+Sharp Wit,7,,"Replace mana/manaGain sides with 'basic damage' sides, retaining their other keywords and triple 
+their pips",None,,,
+Tentacle,7,,Add repel to the two right sides,"Complete ""70 Achievements"" achievement",,,
+Thimble,7,,Immune to damage during my turn,"Complete ""Oops"" achievement",,,
+Troll Blood,7,,Start with 2 regen,"Complete ""Troll Nemesis"" achievement",,,
+Twisted Bar,7,,Set all sides to 2,"Complete ""All 2"" achievement",,,
+Two Reeds,7,,+1 pip to all sides with even pips,None,,,
+Wandcraft,7,,"Replace all sides with 'singleUse mana' sides, retaining their original pips and keywords",None,,,
+Wine,7,,"Start poisoned
+All monsters: Start poisoned","Complete ""Green Blood"" achievement",,,
+Wooden Bracelet,7,,+1 pip to all sides with no keywords,None,,,
+Brimstone,8,,Triple the pips of the rightmost side,None,,,
+Bullseye,8,,Add engage to the middle column,None,,,
+Deadly Bolt,8,,"After an ability is used, 1 damage to the top-most enemy","Complete ""Wizard"" achievement",,,
+Faerie Dust,8,,Replace blank sides with '+3 mana',None,,,
+Gauntlet,8,,+1 pip to all damage sides,None,,,
+Greatsword,8,,Replace the middle side with '5 damage inspired',None,,,
+Holy Book,8,,Add cleanse & selfcleanse to the middle row,None,,,
+Iron Crown,8,,"Grey heroes only
++4 pips to the left side",None,,,
+Ironblood Pendant,8,,+3 to incoming healing and shields,None,,,
+Katar,8,,Add trio to all damage sides,None,,,
+Learn Spark,8,,Learn the spell: Spark (Cost: 4 mana - Add manaGain to target's sides this turn),None,,,
+Lion,8,,Add fierce to the two left sides,None,,,
+Mirror Mask,8,,Replace all sides with the hero above's base sides,None,,,
+Olympian Trident,8,,Add cleave to the middle side,None,,,
+Poison Dip,8,,Add poison to the top and bottom sides,None,,,
+Prism,8,,Add rainbow to the middle side,None,,,
+Sapphire Ring,8,,+1 pip to all mana/manaGain sides,None,,,
+Scorpion Tail,8,,Add weaken & pain to the top and bottom sides,None,,,
+Serration,8,,Add vulnerable to the top and bottom sides,None,,,
+Sickle,8,,+1 pip to all lowest-pip sides,None,,,
+Singularity,8,,+2 pips to the two right sides,None,,,
+Standard,8,,"Yellow heroes only
++1 pip to all sides",None,,,
+Sushi,8,,Replace the left side with 'Gain 2 rerolls cantrip',None,,,
+Tourmaline Paraiba,8,,Add era to all mana/manaGain sides,None,,,
+Tusk,8,,"+1 pip to all heal/selfheal sides
++1 pip to all shield/selfshield sides",None,,,
+Wax Seal,8,,All sides get +1 pip for each other identical side,"Complete ""70 Achievements"" achievement",,,
+Angel Feather,9,,Add rescue to the top and bottom sides,None,,,
+Boarhide Bracers,9,,+2 pips to the top and bottom sides,None,,,
+Chaos Wand,9,,Replace the middle side with '1 damage singleUse cleave engage selfheal weaken vulnerable',"Complete ""Chaos+++"" achievement",,,
+Charged Hammer,9,,"Replace the left side with '10 damage heavy, charged'",None,,,
+Collar,9,,Add copycat to the top and bottom sides,"Complete ""45 Achievements"" achievement",,,
+Dumbbell,9,,+4 pips to all sides with 4 or more pips,None,,,
+Emerald Mirror,9,,Gain the effects of all tier 6-8 items on other heroes,"Complete ""70 Achievements"" achievement",,,
+Eye of Horus,9,,+1 pip to all sides,None,,,
+Helm of Power,9,,Double the pips of the left side,None,,,
+Horned Viper,9,,Add poison to the two left sides,"Complete ""Mandrake"" achievement",,,
+Overflowing Chalice,9,,Add fizz to the three right sides,None,,,
+Second Heart,9,,+1 hp for each 1 hp,None,,,
+Silk Cape,9,,Copy the left side onto the middle row,None,,,
+Spike Stone,9,,Add fumble & +3 pips to the moddle column,None,,,
+Timestone,9,,Add cantrip to the two right sides,None,,,
+Triple Shuriken,9,,Add ranged & chain to all sides,"Complete ""70 Achievements"" achievement",,,
+Antlers,10,,"+1 pip to all heal/selfheal sides
++1 pip to all shield/selfshield sides
++1 pip to all damage sides
++1 pip to all mana/manaGain sides",None,,,
+Egg Basket,10,,"+6 pip to the left side
+Replace the five right sides with 'blank'",None,,,
+Heart of Light,10,,Replace blank sides with 'Heal 10 cleanse quadUse',None,,,
+Learn Abyss,10,,Learn the spell: Abyss (Cost: 5 mana - Kill an enemy with half or less hp),None,,,
+Mithril Shields,10,,Add cantrip to all shield/selfshield sides,None,,,
+Puzzle Box,10,,"Add enduring to the two left sides
+Swap the left side with the middle side","Complete ""70 Achievements"" achievement",,,
+Shiny Gauntlets,10,,Add pristine to the top and bottom sides,None,,,
+Stream,10,,Add all keywords present on this dice to the right side,"Complete ""70 Achievements"" achievement",,,
+Bismuth,11,,Replace blank sides with 'Add copycat to target's sides this turn',None,,,
+Diamond Skull,11,,"+2 max hp
+Upon death: +1 pip to allied sides this fight",None,,,
+Economancy,11,,Add squared to the middle column,None,,,
+Full Plate,11,,+14 max hp,None,,,
+Mana Potion,11,,Replace the top side with '+20 mana potion',"Complete ""Herbalist-Pick"" achievement",,,
+Poseidon Charm,11,,Add cleave to the top and bottom sides,None,,,
+Stilts,11,,Add tall to the middle column,None,,,
+Telescope,11,,Add spy to the two left sides,"Complete ""70 Achievements"" achievement",,,
+Broomstick,12,,Add mana-gain to the top and bottom sides,None,,,
+Coffee,12,,Add cantrip to all highest-pip sides,None,,,
+Conjuring Rings,12,,Add duplicate to the top side,None,,,
+Locket,12,,Add resilient to all sides,None,,,
+Ruby Shards,12,,Add cleave to all heal/selfheal/shield/selfshield sides,None,,,
+Shining Emerald,12,,Gain the effects of all tier 13-20 items on other heroes,None,,,
+Bronze Bell,13,,Add resonate to the top and bottom sides,None,,,
+Demon Heart,13,,Add inflictinflictdeath to the middle column,None,,,
+Illegal,13,,Replace left side with '2 rerolls cantrip' and middle side with 'Target hero can use their dice again',None,,,
+Titanbane Amulet,13,,Add dispel to all sides,None,,,
+Ethereal Cloak,14,,"Replace all sides with 'Dodge all damage and enemy effects this turn'
+All hp: become immune to damage this turn",None,,,
+Fertiliser,14,,Add growth to all sides,None,,,
+Golden D6,14,,"Set the values of all sides to Ludus's sides
+(Set left side to 6, middle side to 5, top side to 4, bottom side to 3, rightmost side to 2 and 
+right side to 1)","Complete ""1-5 Straight"" achievement",,,
+Huge Sword,14,,Add cleave to all damage sides,None,,,
+Third Heart,14,,+2 hp for each 1 hp,None,,,
+Whirlwind,14,,Add cantrip to the middle column,None,,,
+Archmage Orb,15,,Add charged to the middle side,None,,,
+Banned,15,,Add cleave to the left side & growth to the middle side,None,,,
+Diamond Ring,15,,"Replace damage sides with 'heal, shield, manaGain' sides, retaining their original value and keywords",None,,,
+Dolphin,15,,Add echo to all sides,None,,,
+Emerald Satchel,15,,Copy all unequipped items,"Complete ""70 Achievements"" achievement",,,
+Learn Infinity,15,,Learn the spell: Infinity (Cost: 13 mana - Kill an enemy),"Complete ""Crushed"" achievement",,,
+Titan Blade,15,,Replace the left side with '100 damage death',None,,,
+Blue Skink,16,,"Replace all sides with the hero below's base sides, retaining my side's pips and keywords",None,,,
+Chocolate Bar,16,,Add doubleUse to all damage/shield/selfshield sides,None,,,
+Farewell,16,,Upon death: Kill the top-most enemy,None,,,
+Pentagram,16,,First 5 turns: Cannot die,None,,,
+Whirlpool,16,,Add all keywords present on this dice to all sides,None,,,
+Face of Horus,17,,+2 pips to all sides,None,,,
+Obsidian Edge,17,,Triple the pips of all damage sides,"Complete ""Splattered"" achievement",,,
+Taboo,17,,Add hyperuse to all heal/selfheal sides,None,,,
+,,,,,,,
+Special item,,,,,,,
+err,-50,,Summon an error for each wasted point of healing I receive,Failsafe item,,,
