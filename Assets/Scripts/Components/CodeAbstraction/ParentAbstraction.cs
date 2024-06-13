@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ParentAbstraction : MonoAbstraction 
 {
     [SerializeField] private OptionPicker _optionPick;
+    [SerializeField] private Button closeButton;
     protected Dictionary<string, Func<MonoAbstraction>> options;
     protected OptionPicker OptionPick
     {
@@ -45,5 +46,21 @@ public abstract class ParentAbstraction : MonoAbstraction
         abstraction.transform.SetParent(parent, false);
         abstraction.transform.SetSiblingIndex(parent.childCount - 3);
         subAbstractions.Add(abstraction);
+        StartCoroutine(AddCloseButton(abstraction));
+    }
+
+    private IEnumerator AddCloseButton(MonoAbstraction abstraction)
+    {
+        yield return null;
+
+        Button close = Instantiate(closeButton, OptionPick.transform.parent);
+        close.gameObject.SetActive(true);
+        (close.transform as RectTransform).anchoredPosition = (abstraction.transform as RectTransform).anchoredPosition;
+        close.onClick.AddListener(() =>
+        {
+            subAbstractions.Remove(abstraction);
+            Destroy(abstraction.gameObject);
+            Destroy(close.gameObject);
+        });
     }
 }
