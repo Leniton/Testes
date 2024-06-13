@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,6 @@ public class API_Manager : MonoBehaviour
 
     public void CopyCode()
     {
-        GUIUtility.systemCopyBuffer = currentCreation.GetCode(null);
+        NoTask.WebGLSupport.Clipboard.ClipboardWebGLUtility.CopyTextToClipboard(currentCreation.GetCode(null));
     }
 }
