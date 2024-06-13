@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Text;
+using UnityEngine.UI;
 
 public class TextAbstraction : MonoAbstraction
 {
     [SerializeField] string codeName;
+    [SerializeField] TMP_Text title;
     [SerializeField] TMP_InputField InputField;
 
     public override string name
@@ -30,6 +32,12 @@ public class TextAbstraction : MonoAbstraction
     }
 
     private void UpdateData(string data) => baseAbstraction.Data = data;
+
+    public void Style(string Title, Color? color = null)
+    {
+        title.text = Title;
+        if(color != null) GetComponent<Image>().color = color.Value;
+    }
 
     public void Config(string Name, object data, TMP_InputField.ContentType type = TMP_InputField.ContentType.Standard, int characterLimit = 99999)
     {

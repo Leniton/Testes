@@ -10,6 +10,7 @@ public static class WindowGenerator
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
         text.gameObject.name = $"Name";
         text.Config("n", "");
+        text.Style("Name");
 
         return text;
     }
@@ -18,26 +19,21 @@ public static class WindowGenerator
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
         text.gameObject.name = "HP";
         text.Config("hp", 0, TMP_InputField.ContentType.IntegerNumber);
+        text.Style("HP", Color.red);
 
         return text;
     }
 
-    public static MonoAbstraction Reference(List<string> referencePool, List<string> referenceDescription = null)
+    public static MonoAbstraction Reference(string Title, List<string> referencePool, List<string> referenceDescription = null, string codeName = "")
     {
         SugestTextAbstraction reference = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
-        reference.gameObject.name = "Reference";
-        reference.Config("", referencePool, referenceDescription);
+        reference.gameObject.name = $"Reference: {Title}";
+        reference.Config(codeName, referencePool, referenceDescription);
+        reference.Style(Title);
 
         return reference;
     }
-    public static MonoAbstraction Keyword()
-    {
-        SugestTextAbstraction keyword = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
-        keyword.gameObject.name = "Keyword";
-        keyword.Config("k", KeywordDatabase.keywords, KeywordDatabase.desctiptions);
-
-        return keyword;
-    }
+    public static MonoAbstraction Keyword() => Reference("Keyword", KeywordDatabase.keywords, KeywordDatabase.desctiptions, "k");
     public static MonoAbstraction Generated(string name)
     {
         TextAbstraction generated = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/HexAbstractionWindow"));
@@ -51,7 +47,7 @@ public static class WindowGenerator
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
-        item.SetItem(Reference(ItemDatabase.Items,ItemDatabase.desctiptions));
+        item.SetItem(Reference("Item",ItemDatabase.Items,ItemDatabase.desctiptions));
 
         return item;
     }
@@ -84,7 +80,7 @@ public static class WindowGenerator
     {
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
-        hero.SetHero(Reference(HeroDatabase.Heroes, HeroDatabase.desctiptions));
+        hero.SetHero(Reference("Hero", HeroDatabase.Heroes, HeroDatabase.desctiptions));
 
         return hero;
     }

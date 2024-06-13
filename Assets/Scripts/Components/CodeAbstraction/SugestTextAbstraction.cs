@@ -4,11 +4,11 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class SugestTextAbstraction : MonoAbstraction
 {
     [SerializeField] string codeName;
+    [SerializeField] TMP_Text title;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] ScrollRect scroll;
     [SerializeField] private OptionItem optionItem;
@@ -42,6 +42,12 @@ public class SugestTextAbstraction : MonoAbstraction
         inputField.onValueChanged.AddListener(CheckText);
     }
 
+    public void Style(string Title, Color? color = null)
+    {
+        title.text = Title;
+        if (color != null) GetComponent<Image>().color = color.Value;
+    }
+
     private void CheckText(string data)
     {
         baseAbstraction.Data = data;
@@ -60,6 +66,10 @@ public class SugestTextAbstraction : MonoAbstraction
             if (line.Contains(text))
             {
                 bool match = line == text;
+                if(match)
+                {
+                    baseAbstraction.Data = inputField.text;
+                }
                 currentPick = match ? i : -1;
                 inputField.textComponent.color = match ? Color.green : Color.white;
                 sugestions.Add(lines[i]);
@@ -109,6 +119,7 @@ public class SugestTextAbstraction : MonoAbstraction
     private void PickOption(int id)
     {
         inputField.text = options[id].Text;
+        baseAbstraction.Data = inputField.text;
         CloseOptions();
     }
     public void ClearOptions()
