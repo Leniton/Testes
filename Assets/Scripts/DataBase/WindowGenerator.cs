@@ -39,6 +39,7 @@ public static class WindowGenerator
         TextAbstraction generated = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/HexAbstractionWindow"));
         generated.gameObject.name = "Generated";
         generated.Config(name, "", TMP_InputField.ContentType.Custom);
+        generated.Style("Gen.");
 
         return generated;
     }
@@ -47,7 +48,7 @@ public static class WindowGenerator
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
-        item.SetItem(Reference("Item",ItemDatabase.Items,ItemDatabase.desctiptions));
+        item.SetItem(Reference("Ref.",ItemDatabase.Items,ItemDatabase.desctiptions));
 
         return item;
     }
