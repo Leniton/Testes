@@ -34,7 +34,7 @@ public class DatabaseSetup
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Heroes");
         string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
-        int startingIndex = 4; //where data starts
+        int startingIndex = 3; //where data starts
         int length = data.GetLength(0);
         HeroDatabase.Heroes.Clear();
 
@@ -42,7 +42,7 @@ public class DatabaseSetup
         for (int i = startingIndex; i < length; i++)
         {
             string name = data[i, 3];
-            HeroDatabase.Heroes.Add(name);
+            HeroDatabase.Heroes.Add(name.Trim());
             HeroDatabase.desctiptions.Add($"Tier {data[i, 1]} {data[i,0]} hero: {data[i, 4]} hp");
         }
     }
@@ -50,7 +50,7 @@ public class DatabaseSetup
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Items");
         string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
-        int startingIndex = 3; //where data starts
+        int startingIndex = 2; //where data starts
         int length = data.GetLength(0);
         ItemDatabase.Items.Clear();
 
@@ -58,7 +58,7 @@ public class DatabaseSetup
         for (int i = startingIndex; i < length; i++)
         {
             string name = data[i, 0];
-            ItemDatabase.Items.Add(name);
+            ItemDatabase.Items.Add(name.Trim());
             ItemDatabase.desctiptions.Add($"[tier {data[i, 1]}] - {data[i, 3]}");
         }
     }
@@ -66,7 +66,7 @@ public class DatabaseSetup
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Keywords");
         string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
-        int startingIndex = 3; //where data starts
+        int startingIndex = 2; //where data starts
         int length = data.GetLength(0);
         KeywordDatabase.keywords.Clear();
 
@@ -74,7 +74,7 @@ public class DatabaseSetup
         for (int i = startingIndex; i < length; i++)
         {
             string name = data[i, 0];
-            KeywordDatabase.keywords.Add(name);
+            KeywordDatabase.keywords.Add(name.Trim());
             KeywordDatabase.desctiptions.Add(data[i, 3]);
         }
     }
