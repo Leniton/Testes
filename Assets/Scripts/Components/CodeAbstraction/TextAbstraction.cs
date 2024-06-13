@@ -31,7 +31,15 @@ public class TextAbstraction : MonoAbstraction
         InputField.onValueChanged.AddListener(UpdateData);
     }
 
-    private void UpdateData(string data) => baseAbstraction.Data = data;
+    private void UpdateData(string data)
+    {
+        if(data.Length >= InputField.characterLimit)
+        {
+            data = data.Substring(0, InputField.characterLimit);
+            InputField.text = data;
+        }
+        baseAbstraction.Data = data;
+    }
 
     public void Style(string Title, Color? color = null)
     {
