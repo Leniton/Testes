@@ -5,21 +5,21 @@ using TMPro;
 
 public static class WindowGenerator
 {
-    public static MonoAbstraction Name()
+    public static MonoAbstraction Word(string name, string code)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
-        text.gameObject.name = $"Name";
-        text.Config("n", "");
-        text.Style("Name");
+        text.gameObject.name = name;
+        text.Config(code, "");
+        text.Style(name);
 
         return text;
     }
-    public static MonoAbstraction HP()
+    public static MonoAbstraction Number(string name, string code)
     {
         TextAbstraction text = Object.Instantiate(Resources.Load<TextAbstraction>("Prefabs/AbstractionTextWindow"));
-        text.gameObject.name = "HP";
-        text.Config("hp", 0, TMP_InputField.ContentType.IntegerNumber);
-        text.Style("HP", Color.red);
+        text.gameObject.name = name;
+        text.Config(code, 0, TMP_InputField.ContentType.IntegerNumber);
+        text.Style(name);
 
         return text;
     }
