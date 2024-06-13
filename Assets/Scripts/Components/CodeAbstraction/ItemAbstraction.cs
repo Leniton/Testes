@@ -26,7 +26,6 @@ public class ItemAbstraction : ParentAbstraction
         subAbstractions.Add(item);
     }
 
-    [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
         sb ??= new StringBuilder();

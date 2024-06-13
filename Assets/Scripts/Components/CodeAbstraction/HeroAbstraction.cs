@@ -21,7 +21,6 @@ public class HeroAbstraction : ParentAbstraction
         hero.transform.SetParent(typeSlot);
     }
 
-    [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
         sb ??= new StringBuilder();

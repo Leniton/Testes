@@ -55,6 +55,5 @@ public class TextAbstraction : MonoAbstraction
         InputField.characterLimit = characterLimit;
     }
 
-    [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb) => baseAbstraction.GetCode(sb);
 }

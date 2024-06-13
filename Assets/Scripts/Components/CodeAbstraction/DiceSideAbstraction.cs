@@ -74,7 +74,6 @@ public class DiceSideAbstraction : MonoAbstraction
         all.GetComponent<DualState>().SetState(all.State);
     }
 
-    [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
         //check if is composite

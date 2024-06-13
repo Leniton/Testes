@@ -7,7 +7,6 @@ public class ChoseSidesAbstraction : MonoAbstraction
     [SerializeField] private StateButton button;
     [SerializeField] private PickSideWindow[] options;
 
-    [SerializableMethods.SerializeMethod]
     public override string GetCode(StringBuilder sb)
     {
         sb ??= new StringBuilder();
