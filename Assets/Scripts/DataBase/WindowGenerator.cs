@@ -48,7 +48,16 @@ public static class WindowGenerator
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
-        item.SetItem(Reference("Ref.", ItemDatabase.Items, ItemDatabase.desctiptions));
+        item.name = "";
+        item.SetItem(Reference("Ref.", ItemDatabase.Items, ItemDatabase.desctiptions,"i"));
+
+        return item;
+    }
+    public static MonoAbstraction Item_Hat()
+    {
+        ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
+        item.gameObject.name = "Item";
+        item.SetItem(Reference("Hat", HeroDatabase.Heroes, HeroDatabase.desctiptions, "hat"));
 
         return item;
     }
