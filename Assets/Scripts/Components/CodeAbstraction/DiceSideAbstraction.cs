@@ -13,7 +13,7 @@ public class DiceSideAbstraction : MonoAbstraction
     [Header("Combination buttons"),SerializeField] private StateButton right2;
     [SerializeField] private StateButton topbot, row, col, all;
 
-    private DiceSides diceSides;
+    private DiceSides diceSides = DiceSides.None;
 
     private void Awake()
     {
@@ -79,52 +79,66 @@ public class DiceSideAbstraction : MonoAbstraction
     {
         //check if is composite
         List<DiceSides> sides = new();
-        if(diceSides != DiceSides.all)
+        if(diceSides != DiceSides.None)
         {
-            if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.topbot))
+            if (diceSides != DiceSides.all)
             {
-                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.col))
-                    sides.Add(DiceSides.col);
-                else 
-                    sides.Add(DiceSides.topbot);
-            }
-            else AddSingleSides(sides, diceSides & ~DiceSides.row);
-
-            DiceSides ignoreSide = sides.Contains(DiceSides.col) ? DiceSides.col : DiceSides.topbot;
-            if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.right2))
-            {
-                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.row))
-                    sides.Add(DiceSides.row);
-                else
+                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.topbot))
                 {
-                    sides.Add(DiceSides.right2);
-                    if (diceSides != DiceSides.right2)
+                    if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.col))
+                        sides.Add(DiceSides.col);
+                    else
+                        sides.Add(DiceSides.topbot);
+                }
+                else AddSingleSides(sides, diceSides & ~DiceSides.row);
+
+                DiceSides ignoreSide = sides.Contains(DiceSides.col) ? DiceSides.col : DiceSides.topbot;
+                if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.right2))
+                {
+                    if (NumberUtil.ContainsBytes((int)diceSides, (int)DiceSides.row))
+                        sides.Add(DiceSides.row);
+                    else
                     {
-                        ignoreSide |= DiceSides.right2;
-                        AddSingleSides(sides, diceSides & ~ignoreSide);
+                        sides.Add(DiceSides.right2);
+                        if (diceSides != DiceSides.right2)
+                        {
+                            ignoreSide |= DiceSides.right2;
+                            AddSingleSides(sides, diceSides & ~ignoreSide);
+                        }
                     }
                 }
+                else AddSingleSides(sides, diceSides & ~ignoreSide);
             }
-            else AddSingleSides(sides, diceSides & ~ignoreSide);
+            else sides.Add(DiceSides.all);
         }
-        else sides.Add(diceSides);
 
         //placing logic
         sb = sb ?? new();
-        if (sides.Count > 1) sb.Append('(');
-        for (int i = 0; i < sides.Count; i++)
+        if (choseSides.State && diceSides != DiceSides.None)
         {
-            if(i > 0) sb.Append("#");
-            sb.Append('(');
-            sb.Append(sides[i]);
-            for (int u = 0; u < subAbstractions.Count; u++)
+            if (sides.Count > 1) sb.Append('(');
+            for (int i = 0; i < sides.Count; i++)
             {
-                sb.Append($".");
-                subAbstractions[u].GetCode(sb);
+                if (i > 0) sb.Append("#");
+                sb.Append('(');
+                sb.Append(sides[i]);
+                for (int u = 0; u < subAbstractions.Count; u++)
+                {
+                    sb.Append($".");
+                    subAbstractions[u].GetCode(sb);
+                }
+                sb.Append(')');
             }
-            sb.Append(')');
+            if (sides.Count > 1) sb.Append(')');
         }
-        if (sides.Count > 1) sb.Append(')');
+        else
+        {
+            for (int i = 0; i < subAbstractions.Count; i++)
+            {
+                if (i > 0) sb.Append($".");
+                subAbstractions[i].GetCode(sb);
+            }
+        }
 
         return sb.ToString();
     }
@@ -142,6 +156,7 @@ public class DiceSideAbstraction : MonoAbstraction
 [System.Flags]
 public enum DiceSides
 {
+    None = 0,
     left = 1,
     mid = 2,
     top = 4,
