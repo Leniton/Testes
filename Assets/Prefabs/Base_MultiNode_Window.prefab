@@ -46,7 +46,7 @@ PrefabInstance:
     - target: {fileID: 6701296420106310139, guid: daf26cb849cf3a0408ad1ecb9923cc03,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.50012
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6701296420106310139, guid: daf26cb849cf3a0408ad1ecb9923cc03,
         type: 3}
@@ -91,12 +91,12 @@ PrefabInstance:
     - target: {fileID: 6701296420106310139, guid: daf26cb849cf3a0408ad1ecb9923cc03,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.24996948
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6701296420106310139, guid: daf26cb849cf3a0408ad1ecb9923cc03,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6701296420106310139, guid: daf26cb849cf3a0408ad1ecb9923cc03,
         type: 3}
@@ -150,15 +150,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 10
+    m_Right: 10
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 1
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -294,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 3837842405138823497, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 630
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3837842405138823497, guid: d8972e3edc1e0fc4c8a5b92040d9e3eb,
         type: 3}

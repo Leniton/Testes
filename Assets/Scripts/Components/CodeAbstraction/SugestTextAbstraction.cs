@@ -12,8 +12,11 @@ public class SugestTextAbstraction : MonoAbstraction
     [SerializeField] TMP_InputField inputField;
     [SerializeField] ScrollRect scroll;
     [SerializeField] private OptionItem optionItem;
+    [SerializeField] TMP_Text descríptionText;
 
+    int currentPick;
     private List<string> lines;
+    private List<string> descriptions = new();
     private List<OptionItem> options = new();
 
     public override string name
@@ -52,9 +55,13 @@ public class SugestTextAbstraction : MonoAbstraction
 
         for (int i = 0; i < lines.Count; i++)
         {
-            if (lines[i].ToLower().Contains(data.ToLower()))
+            string line = lines[i].ToLower();
+            string text = data.ToLower();
+            if (line.Contains(text))
             {
-                inputField.textComponent.color = lines[i] == data ? Color.green : Color.white;
+                bool match = line == text;
+                currentPick = match ? i : -1;
+                inputField.textComponent.color = match ? Color.green : Color.white;
                 sugestions.Add(lines[i]);
             }
 
@@ -68,11 +75,12 @@ public class SugestTextAbstraction : MonoAbstraction
         OpenOptions();
         SetOptions(sugestions);
     }
-    public void Config(string Name, List<string> data)
+    public void Config(string Name, List<string> data, List<string> dataDescription = null)
     {
         baseAbstraction = new BaseAbstraction(Name, data);
         codeName = name;
         lines = data;
+        descriptions = dataDescription ?? new();
     }
     public void OpenOptions()
     {
@@ -81,6 +89,7 @@ public class SugestTextAbstraction : MonoAbstraction
     public void CloseOptions()
     {
         scroll.gameObject.SetActive(false);
+        descríptionText.text = descriptions.Count > currentPick && currentPick > 0 ? descriptions[currentPick] : "";
     }
     public void SetOptions(List<string> _options)
     {

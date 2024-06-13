@@ -22,11 +22,11 @@ public static class WindowGenerator
         return text;
     }
 
-    public static MonoAbstraction Reference(List<string> referencePool)
+    public static MonoAbstraction Reference(List<string> referencePool, List<string> referenceDescription = null)
     {
         SugestTextAbstraction reference = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
         reference.gameObject.name = "Reference";
-        reference.Config("", referencePool);
+        reference.Config("", referencePool, referenceDescription);
 
         return reference;
     }
@@ -34,7 +34,7 @@ public static class WindowGenerator
     {
         SugestTextAbstraction keyword = Object.Instantiate(Resources.Load<SugestTextAbstraction>("Prefabs/AbstractionSugestTextWindow"));
         keyword.gameObject.name = "Keyword";
-        keyword.Config("k", KeywordDatabase.keywords);
+        keyword.Config("k", KeywordDatabase.keywords, KeywordDatabase.desctiptions);
 
         return keyword;
     }
@@ -51,7 +51,7 @@ public static class WindowGenerator
     {
         ItemAbstraction item = Object.Instantiate(Resources.Load<ItemAbstraction>("Prefabs/ItemAbstractionWindow"));
         item.gameObject.name = "Item";
-        item.SetItem(Reference(ItemDatabase.Items));
+        item.SetItem(Reference(ItemDatabase.Items,ItemDatabase.desctiptions));
 
         return item;
     }
@@ -84,7 +84,7 @@ public static class WindowGenerator
     {
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
-        hero.SetHero(Reference(HeroDatabase.Heroes));
+        hero.SetHero(Reference(HeroDatabase.Heroes, HeroDatabase.desctiptions));
 
         return hero;
     }
@@ -92,7 +92,7 @@ public static class WindowGenerator
     {
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
-        hero.SetHero(Generated($"{color.ToString()}{tier}"));
+        hero.SetHero(Generated($"{color}{tier}"));
 
         return hero;
     }

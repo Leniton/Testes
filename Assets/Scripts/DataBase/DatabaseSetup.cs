@@ -33,46 +33,49 @@ public class DatabaseSetup
     public static void HeroesSetup()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Heroes");
-        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
         int startingIndex = 4; //where data starts
-        int length = idSideData.GetLength(0);
+        int length = data.GetLength(0);
         HeroDatabase.Heroes.Clear();
 
         //0: color | 1: tier | 3: name | 4: hp
         for (int i = startingIndex; i < length; i++)
         {
-            string name = idSideData[i, 3];
+            string name = data[i, 3];
             HeroDatabase.Heroes.Add(name);
+            HeroDatabase.desctiptions.Add($"Tier {data[i, 1]} {data[i,0]} hero: {data[i, 4]} hp");
         }
     }
     public static void ItemsSetup()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Items");
-        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
         int startingIndex = 3; //where data starts
-        int length = idSideData.GetLength(0);
+        int length = data.GetLength(0);
         ItemDatabase.Items.Clear();
 
-        //0: name | 2: tier | 4: effects
+        //0: name | 1: tier | 3: effects
         for (int i = startingIndex; i < length; i++)
         {
-            string name = idSideData[i, 0];
+            string name = data[i, 0];
             ItemDatabase.Items.Add(name);
+            ItemDatabase.desctiptions.Add($"[tier {data[i, 1]}] - {data[i, 3]}");
         }
     }
     public static void KeywordsSetup()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("CSV/Slice & Dice Full Almanac v3.0  - Keywords");
-        string[,] idSideData = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
+        string[,] data = CSVLoader.LoadCSV(CSVLoader.GetReaderFromString(textAsset.text));
         int startingIndex = 3; //where data starts
-        int length = idSideData.GetLength(0);
+        int length = data.GetLength(0);
         KeywordDatabase.keywords.Clear();
 
-        //0: name | 2: color | 4: effects
+        //0: name | 2: color | 3: effects
         for (int i = startingIndex; i < length; i++)
         {
-            string name = idSideData[i, 0];
+            string name = data[i, 0];
             KeywordDatabase.keywords.Add(name);
+            KeywordDatabase.desctiptions.Add(data[i, 3]);
         }
     }
 }

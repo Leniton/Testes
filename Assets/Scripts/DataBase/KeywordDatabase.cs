@@ -2,15 +2,6 @@ using System.Collections.Generic;
 
 public static class KeywordDatabase
 {
-    public static List<string> keywords = new()
-    {
-        "cantrip",
-        "chain",
-        "cleanse",
-        "cleave",
-        "copycat",
-        "cruel",
-        "death",
-        "deathwish",
-    };
+    public static List<string> keywords = new();
+    public static List<string> desctiptions = new();
 }
