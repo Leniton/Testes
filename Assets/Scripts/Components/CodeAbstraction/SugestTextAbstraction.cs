@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -58,6 +57,7 @@ public class SugestTextAbstraction : MonoAbstraction
         }
 
         List<string> sugestions = new();
+        bool match = false;
 
         for (int i = 0; i < lines.Count; i++)
         {
@@ -65,13 +65,12 @@ public class SugestTextAbstraction : MonoAbstraction
             string text = data.ToLower();
             if (line.Contains(text))
             {
-                bool match = line == text;
-                if(match)
+                if(!match) match = line == text;
+                if (match)
                 {
                     baseAbstraction.Data = inputField.text;
                 }
                 currentPick = match ? i : -1;
-                inputField.textComponent.color = match ? Color.green : Color.white;
                 sugestions.Add(lines[i]);
             }
 
@@ -81,6 +80,8 @@ public class SugestTextAbstraction : MonoAbstraction
                 return;
             }
         }
+
+        inputField.textComponent.color = match ? Color.green : Color.white;
 
         OpenOptions();
         SetOptions(sugestions);
