@@ -80,7 +80,7 @@ public static class WindowGenerator
     {
         HeroAbstraction hero = Object.Instantiate(Resources.Load<HeroAbstraction>("Prefabs/HeroAbstractionWindow"));
         hero.gameObject.name = "Hero";
-        hero.SetHero(Reference("Hero", HeroDatabase.Heroes, HeroDatabase.desctiptions));
+        hero.SetHero(Reference("Ref.", HeroDatabase.Heroes, HeroDatabase.desctiptions));
 
         return hero;
     }
