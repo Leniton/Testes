@@ -115,15 +115,17 @@ public class DiceSideAbstraction : MonoAbstraction
         sb = sb ?? new();
         if (choseSides.State && diceSides != DiceSides.None)
         {
+            sb.Append($".");
             if (sides.Count > 1) sb.Append('(');
             for (int i = 0; i < sides.Count; i++)
             {
                 if (i > 0) sb.Append("#");
                 sb.Append('(');
                 sb.Append(sides[i]);
+
                 for (int u = 0; u < subAbstractions.Count; u++)
                 {
-                    sb.Append($".");
+                    if (u > 0 || !string.IsNullOrEmpty(subAbstractions[u].name)) sb.Append($".");
                     subAbstractions[u].GetCode(sb);
                 }
                 sb.Append(')');
@@ -134,7 +136,7 @@ public class DiceSideAbstraction : MonoAbstraction
         {
             for (int i = 0; i < subAbstractions.Count; i++)
             {
-                if (i > 0) sb.Append($".");
+                if (i > 0 || !string.IsNullOrEmpty(subAbstractions[i].name)) sb.Append($".");
                 subAbstractions[i].GetCode(sb);
             }
         }

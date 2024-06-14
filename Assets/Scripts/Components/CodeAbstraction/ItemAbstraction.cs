@@ -29,11 +29,7 @@ public class ItemAbstraction : ParentAbstraction
     public override string GetCode(StringBuilder sb)
     {
         sb ??= new StringBuilder();
-        if(!string.IsNullOrEmpty(name))
-        {
-            sb.Append(name);
-            sb.Append('.');
-        }
+        sb.Append(name);
         diceSide.GetCode(sb);
         Debug.Log(sb.ToString());
         return sb.ToString();
