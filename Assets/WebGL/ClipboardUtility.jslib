@@ -1,6 +1,15 @@
 var ClipboardUtility = {
     $ClipboardUtility: {},
+    
+    AddEvents: function (callback) {
+        if(typeof Runtime === "undefined") Runtime = { dynCall : dynCall }
+        const source = document.querySelector("div.source");
 
+        document.addEventListener('copy', (evt) => {
+            var text = "a";
+            Runtime.dynCall("vs", callback ,[text])
+        });
+    },
     CopyToClipboard: function (textPtr) {
         var text = UTF8ToString(textPtr);
         navigator.clipboard.writeText(text).then(function () {
