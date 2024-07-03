@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    public Vector2Int dir;
-    public Node pointNode;
+    private Vector2Int dir;
+    private Node pointNode;
 
     [Space, SerializeField] SpriteRenderer render;
     [SerializeField] Sprite arrow, blank;
