@@ -43,7 +43,7 @@ public class OShiftMaze : MonoBehaviour
     }
 
     [SerializableMethods.SerializeMethod]
-    private void OriginShift(int repetitions = 1)
+    public void OriginShift(int repetitions = 1)
     {
         //pick random direction from current origin
         Vector2Int shiftDir = RandomDirection();
