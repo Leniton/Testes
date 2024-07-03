@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/networkTests/network.unity
     guid: 30bdf9e703826234aae97543418eeefd
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 664f23ee76806f746a29ca85f89381ed,
+      type: 2}
