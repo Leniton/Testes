@@ -1,14 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Debug = UnityEngine.Debug;
+using WindowsInput;
+using WindowsInput.Native;
 
 public class KeySimulator : MonoBehaviour
 {
-
+    private InputSimulator sim;
     private bool simulate;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -16,12 +15,11 @@ public class KeySimulator : MonoBehaviour
     {
         Process[] processes = Process.GetProcessesByName("DMT");
         Debug.Log(processes.Length);
-        
     }
 
-    private void Start()
+    private void Awake()
     {
-        
+        sim = new InputSimulator();
     }
 
     IEnumerator ConstantCall()
@@ -29,7 +27,7 @@ public class KeySimulator : MonoBehaviour
         while (simulate)
         {
             yield return new WaitForSeconds(1);
-            SimulateInput.Main.SimulateInput("");
+            sim.Mouse.MoveMouseBy(-5, 0);
         }
     }
 
@@ -37,8 +35,15 @@ public class KeySimulator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            simulate = !simulate;
-            if(simulate) StartCoroutine(ConstantCall());
+            //simulate = !simulate;
+            //if(simulate) StartCoroutine(ConstantCall());
+            //sim.Keyboard.KeyPress(VirtualKeyCode.VK_K);
+            /*sim.Keyboard.KeyDown(VirtualKeyCode.LWIN)
+                .KeyDown(VirtualKeyCode.LMENU)
+                .KeyPress(VirtualKeyCode.F1)
+                .KeyUp(VirtualKeyCode.LWIN)
+                .KeyUp(VirtualKeyCode.LMENU);*/
+            //sim.Mouse.MoveMouseBy(2, 2);
         }
 
         if (Input.GetKeyDown(KeyCode.K)) Debug.Log("key down");
