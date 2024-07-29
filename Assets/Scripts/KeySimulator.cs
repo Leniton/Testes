@@ -43,10 +43,20 @@ public class KeySimulator : MonoBehaviour
                 .KeyPress(VirtualKeyCode.F1)
                 .KeyUp(VirtualKeyCode.LWIN)
                 .KeyUp(VirtualKeyCode.LMENU);*/
-            //sim.Mouse.MoveMouseBy(2, 2);
+            //sim.Mouse.MoveMouseBy(2, 2);\
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "\"C:\\Users\\leniton.carneiro\\AppData\\Local\\Programs\\Opera GX\\launcher.exe\"";
+            startInfo.WorkingDirectory = string.Empty;
+            startInfo.UseShellExecute = false;
+            startInfo.Arguments = " --side-profile-name=31343533325F31313537303035323933 --side-profile-minimal --side-profile-clear-on-exit --side-profile-muted --side-profile-no-gx-sounds --with-feature:side-profiles --private";
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) Debug.Log("key down");
+        //if (Input.GetKeyDown(KeyCode.K)) Debug.Log("key down");
+        if (sim.InputDeviceState.IsKeyDown(VirtualKeyCode.VK_K)) Debug.Log("key down");
         if (Input.GetKey(KeyCode.K)) Debug.Log("key");
         if (Input.GetKeyUp(KeyCode.K)) Debug.Log("key up");
     }
