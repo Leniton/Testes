@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ColorPalette : ScriptableObject
 {
     public List<Graphic> Graphics = new();
-    public List<Renderer> Renderers = new();
+    public List<SpriteRenderer> Renderers = new();
 
     public List<int> _graphicsLookUp = new();
     public List<int> _renderersLookUp = new();
