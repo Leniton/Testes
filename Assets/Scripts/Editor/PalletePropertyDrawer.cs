@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -22,9 +20,9 @@ public class PalletePropertyDrawer : Editor
         /*
         palette.Colors.Clear();
         palette.Graphics.Clear();
-        palette._graphicsLookUp= new();
+        palette.graphicsLookUp= new();
         palette.Renderers.Clear();
-        palette._renderersLookUp.Clear();
+        palette.renderersLookUp.Clear();
         */
         VisualElement root = new();
         
@@ -68,16 +66,16 @@ public class PalletePropertyDrawer : Editor
     {
         palette.Colors.Clear();
         palette.Graphics.Clear();
-        palette._graphicsLookUp.Clear();
+        palette.graphicsLookUp.Clear();
         palette.Renderers.Clear();
-        palette._renderersLookUp.Clear();
+        palette.renderersLookUp.Clear();
 
-        string[] guids = AssetDatabase.FindAssets( "t:Prefab" , new string[] { "Assets" });
-        //Debug.Log(AssetDatabase.FindAssets("t:Scene", new string[] { "Assets" }).Length);
+        string[] prefabs = AssetDatabase.FindAssets( "t:Prefab" , palette.searchFolders);
+        //string[] scenes =  AssetDatabase.FindAssets("t:Scene", new string[] { "Assets" });
         //GetPrefabAssetPathOfNearestInstanceRoot	Retrieves the asset path of the nearest Prefab instance root the specified object is part of.
-        foreach (var guid in guids)
+        foreach (var prefab in prefabs)
         {
-            var path = AssetDatabase.GUIDToAssetPath( guid );
+            var path = AssetDatabase.GUIDToAssetPath( prefab );
             GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>( path );
 
             Graphic[] graphics = go.GetComponentsInChildren<Graphic>();
@@ -91,7 +89,7 @@ public class PalletePropertyDrawer : Editor
                     //add color if doesn't exist
                     if (!palette.Colors.Contains(color)) palette.Colors.Add(color);
                     //set a lookup inder to link object to color
-                    palette._graphicsLookUp.Add(palette.Colors.IndexOf(color));
+                    palette.graphicsLookUp.Add(palette.Colors.IndexOf(color));
                 }
             }
 
@@ -106,7 +104,7 @@ public class PalletePropertyDrawer : Editor
                     //add color if doesn't exist
                     if (!palette.Colors.Contains(color)) palette.Colors.Add(color);
                     //set a lookup inder to link object to color
-                    palette._renderersLookUp.Add(palette.Colors.IndexOf(color));
+                    palette.renderersLookUp.Add(palette.Colors.IndexOf(color));
                 }
             }
         }
@@ -122,9 +120,9 @@ public class PalletePropertyDrawer : Editor
         {
             int id = i;
             VisualElement color = new();
-            color.style.flexDirection = FlexDirection.Row;
+            //color.style.flexDirection = FlexDirection.Row;
 
-            Button b = new Button();
+            /*Button b = new Button();
             b.style.width = 20;
             b.text = "X";
             b.clicked += () =>
@@ -132,7 +130,7 @@ public class PalletePropertyDrawer : Editor
                 palette.Colors.RemoveAt(id);
                 UpdatePalette();
             };
-            color.Add(b);
+            color.Add(b);*/
             
             ColorField field = new ColorField($"{i}");
             field.value = palette.Colors[id];
@@ -150,97 +148,77 @@ public class PalletePropertyDrawer : Editor
     private void LoadReferences()
     {
         referencesRoot.Clear();
-        float spacing = 15;
         for (var i = 0; i < palette.Graphics.Count; i++)
         {
-            VisualElement referenceInfo = new VisualElement();
-            referenceInfo.style.flexDirection = FlexDirection.Row;
-            referenceInfo.style.height = 25;
-            referenceInfo.style.borderTopWidth = 2;
-            referenceInfo.style.borderBottomWidth = 2;
-
-            ObjectField field = new ObjectField();
-            field.style.flexBasis = 200;
-            field.style.right = spacing;
-            field.value = palette.Graphics[i];
-            referenceInfo.Add(field);
-            Label index = new Label(palette._graphicsLookUp[i].ToString());
-            index.style.unityTextAlign = TextAnchor.MiddleCenter;
-            index.style.flexBasis = 20; 
-            float darkness = .1f;
-            index.style.backgroundColor = new Color(darkness, darkness, darkness, 1);
-            referenceInfo.Add(index);
-
-            VisualElement color = new Box();
-            color.style.left = spacing;
-            color.style.width = 20;
-            color.style.backgroundColor = palette.Colors[palette._graphicsLookUp[i]];
-            referenceInfo.Add(color);
-
-            referencesRoot.Add(referenceInfo);
+            referencesRoot.Add(PrefabReference(palette.Graphics, palette.graphicsLookUp, i));
         }
 
         for (var i = 0; i < palette.Renderers.Count; i++)
         {
-            VisualElement referenceInfo = new VisualElement();
-            referenceInfo.style.flexDirection = FlexDirection.Row;
-            referenceInfo.style.height = 25;
-            referenceInfo.style.borderTopWidth = 2;
-            referenceInfo.style.borderBottomWidth = 2;
-
-            ObjectField field = new ObjectField();
-            field.style.flexBasis = 200;
-            field.style.right = spacing;
-            field.value = palette.Renderers[i];
-            referenceInfo.Add(field);
-
-            Label index = new Label(palette._renderersLookUp[i].ToString());
-            index.style.unityTextAlign = TextAnchor.MiddleCenter;
-            index.style.flexBasis = 20;
-            float darkness = .1f;
-            index.style.backgroundColor = new Color(darkness, darkness, darkness, 1);
-            referenceInfo.Add(index);
-
-            VisualElement color = new Box();
-            color.style.left = spacing;
-            color.style.width = 20;
-            color.style.backgroundColor = palette.Colors[palette._renderersLookUp[i]];
-            referenceInfo.Add(color);
-
-            referencesRoot.Add(referenceInfo);
+            referencesRoot.Add(PrefabReference(palette.Renderers, palette.renderersLookUp, i));
         }
+    }
+
+    private VisualElement PrefabReference<T>(List<T> reference, List<int> lookUp, int id) where T : Object
+    {
+        float spacing = 15;
+        VisualElement referenceInfo = new VisualElement();
+        referenceInfo.style.flexDirection = FlexDirection.Row;
+        referenceInfo.style.height = 25;
+        referenceInfo.style.borderTopWidth = 2;
+        referenceInfo.style.borderBottomWidth = 2;
+
+        Label index = new Label(lookUp[id].ToString());
+        index.style.unityTextAlign = TextAnchor.MiddleCenter;
+        index.style.flexBasis = 20;
+        float darkness = .1f;
+        index.style.backgroundColor = new Color(darkness, darkness, darkness, 1);
+        referenceInfo.Add(index);
+
+        VisualElement color = new Button();
+        color.style.left = spacing;
+        color.style.width = 20;
+        color.style.backgroundColor = palette.Colors[lookUp[id]];
+        referenceInfo.Add(color);
+
+        ObjectField field = new ObjectField();
+        //field.style.flexBasis = 200;
+        field.style.left = spacing;
+        field.value = reference[id];
+        field.objectType = typeof(T);
+        referenceInfo.Add(field);
+
+        return referenceInfo;
     }
 
     private void UpdateProjectElements()
     {
-        for (int i = 0; i < palette._graphicsLookUp.Count; i++)
+        for (int i = 0; i < palette.graphicsLookUp.Count; i++)
         {
             UpdateElementColor(palette.Graphics[i]);
         }
-        for (int i = 0; i < palette._renderersLookUp.Count; i++)
+        for (int i = 0; i < palette.renderersLookUp.Count; i++)
         {
             UpdateElementColor(palette.Renderers[i]);
         }
         AssetDatabase.Refresh();
     }
-
     private void UpdateElementColor(Graphic element)
     {
         string path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(element);
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
 
-        element.color = palette.Colors[palette._graphicsLookUp[palette.Graphics.IndexOf(element)]];
+        element.color = palette.Colors[palette.graphicsLookUp[palette.Graphics.IndexOf(element)]];
 
         PrefabUtility.SavePrefabAsset(prefab);
         AssetDatabase.Refresh();
     }
-
     private void UpdateElementColor(SpriteRenderer element)
     {
         string path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(element);
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
 
-        element.color = palette.Colors[palette._renderersLookUp[palette.Renderers.IndexOf(element)]];
+        element.color = palette.Colors[palette.renderersLookUp[palette.Renderers.IndexOf(element)]];
 
         PrefabUtility.SavePrefabAsset(prefab);
         AssetDatabase.Refresh();
