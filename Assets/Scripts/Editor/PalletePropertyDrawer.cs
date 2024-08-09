@@ -253,6 +253,7 @@ public class PalletePropertyDrawer : Editor
 
         VisualElement window = new VisualElement();
         window.style.flexDirection = FlexDirection.Row;
+        window.style.flexWrap = Wrap.Wrap;
         Popup.Add(window);
 
         for (int i = 0; i < palette.Colors.Count; i++)
@@ -260,6 +261,10 @@ public class PalletePropertyDrawer : Editor
             int colorID = i;
             Button color = new Button();
             color.name = "color pick";
+            color.style.borderTopColor = Color.white;
+            color.style.borderBottomColor = Color.white;
+            color.style.borderLeftColor = Color.white;
+            color.style.borderRightColor = Color.white;
             color.style.left = 8;
             color.style.width = 20;
             color.style.height = 20;

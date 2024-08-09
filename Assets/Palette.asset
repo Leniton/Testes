@@ -16,11 +16,12 @@ MonoBehaviour:
   - Assets
   Colors:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.2774439, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   Graphics:
   - {fileID: 4244661091517528271, guid: c5be13df7a94b044fb759c41bf68a534, type: 3}
   - {fileID: 9116168876329321417, guid: c5be13df7a94b044fb759c41bf68a534, type: 3}
+  - {fileID: 1719992110501707082, guid: 8cfba536d7acbd442bdb576ede4951b8, type: 3}
   Renderers:
   - {fileID: 6989260618288634933, guid: 0ef17ec15c3f16641a99b5cec5a4e291, type: 3}
-  graphicsLookUp: 0000000000000000
+  graphicsLookUp: 000000000000000000000000
   renderersLookUp: 01000000
