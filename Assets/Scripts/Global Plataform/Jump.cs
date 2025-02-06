@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using PhysicsHelper;
 
 [Serializable]
 public class Jump : Displacement
