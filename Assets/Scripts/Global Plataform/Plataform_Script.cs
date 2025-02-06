@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PhysicsHelper;
 
-[RequireComponent(typeof(PhysicsHandler2D))]
+[RequireComponent(typeof(PhysicsHandler))]
 public class Plataform_Script : MonoBehaviour
 {
 #if UNITY_EDITOR
@@ -34,14 +34,14 @@ public class Plataform_Script : MonoBehaviour
         set { movementOverride = value; }
     }
 
-    PhysicsHandler2D physicsHandler;
+    PhysicsHandler physicsHandler;
 
     Vector3 finalVelocity;
     GameObject lastWall;
 
     void Awake()
     {
-        physicsHandler = GetComponent<PhysicsHandler2D>();
+        physicsHandler = GetComponent<PhysicsHandler>();
         jump.Init(physicsHandler);
         movement.Init(physicsHandler);
     }
