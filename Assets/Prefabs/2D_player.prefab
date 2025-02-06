@@ -285,7 +285,7 @@ MonoBehaviour:
       referenceHeight: 5
       timeToLand: 0.4
     gravityCompensation: 2.58
-    maxSlopeAngle: 0
+    maxSlopeAngle: 60
   movement:
     orientation: {x: 0, y: 1, z: 0}
     topSpeed: 4
