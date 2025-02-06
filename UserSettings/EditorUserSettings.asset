@@ -12,6 +12,12 @@ EditorUserSettings:
       value: 0754045f500059035f0a55714477064443154a7b2a7b72352e7c4936b7b86d3c
       flags: 0
     RecentlyUsedSceneGuid-2:
+      value: 0503505e520d5f0f5d5c0e7b43270a4417161c722e2a243479781966bbb2636f
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5a57550052005b0e0e5b5a744974064446154a7f7b2b7e637e7d4b32e3e5656c
+      flags: 0
+    RecentlyUsedSceneGuid-4:
       value: 01050d5704010d025a5f5f7247220d44424e4f292e7f7364792a4e61e4b13061
       flags: 0
     RecentlyUsedScenePath-0:
@@ -46,4 +52,5 @@ EditorUserSettings:
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
   m_VCAllowAsyncUpdate: 0
+  m_VCScanLocalPackagesOnConnect: 1
   m_ArtifactGarbageCollection: 1
