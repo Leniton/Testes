@@ -9,8 +9,7 @@ public class Plataform2d_Input : MonoBehaviour
 
     void Awake()
     {
-        plataform = GetComponent<Plataform_Script>();
-        if (plataform) plataform.GetComponentInChildren<Plataform_Script>();
+        plataform.GetComponentInChildren<Plataform_Script>();
     }
 
     void Update()
