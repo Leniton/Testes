@@ -77,10 +77,18 @@ public class Plataform_Script : MonoBehaviour
 
         physicsHandler.Velocity = finalVelocity;
 
-        if (finalVelocity.y < 0)
+        if (!jump.onGround)
         {
             input.y = 0;
             state = State.jumping;
+        }
+        else
+        {
+            Vector3 moving = finalVelocity - Vector3.Scale(finalVelocity, jump.orientation);
+            if (moving == Vector3.zero)
+                state = State.idle;
+            else
+                state = State.walking;
         }
     }
 }

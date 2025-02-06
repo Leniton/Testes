@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Plataform2d_Input : MonoBehaviour
 {
-
-    Plataform_Script plataform;
+    private Plataform_Script plataform;
 
     void Awake()
     {
-        plataform.GetComponentInChildren<Plataform_Script>();
+        plataform ??= GetComponentInChildren<Plataform_Script>();
     }
 
     void Update()
