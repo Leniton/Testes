@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PhysicsHelper;
 
 [RequireComponent(typeof(PhysicsHandler))]
 public class Plataform_Script : MonoBehaviour
