@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PhysicsHelper;
 
@@ -27,23 +25,24 @@ public class Plataform_Script : MonoBehaviour
         set { jumpOverride = value; }
     }
 
-    Movement movementOverride;
+    private Movement movementOverride;
     public Movement Movement
     {
         get { return movementOverride ?? movement; }
         set { movementOverride = value; }
     }
 
-    PhysicsHandler physicsHandler;
+    private PhysicsHandler physicsHandler;
 
-    Vector3 finalVelocity;
-    GameObject lastWall;
+    //for calculating movement while in moving plataforms
+    private PhysicsHandler physicsSurface;
 
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
         jump.Init(physicsHandler);
         movement.Init(physicsHandler);
+        jump.OnLand += OnLanding;
     }
 
     void FixedUpdate()
@@ -56,10 +55,10 @@ public class Plataform_Script : MonoBehaviour
         }
 #endif
 
-        finalVelocity = physicsHandler.Velocity;
+        Vector3 inputVelocity = physicsHandler.Velocity;
         Vector3 xInput = Movement.AdjustToNormal(input, Jump.floorNormal);
-        finalVelocity = (finalVelocity * (1 - levelOfControl)) + (Movement.Move(xInput) * levelOfControl);
-        finalVelocity.y = physicsHandler.Velocity.y;
+        inputVelocity = (inputVelocity * (1 - levelOfControl)) + (Movement.Move(xInput) * levelOfControl);
+        inputVelocity.y = physicsHandler.Velocity.y;
 
         if (levelOfControl >= controlJumpThreshold)
         {
@@ -67,16 +66,21 @@ public class Plataform_Script : MonoBehaviour
             {
                 if (Jump.onGround)
                 {
-                    finalVelocity.y = Jump.JumpValue();
+                    inputVelocity.y = Jump.JumpValue();
                     input.y = 0;
                 }
             }
         }
 
-        if(useGravity) finalVelocity.y -= Jump.GravityForce();
+        if(useGravity) inputVelocity.y -= Jump.GravityForce();
+
+        Vector3 finalVelocity = inputVelocity;
+        if (jump.onGround && physicsSurface)
+            finalVelocity += physicsSurface.Velocity;
 
         physicsHandler.Velocity = finalVelocity;
 
+        //Update state
         if (!jump.onGround)
         {
             input.y = 0;
@@ -84,11 +88,16 @@ public class Plataform_Script : MonoBehaviour
         }
         else
         {
-            Vector3 moving = finalVelocity - Vector3.Scale(finalVelocity, jump.orientation);
+            Vector3 moving = inputVelocity - Vector3.Scale(inputVelocity, jump.orientation);
             if (moving == Vector3.zero)
                 state = State.idle;
             else
                 state = State.walking;
         }
+    }
+
+    private void OnLanding(CollisionData data)
+    {
+        physicsSurface = data.gameObject.GetComponent<PhysicsHandler>();
     }
 }

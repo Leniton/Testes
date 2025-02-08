@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.lenix.numberutils": {
+      "version": "https://github.com/LenixSO/NumberUtilities.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d2a51f13ea08bd3e73c01457c9f191c02a1316ee"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

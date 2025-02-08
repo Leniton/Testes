@@ -17,7 +17,7 @@ public class Jump : Displacement
     public Vector3 floorNormal {  get; private set; }
 
     public Action<CollisionData> OnLand;
-    GameObject standingFloor;
+    private GameObject standingFloor;
 
     public override void Init(PhysicsHandler handler)
     {
