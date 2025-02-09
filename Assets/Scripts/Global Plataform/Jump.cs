@@ -102,7 +102,7 @@ public class Jump : Displacement
     void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
-        if (data.collider.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
+        if (data.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
@@ -120,7 +120,7 @@ public class Jump : Displacement
     void CollisionExit(CollisionData data)
     {
         //print($"Exit {data.collider.gameObject.name}");
-        if (data.collider.gameObject == standingFloor)
+        if (data.gameObject == standingFloor)
         {
             floorNormal = orientation;
             standingFloor = null;

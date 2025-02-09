@@ -36,13 +36,15 @@ public class Plataform_Script : MonoBehaviour
 
     //for calculating movement while in moving plataforms
     private PhysicsHandler physicsSurface;
+    private bool jumped = false;
 
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
         jump.Init(physicsHandler);
-        movement.Init(physicsHandler);
         jump.OnLand += OnLanding;
+        movement.Init(physicsHandler);
+        physicsHandler.CollisionExit += OnLeavingPlataform;
     }
 
     void FixedUpdate()
@@ -66,6 +68,7 @@ public class Plataform_Script : MonoBehaviour
             {
                 if (Jump.onGround)
                 {
+                    jumped = true;
                     inputVelocity.y = Jump.JumpValue();
                     input.y = 0;
                 }
@@ -75,8 +78,12 @@ public class Plataform_Script : MonoBehaviour
         if(useGravity) inputVelocity.y -= Jump.GravityForce();
 
         Vector3 finalVelocity = inputVelocity;
-        if (jump.onGround && physicsSurface)
-            finalVelocity += physicsSurface.Velocity;
+        if (!jumped && jump.onGround && physicsSurface)
+        {
+            finalVelocity.y = 0;
+            Vector3 surfaceVelocity = physicsSurface.Velocity;
+            finalVelocity += surfaceVelocity;
+        }
 
         physicsHandler.Velocity = finalVelocity;
 
@@ -98,6 +105,12 @@ public class Plataform_Script : MonoBehaviour
 
     private void OnLanding(CollisionData data)
     {
+        jumped = false;
         physicsSurface = data.gameObject.GetComponent<PhysicsHandler>();
+    }
+    private void OnLeavingPlataform(CollisionData data)
+    {
+        if (jump.onGround) return;
+        physicsSurface = null;
     }
 }

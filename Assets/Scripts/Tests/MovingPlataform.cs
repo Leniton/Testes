@@ -6,6 +6,7 @@ using PhysicsHelper;
 
 public class MovingPlataform : MonoBehaviour
 {
+    [SerializeField] private Vector3 direction = Vector3.right;
     [SerializeField] private float speed = 5;
     [SerializeField] private float cycleDuration = 5;
     private PhysicsHandler physicsHandler;
@@ -17,7 +18,7 @@ public class MovingPlataform : MonoBehaviour
 
     private void Update()
     {
-        float direction = NumberUtil.SineWave(Time.time, 1, 1f/cycleDuration);
-        physicsHandler.Velocity = Vector3.right * direction * speed;
+        float dir = NumberUtil.SineWave(Time.time, 1, 1f/cycleDuration);
+        physicsHandler.Velocity = direction * (dir * speed);
     }
 }
