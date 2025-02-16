@@ -10,23 +10,20 @@ public class Gravity : Displacement
 
     private float fallGravity;
 
-    public Gravity(float height = 1, float timeToLand = 1, float? finalSpeed = null)
+    public Gravity(float height = 1, float timeToLand = 1, float finalSpeed = 0)
     {
         referenceHeight = height;
         this.timeToLand = timeToLand;
-        //if no final speed is set, calculate assuming initialVelocity is 0 
-        finalVelocity = finalSpeed ??= InitialVelocity(height, timeToLand, 0);
+        finalVelocity = finalSpeed;
     }
 
     public override void CalculateParameters()
     {
-        //fallGravity = (2 * referenceHeight) / (Mathf.Pow(timeToLand, 2));
         float stepsRequired = TimeSteps(timeToLand);
         float startingSpeed = InitialVelocity(referenceHeight, timeToLand, finalVelocity);
-        //float startingSpeed = (2 * referenceHeight / timeToLand) - finalVelocity;
         fallGravity = (startingSpeed / (stepsRequired - 1));
 
-        Debug.Log($"steps: {stepsRequired} | startingSpeed: {startingSpeed}\n gravity: {fallGravity}");
+        //Debug.Log($"startingSpeed: {startingSpeed} | gravity: {fallGravity}\nsteps: {stepsRequired} ");
     }
 
     public float GravityForce()
@@ -39,7 +36,7 @@ public class Gravity : Displacement
     public static float InitialVelocity(float displacement, float time, float finalVelocity)
     {
         float stepsRequired = TimeSteps(time);
-        float startingSpeed = (2 * displacement / stepsRequired) - finalVelocity;
+        float startingSpeed = ((2 * displacement / stepsRequired) - finalVelocity) / Time.fixedDeltaTime;
         return startingSpeed;
     }
 }

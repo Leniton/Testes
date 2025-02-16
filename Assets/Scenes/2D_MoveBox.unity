@@ -902,7 +902,7 @@ MonoBehaviour:
   terminalVelocity: 10
   pulo: 5
   puloCurto: 0
-  fallSpot: 0
+  fallSpot: 0.01
 --- !u!212 &652576063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2560,31 +2560,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
-        type: 3}
-      propertyPath: testMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
-        type: 3}
-      propertyPath: jump.timeToLand
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
-        type: 3}
-      propertyPath: jump.gravity.timeToLand
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477279677991117515, guid: 4f0e12de589b9234ab1a749e84391ccb,
-        type: 3}
-      propertyPath: jump.gravity.referenceHeight
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477279677991117516, guid: 4f0e12de589b9234ab1a749e84391ccb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 4477279677991117516, guid: 4f0e12de589b9234ab1a749e84391ccb,
         type: 3}
       propertyPath: m_LocalPosition.x
