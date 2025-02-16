@@ -6,13 +6,16 @@ using PhysicsHelper;
 public class Jump : Displacement
 {
     //Jump parameters
-    [SerializeField] float jumpHeight; //the height the jump will reach
-    [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
-    [SerializeField] Gravity gravity;
-    [SerializeField] float gravityCompensation;
-    [SerializeField] float maxSlopeAngle;
-    float jumpSpeed;
-    float terminalVelocity;
+    [SerializeField] private float jumpHeight; //the height the jump will reach
+    [SerializeField, Min(.05f)] float timeToMaxHeight; //the time it will take to reach max height
+    [SerializeField, Min(.05f)] private float timeToLand;
+    [Space]
+    [SerializeField] private float maxSlopeAngle;
+    private float jumpSpeed;
+
+    private Gravity jumpGravity;    
+    private Gravity fallGravity;
+
     public bool onGround { get; private set; }
     public Vector3 floorNormal {  get; private set; }
 
@@ -21,21 +24,32 @@ public class Jump : Displacement
 
     public override void Init(PhysicsHandler handler)
     {
+        //create gravity
+        jumpGravity = new Gravity(jumpHeight, timeToMaxHeight, 0);
+        fallGravity = new Gravity(jumpHeight, timeToLand);
+
+        //initialize self and gravities
         base.Init(handler);
-        gravity.Init(handler);
+        jumpGravity.Init(handler);
+        //fallGravity.Init(handler);
+
+        //listen to collision events
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
     }
 
     public override void CalculateParameters()
     {
-        //basic speed formula plus the extra force needed to compensate for the gravity force
-        jumpSpeed = jumpHeight;
-        jumpSpeed *= 1f + gravityCompensation;
+        //uses the same formula as gravity to keep it consistent
+        jumpSpeed = Gravity.InitialVelocity(jumpHeight, timeToMaxHeight, 0);
+        //Debug.Log(jumpSpeed);
 
         //gravity calculations. jump and fall gravity are different
-        gravity.CalculateParameters();
+        jumpGravity.CalculateParameters();
+        //fallGravity.CalculateParameters();
     }
+
+
 
     public float JumpValue()
     {
@@ -54,39 +68,42 @@ public class Jump : Displacement
         if (onGround) return 0;
 
         //test only
-        stopTime = 0;
 
-        Vector3 gravityEffect = physicsHandler.Velocity;
+        Vector3 currentVelocity = physicsHandler.Velocity;
+        currentVelocity.Scale(orientation);
+        float gravityEffect = Vector3.Dot(currentVelocity, orientation);
 
-        float currentGravity;
-        float gravityGuess;
-        if (gravityEffect.y > 0)
-        {
-            //currentGravity = jumpGravity;
-            gravityGuess = jumpSpeed / timeToMaxHeight;
-            gravityGuess = Mathf.Lerp(0, gravityGuess, Time.fixedDeltaTime);
-            if (gravityEffect.y - gravityGuess < 0.00001f) gravityGuess = gravityEffect.y;
-            currentGravity = gravityGuess;
-        }
-        else
-        {
-            currentGravity = gravity.GravityForce();
-        }
+        Gravity currentGravity = jumpGravity;// gravityEffect > 0 ? jumpGravity : fallGravity;
+
+        float gravityForce = currentGravity.GravityForce();
+        //float gravityGuess;
+        //if (gravityEffect.y > 0)
+        //{
+        //    //currentGravity = jumpGravity;
+        //    gravityGuess = jumpSpeed / timeToMaxHeight;
+        //    gravityGuess = Mathf.Lerp(0, gravityGuess, Time.fixedDeltaTime);
+        //    if (gravityEffect.y - gravityGuess < 0.00001f) gravityGuess = gravityEffect.y;
+        //    gravityForce = gravityGuess;
+        //}
+        //else
+        //{
+        //    gravityForce = fallGravity.GravityForce();
+        //}
 
         //test only
+        stopTime += Time.fixedDeltaTime;
         if (checkStopTime)
         {
-            stopTime += Time.fixedDeltaTime;
-            speedLost += currentGravity;
+            speedLost += gravityForce;
             //Debug.Log($"losing {gravityGuess} from {jumpSpeed}; total: {speedLost}");
         }
-        if (gravityEffect.y <= 0)
+        if (gravityEffect <= 0)
         {
             if (!checkStopTime)
             { 
                 //Debug.LogError($"fall acceleration is {fallGravity} per second");
                 checkStopTime = true;
-                //Debug.LogError($"stop time: {stopTime} | height: {transform.position.y} \ncurrentSpeed: {gravityEffect.y}");
+                Debug.LogError($"stop time: {stopTime} | height: {physicsHandler.transform.position.y} \ncurrentSpeed: {gravityEffect}");
                 //Debug.DrawRay(transform.position, Vector3.down * t_initialHeight, Color.red + (Color.yellow / 2), .2f);
                 //print($"Initial speed: {jumpSpeed} | total speed lost: {speedLost}");
                 //float ticksPerSecond = (1f / Time.fixedDeltaTime) - 1;
@@ -97,7 +114,7 @@ public class Jump : Displacement
         }
 
         //if (gravityEffect.y > -terminalVelocity)
-        return currentGravity;
+        return gravityForce;
     }
     void CollisionEnter(CollisionData data)
     {
@@ -111,7 +128,7 @@ public class Jump : Displacement
             OnLand?.Invoke(data);
 
             //test only
-            //Debug.LogWarning($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
+            Debug.LogError($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
             checkStopTime = false;
             stopTime = 0;
             speedLost = 0;
