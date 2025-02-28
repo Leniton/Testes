@@ -929,44 +929,15 @@ GameObject:
   - component: {fileID: 652576063}
   - component: {fileID: 652576066}
   - component: {fileID: 652576067}
-  - component: {fileID: 652576069}
-  - component: {fileID: 652576062}
-  - component: {fileID: 652576065}
   - component: {fileID: 652576068}
+  - component: {fileID: 652576065}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &652576062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652576061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 604fafde7b8992844ba9f23732ed1394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  left: 0
-  right: 0
-  jump: 0
-  estado: 0
-  fliped: 0
-  controleMovimento: 1
-  startingSpeed: 0
-  acceleration: 0
-  topSpeed: 0
-  deceleration: 0
-  gravity: 1
-  terminalVelocity: 10
-  pulo: 5
-  puloCurto: 0
-  fallSpot: 0
+  m_IsActive: 1
 --- !u!212 &652576063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1042,13 +1013,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652576061}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96e74eb377caf6e478fe188ca7390b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocidade: 5
-  IA: 0
+  movement:
+    orientation: {x: 0, y: 1, z: 0}
+    topSpeed: 5
+    timeToTopSpeed: 0.2
+    timeToStop: 0.2
+    collisionRule: 0
+  PhysicsHandler: {fileID: 652576068}
 --- !u!50 &652576066
 Rigidbody2D:
   serializedVersion: 4
@@ -1064,7 +1040,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 1d89617fcfdf4f24e94d62c99d5232b2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1128,24 +1104,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652576061}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c55ac6e06f82c3e40a02d292160b974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Velocidade: 5
-  "Acelera\xE7\xE3o": 1
-  "Desacelera\xE7\xE3o": 1
---- !u!114 &652576069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652576061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d0a7d7dfc8fcd4eb31ed701623b5ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c2252ebe7221cd4e8898d5a3acb871d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &696637414
@@ -3468,6 +3429,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: New player plataform
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477279677991117525, guid: 4f0e12de589b9234ab1a749e84391ccb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
