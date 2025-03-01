@@ -9,7 +9,7 @@ public class Plataform2d_Input : MonoBehaviour
 
     void Awake()
     {
-        plataform.GetComponentInChildren<Plataform_Script>();
+        plataform ??= GetComponentInChildren<Plataform_Script>();
     }
 
     void Update()
@@ -25,7 +25,7 @@ public class Plataform2d_Input : MonoBehaviour
 
         plataform.input.x = Input.GetAxis("Horizontal");
 
-        if (Input.GetKey(KeyCode.LeftShift)) plataform.levelOfControl = 0;
-        else plataform.levelOfControl = Mathf.Clamp01(plataform.levelOfControl + Time.deltaTime);
+        //if (Input.GetKey(KeyCode.LeftShift)) plataform.levelOfControl = 0;
+        //else plataform.levelOfControl = Mathf.Clamp01(plataform.levelOfControl + Time.deltaTime);
     }
 }
