@@ -17,9 +17,9 @@ public class Movement : Displacement
     [SerializeField] CollisionRule collisionRule;
     private List<CollisionData> lastCollision = new();
 
-    public override void Init(PhysicsHandler handler)
+    public override void Initialize(PhysicsHandler handler)
     {
-        base.Init(handler);
+        base.Initialize(handler);
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
     }

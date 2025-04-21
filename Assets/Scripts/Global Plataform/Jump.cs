@@ -10,6 +10,7 @@ public class Jump : Displacement
     [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
     [SerializeField, Min(.2f)] private float timeToLand;
     [Space]
+    [Tooltip("How steep a slope can be to still be considered a floor")]
     [SerializeField] private float maxSlopeAngle;
     private float jumpSpeed;
 
@@ -22,20 +23,28 @@ public class Jump : Displacement
     public Action<CollisionData> OnLand;
     private GameObject standingFloor;
 
-    public override void Init(PhysicsHandler handler)
+    public override void Initialize(PhysicsHandler handler)
     {
         //create gravity
         jumpGravity = new Gravity(jumpHeight, timeToMaxHeight);
         fallGravity = new Gravity(jumpHeight, timeToLand);
 
         //initialize self and gravities
-        base.Init(handler);
-        jumpGravity.Init(handler);
-        fallGravity.Init(handler);
+        base.Initialize(handler);
+        jumpGravity.Initialize(handler);
+        fallGravity.Initialize(handler);
 
         //listen to collision events
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
+    }
+    public void CopyFloorData(Jump overridenJump)
+    {
+        onGround = overridenJump.onGround;
+        floorNormal = overridenJump.floorNormal;
+        standingFloor = overridenJump.standingFloor;
+
+        OnLand += overridenJump.OnLand;
     }
 
     public override void CalculateParameters()
@@ -59,8 +68,8 @@ public class Jump : Displacement
     //test parameters
     bool pause = false;
     bool checkStopTime = false;
-    float stopTime;
-    float speedLost;
+    private float stopTime;
+    private float speedLost;
     /// <summary>
     /// Must be called on FixedUpdate to work properly
     /// </summary>
@@ -99,10 +108,10 @@ public class Jump : Displacement
         //if (gravityEffect.y > -terminalVelocity)
         return gravityForce;
     }
-    void CollisionEnter(CollisionData data)
+    private void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
-        if (data.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
+        if (Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
@@ -118,7 +127,7 @@ public class Jump : Displacement
             speedLost = 0;
         }
     }
-    void CollisionExit(CollisionData data)
+    private void CollisionExit(CollisionData data)
     {
         //print($"Exit {data.collider.gameObject.name}");
         if (data.gameObject == standingFloor)

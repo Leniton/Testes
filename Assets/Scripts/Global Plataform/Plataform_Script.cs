@@ -13,16 +13,22 @@ public class Plataform_Script : MonoBehaviour
     [SerializeField] public State state = new State();
 
     public Vector3 input = Vector3.zero;
-    [SerializeField] private float controlJumpThreshold;
-    //Reference Parameters
-    [SerializeField] Jump jump;
-    [SerializeField] Movement movement;
+    //Movement
+    [Header("Walk"), SerializeField] private Movement movement;
+
+    [Header("Jump"), SerializeField] private float controlJumpThreshold;
+    [SerializeField] private Jump jump;
 
     private Jump jumpOverride;
     public Jump Jump
     {
         get { return jumpOverride ?? jump; }
-        set { jumpOverride = value; }
+        set 
+        {
+            value.Initialize(physicsHandler);
+            value.CopyFloorData(Jump);
+            jumpOverride = value; 
+        }
     }
 
     private Movement movementOverride;
@@ -32,7 +38,7 @@ public class Plataform_Script : MonoBehaviour
         set { movementOverride = value; }
     }
 
-    private PhysicsHandler physicsHandler;
+    public PhysicsHandler physicsHandler {  get; private set; }
 
     //for calculating movement while in moving plataforms
     private PhysicsHandler physicsSurface;
@@ -41,9 +47,9 @@ public class Plataform_Script : MonoBehaviour
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-        jump.Init(physicsHandler);
+        jump.Initialize(physicsHandler);
         jump.OnLand += OnLanding;
-        movement.Init(physicsHandler);
+        movement.Initialize(physicsHandler);
         physicsHandler.CollisionExit += OnLeavingPlataform;
     }
 
@@ -57,8 +63,8 @@ public class Plataform_Script : MonoBehaviour
         }
 #endif
 
+        Vector3 xInput = Movement.AdjustToNormal(input * Vector2.right, Jump.floorNormal);
         Vector3 inputVelocity = physicsHandler.Velocity;
-        Vector3 xInput = Movement.AdjustToNormal(input, Jump.floorNormal);
         inputVelocity = (inputVelocity * (1 - levelOfControl)) + (Movement.Move(xInput) * levelOfControl);
         inputVelocity.y = physicsHandler.Velocity.y;
 

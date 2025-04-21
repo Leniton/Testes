@@ -284,7 +284,7 @@ MonoBehaviour:
     maxSlopeAngle: 60
   movement:
     orientation: {x: 0, y: 1, z: 0}
-    topSpeed: 4
+    topSpeed: 6
     timeToTopSpeed: 0
     timeToStop: 0
     collisionRule: 0

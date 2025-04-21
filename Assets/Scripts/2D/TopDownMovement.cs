@@ -5,26 +5,19 @@ using UnityEngine;
 public class TopDownMovement : MonoBehaviour
 {
 
-	[SerializeField]
-	int Velocidade;
-	Rigidbody2D RB;
+	[SerializeField] Movement movement;
+	[SerializeField] PhysicsHelper.PhysicsHandler PhysicsHandler;
 	int vertical, horizontal;
 
-	[SerializeField]
-	bool IA; 
+    private void Awake()
+    {
+		movement.Initialize(PhysicsHandler);
+    }
 
-	void Start()
+    // Update is called once per frame
+    void Update()
 	{
-		RB = GetComponent<Rigidbody2D>();
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		if (!IA)
-		{
-			Mover();
-		}
+		Mover();
 	}
 
 	void Mover()
@@ -52,11 +45,6 @@ public class TopDownMovement : MonoBehaviour
 		{
 			vertical = 0;
 		}
-		RB.velocity = new Vector3(horizontal, vertical, 0) * Velocidade;
-	}
-
-	public bool isMoving()
-	{
-		return (vertical != 0 || horizontal != 0);
-	}
+		PhysicsHandler.Velocity = movement.Move(new Vector3(horizontal, vertical));
+    }
 }
