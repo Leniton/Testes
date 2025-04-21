@@ -6,13 +6,13 @@ using PhysicsHelper;
 public class Jump : Displacement
 {
     //Jump parameters
-    [SerializeField] float jumpHeight; //the height the jump will reach
-    [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
-    [SerializeField] Gravity gravity;
-    [SerializeField] float gravityCompensation;
-    [SerializeField] float maxSlopeAngle;
-    float jumpSpeed;
-    float terminalVelocity;
+    [SerializeField] private float jumpHeight; //the height the jump will reach
+    [SerializeField, Min(.2f)] private float timeToMaxHeight; //the time it will take to reach max height
+    [SerializeField] private Gravity gravity;
+    [SerializeField] private float gravityCompensation;
+    [SerializeField] private float maxSlopeAngle;
+    private float jumpSpeed;
+
     public bool onGround { get; private set; }
     public Vector3 floorNormal {  get; private set; }
 
@@ -25,6 +25,14 @@ public class Jump : Displacement
         gravity.Init(handler);
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
+    }
+    public void CopyFloorData(Jump overridenJump)
+    {
+        onGround = overridenJump.onGround;
+        floorNormal = overridenJump.floorNormal;
+        standingFloor = overridenJump.standingFloor;
+
+        OnLand += overridenJump.OnLand;
     }
 
     public override void CalculateParameters()
@@ -44,8 +52,8 @@ public class Jump : Displacement
 
     //test parameters
     bool checkStopTime = false;
-    float stopTime;
-    float speedLost;
+    private float stopTime;
+    private float speedLost;
     /// <summary>
     /// Must be called on FixedUpdate to work properly
     /// </summary>
@@ -99,7 +107,7 @@ public class Jump : Displacement
         //if (gravityEffect.y > -terminalVelocity)
         return currentGravity;
     }
-    void CollisionEnter(CollisionData data)
+    private void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
         if (data.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
@@ -117,7 +125,7 @@ public class Jump : Displacement
             speedLost = 0;
         }
     }
-    void CollisionExit(CollisionData data)
+    private void CollisionExit(CollisionData data)
     {
         //print($"Exit {data.collider.gameObject.name}");
         if (data.gameObject == standingFloor)
