@@ -10,6 +10,7 @@ public class Jump : Displacement
     [SerializeField, Min(.2f)] private float timeToMaxHeight; //the time it will take to reach max height
     [SerializeField] private Gravity gravity;
     [SerializeField] private float gravityCompensation;
+    [Tooltip("How steep a slope can be to still be considered a floor")]
     [SerializeField] private float maxSlopeAngle;
     private float jumpSpeed;
 
@@ -110,7 +111,7 @@ public class Jump : Displacement
     private void CollisionEnter(CollisionData data)
     {
         //print($"collided with {data.collider.gameObject.name}");
-        if (data.gameObject.CompareTag("Chão") && Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
+        if (Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
         {
             standingFloor = data.collider.gameObject;
             onGround = true;
