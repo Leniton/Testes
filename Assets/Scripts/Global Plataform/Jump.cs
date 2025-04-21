@@ -25,14 +25,8 @@ public class Jump : Displacement
 
     public override void Initialize(PhysicsHandler handler)
     {
-        //create gravity
-        jumpGravity = new Gravity(jumpHeight, timeToMaxHeight);
-        fallGravity = new Gravity(jumpHeight, timeToLand);
-
         //initialize self and gravities
         base.Initialize(handler);
-        jumpGravity.Initialize(handler);
-        fallGravity.Initialize(handler);
 
         //listen to collision events
         physicsHandler.CollisionEnter += CollisionEnter;
@@ -52,6 +46,12 @@ public class Jump : Displacement
         //uses the same formula as gravity to keep it consistent
         jumpSpeed = Gravity.InitialVelocity(jumpHeight, timeToMaxHeight, 0);
         //Debug.Log(jumpSpeed);
+
+        //create gravity
+        jumpGravity = new Gravity(jumpHeight, timeToMaxHeight);
+        fallGravity = new Gravity(jumpHeight, timeToLand);
+        jumpGravity.Initialize(physicsHandler);
+        fallGravity.Initialize(physicsHandler);
 
         //gravity calculations. jump and fall gravity are different
         jumpGravity.CalculateParameters();
@@ -120,7 +120,7 @@ public class Jump : Displacement
             OnLand?.Invoke(data);
 
             //test only
-            Debug.LogError($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
+            //Debug.LogError($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
             pause = false;
             checkStopTime = false;
             stopTime = 0;
