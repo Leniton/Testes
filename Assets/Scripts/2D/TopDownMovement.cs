@@ -11,7 +11,7 @@ public class TopDownMovement : MonoBehaviour
 
     private void Awake()
     {
-		movement.Init(PhysicsHandler);
+		movement.Initialize(PhysicsHandler);
     }
 
     // Update is called once per frame

@@ -19,10 +19,10 @@ public class Jump : Displacement
     public Action<CollisionData> OnLand;
     private GameObject standingFloor;
 
-    public override void Init(PhysicsHandler handler)
+    public override void Initialize(PhysicsHandler handler)
     {
-        base.Init(handler);
-        gravity.Init(handler);
+        base.Initialize(handler);
+        gravity.Initialize(handler);
         physicsHandler.CollisionEnter += CollisionEnter;
         physicsHandler.CollisionExit += CollisionExit;
     }

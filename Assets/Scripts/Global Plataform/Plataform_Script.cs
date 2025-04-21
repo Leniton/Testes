@@ -23,7 +23,12 @@ public class Plataform_Script : MonoBehaviour
     public Jump Jump
     {
         get { return jumpOverride ?? jump; }
-        set { jumpOverride = value; }
+        set 
+        {
+            value.Initialize(physicsHandler);
+            value.CopyFloorData(Jump);
+            jumpOverride = value; 
+        }
     }
 
     private Movement movementOverride;
@@ -42,9 +47,9 @@ public class Plataform_Script : MonoBehaviour
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-        jump.Init(physicsHandler);
+        jump.Initialize(physicsHandler);
         jump.OnLand += OnLanding;
-        movement.Init(physicsHandler);
+        movement.Initialize(physicsHandler);
         physicsHandler.CollisionExit += OnLeavingPlataform;
     }
 

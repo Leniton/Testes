@@ -9,8 +9,6 @@ public class JumpSetPickup : PlataformPickUp
 
     protected override void OnPlataformerPickup(Plataform_Script plataformer)
     {
-        jump.CopyFloorData(plataformer.Jump);
-        jump.Init(plataformer.physicsHandler);
         plataformer.Jump = jump;
         Destroy(gameObject);
     }
