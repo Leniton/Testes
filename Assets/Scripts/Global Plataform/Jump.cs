@@ -47,6 +47,13 @@ public class Jump : Displacement
         jumpSpeed = Gravity.InitialVelocity(jumpHeight, timeToMaxHeight, 0);
         //Debug.Log(jumpSpeed);
 
+        //alter height bc the faster the jump the higher the height offset
+        //calculate proportion (simplify, from .2 to .1, .07, .048 ...)
+        //[time = offset] .2 = .2; .4 = .1; .6 = .07; .8 = .048
+
+        //calculate what hight would have a offset that equals the desired height
+        //ex: x* (1+.2) = 10 => x = 10/1.2 => x = 8.34
+
         //create gravity
         jumpGravity = new Gravity(jumpHeight, timeToMaxHeight);
         fallGravity = new Gravity(jumpHeight, timeToLand);
