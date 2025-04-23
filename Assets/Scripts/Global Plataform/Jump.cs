@@ -43,19 +43,27 @@ public class Jump : Displacement
 
     public override void CalculateParameters()
     {
-        //uses the same formula as gravity to keep it consistent
-        jumpSpeed = Gravity.InitialVelocity(jumpHeight, timeToMaxHeight, 0);
-        //Debug.Log(jumpSpeed);
-
         //alter height bc the faster the jump the higher the height offset
         //calculate proportion (simplify, from .2 to .1, .07, .048 ...)
         //[time = offset] .2 = .2; .4 = .1; .6 = .07; .8 = .048
+        //offset = (.2/(time/.2))
+
+        //this formula can probably be improved
+        float overReachOffset = .2f / (timeToMaxHeight / .2f);
+        overReachOffset *= .999999f;//slight nerf to make sure it reaches the height 
 
         //calculate what hight would have a offset that equals the desired height
         //ex: x* (1+.2) = 10 => x = 10/1.2 => x = 8.34
+        float adjustedHeight = jumpHeight / (1 + overReachOffset);
+
+        Debug.Log($"[{overReachOffset}] - {jumpHeight}({jumpHeight * (1 + overReachOffset)}) => {adjustedHeight}({adjustedHeight * (1 + overReachOffset)})");
+
+        //uses the same formula as gravity to keep it consistent
+        jumpSpeed = Gravity.InitialVelocity(adjustedHeight, timeToMaxHeight, 0);
+        //Debug.Log(jumpSpeed);
 
         //create gravity
-        jumpGravity = new Gravity(jumpHeight, timeToMaxHeight);
+        jumpGravity = new Gravity(adjustedHeight, timeToMaxHeight);
         fallGravity = new Gravity(jumpHeight, timeToLand);
         jumpGravity.Initialize(physicsHandler);
         fallGravity.Initialize(physicsHandler);
