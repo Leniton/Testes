@@ -74,7 +74,6 @@ public class Plataform_Script : MonoBehaviour
             {
                 if (Jump.onGround)
                 {
-                    Debug.Log(Jump.JumpValue());
                     jumped = true;
                     inputVelocity.y = Jump.JumpValue();
                     input.y = 0;
