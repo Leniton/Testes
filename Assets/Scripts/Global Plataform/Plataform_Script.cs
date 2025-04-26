@@ -17,12 +17,12 @@ public class Plataform_Script : MonoBehaviour
     [Header("Walk"), SerializeField] private Movement movement;
 
     [Header("Jump"), SerializeField] private float controlJumpThreshold;
-    [SerializeField] private Jump jump;
+    [SerializeField] private Jump _jump;
 
     private Jump jumpOverride;
     public Jump Jump
     {
-        get { return jumpOverride ?? jump; }
+        get { return jumpOverride ?? _jump; }
         set 
         {
             value.Initialize(physicsHandler);
@@ -47,8 +47,8 @@ public class Plataform_Script : MonoBehaviour
     void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
-        jump.Initialize(physicsHandler);
-        jump.OnLand += OnLanding;
+        Jump.Initialize(physicsHandler);
+        Jump.OnLand += OnLanding;
         movement.Initialize(physicsHandler);
         physicsHandler.CollisionExit += OnLeavingPlataform;
     }
@@ -58,7 +58,7 @@ public class Plataform_Script : MonoBehaviour
 #if UNITY_EDITOR
         if (testMode)
         {
-            jump.CalculateParameters();
+            Jump.CalculateParameters();
             movement.CalculateParameters();
         }
 #endif
@@ -74,6 +74,7 @@ public class Plataform_Script : MonoBehaviour
             {
                 if (Jump.onGround)
                 {
+                    Debug.Log(Jump.JumpValue());
                     jumped = true;
                     inputVelocity.y = Jump.JumpValue();
                     input.y = 0;
@@ -81,10 +82,10 @@ public class Plataform_Script : MonoBehaviour
             }
         }
 
-        if(useGravity) inputVelocity.y -= Jump.GravityForce();
+        if (useGravity) inputVelocity.y -= Jump.GravityForce();
 
         Vector3 finalVelocity = inputVelocity;
-        if (!jumped && jump.onGround && physicsSurface)
+        if (!jumped && Jump.onGround && physicsSurface)
         {
             finalVelocity.y = 0;
             Vector3 surfaceVelocity = physicsSurface.Velocity;
@@ -94,14 +95,14 @@ public class Plataform_Script : MonoBehaviour
         physicsHandler.Velocity = finalVelocity;
 
         //Update state
-        if (!jump.onGround)
+        if (!Jump.onGround)
         {
             input.y = 0;
             state = State.jumping;
         }
         else
         {
-            Vector3 moving = inputVelocity - Vector3.Scale(inputVelocity, jump.orientation);
+            Vector3 moving = inputVelocity - Vector3.Scale(inputVelocity, _jump.orientation);
             if (moving == Vector3.zero)
                 state = State.idle;
             else
@@ -116,7 +117,7 @@ public class Plataform_Script : MonoBehaviour
     }
     private void OnLeavingPlataform(CollisionData data)
     {
-        if (jump.onGround) return;
+        if (Jump.onGround) return;
         physicsSurface = null;
     }
 }

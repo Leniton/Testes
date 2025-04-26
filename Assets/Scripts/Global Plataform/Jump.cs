@@ -56,7 +56,7 @@ public class Jump : Displacement
         //ex: x* (1+.2) = 10 => x = 10/1.2 => x = 8.34
         float adjustedHeight = jumpHeight / (1 + overReachOffset);
 
-        Debug.Log($"[{overReachOffset}] - {jumpHeight}({jumpHeight * (1 + overReachOffset)}) => {adjustedHeight}({adjustedHeight * (1 + overReachOffset)})");
+        //Debug.Log($"[{overReachOffset}] - {jumpHeight}({jumpHeight * (1 + overReachOffset)}) => {adjustedHeight}({adjustedHeight * (1 + overReachOffset)})");
 
         //uses the same formula as gravity to keep it consistent
         jumpSpeed = Gravity.InitialVelocity(adjustedHeight, timeToMaxHeight, 0);
@@ -73,18 +73,11 @@ public class Jump : Displacement
         fallGravity.CalculateParameters();
     }
 
-
-
     public float JumpValue()
     {
         return jumpSpeed;
     }
 
-    //test parameters
-    bool pause = false;
-    bool checkStopTime = false;
-    private float stopTime;
-    private float speedLost;
     /// <summary>
     /// Must be called on FixedUpdate to work properly
     /// </summary>
@@ -100,27 +93,6 @@ public class Jump : Displacement
 
         float gravityForce = currentGravity.GravityForce();
 
-        //test only
-        stopTime += Time.fixedDeltaTime;
-        speedLost += gravityEffect;
-        if (checkStopTime)
-        {
-            speedLost += gravityForce;
-        }
-        if (gravityEffect <= 0)
-        {
-            if (!checkStopTime)
-            { 
-                checkStopTime = true;
-                Debug.LogError($"stop time: {stopTime} | height: {physicsHandler.transform.position.y} \nspeed lost: {speedLost}");
-                //if(pause) UnityEditor.EditorApplication.isPaused = true;
-                //Debug.DrawRay(transform.position, Vector3.down * t_initialHeight, Color.red + (Color.yellow / 2), .2f);
-                stopTime = 0;
-                speedLost = 0;
-            }
-        }
-
-        //if (gravityEffect.y > -terminalVelocity)
         return gravityForce;
     }
     private void CollisionEnter(CollisionData data)
@@ -133,13 +105,6 @@ public class Jump : Displacement
 
             floorNormal = data.contacts[0].normal;
             OnLand?.Invoke(data);
-
-            //test only
-            //Debug.LogError($"it took {stopTime}s to land, at {data.relativeVelocity} speed");
-            pause = false;
-            checkStopTime = false;
-            stopTime = 0;
-            speedLost = 0;
         }
     }
     private void CollisionExit(CollisionData data)

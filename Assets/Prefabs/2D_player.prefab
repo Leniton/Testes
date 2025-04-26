@@ -275,19 +275,19 @@ MonoBehaviour:
   useGravity: 1
   state: 0
   input: {x: 0, y: 0, z: 0}
-  controlJumpThreshold: 0.1
-  jump:
-    orientation: {x: 0, y: 1, z: 0}
-    jumpHeight: 5
-    timeToMaxHeight: 0.4
-    timeToLand: 0.3
-    maxSlopeAngle: 60
   movement:
     orientation: {x: 0, y: 1, z: 0}
     topSpeed: 6
     timeToTopSpeed: 0
     timeToStop: 0
     collisionRule: 0
+  controlJumpThreshold: 0.1
+  _jump:
+    orientation: {x: 0, y: 1, z: 0}
+    jumpHeight: 5
+    timeToMaxHeight: 0.4
+    timeToLand: 0.3
+    maxSlopeAngle: 60
 --- !u!114 &4477279677991117514
 MonoBehaviour:
   m_ObjectHideFlags: 0
