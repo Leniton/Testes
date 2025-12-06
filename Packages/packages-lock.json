@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "34432703a177c97631a4eb1d908f086037c67969"
     },
+    "com.lenix.serialized-method": {
+      "version": "https://github.com/LenixSO/SerializedMethod.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3fdae7b82531aae28fd3186989b8bd159952b999"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
