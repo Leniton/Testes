@@ -194,3 +194,12 @@ The following packages were updated:
   com.unity.collab-proxy from version 2.6.0 to 2.7.1
   com.unity.ide.rider from version 3.0.34 to 3.0.35
   com.unity.timeline from version 1.7.6 to 1.7.7
+
+=== Wed Dec 24 17:48:09 2025
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ai.navigation from version 1.1.5 to 1.1.6
+  com.unity.ide.rider from version 3.0.35 to 3.0.36
