@@ -194,3 +194,26 @@ The following packages were updated:
   com.unity.ide.rider from version 3.0.28 to 3.0.36
   com.unity.textmeshpro from version 3.0.6 to 3.0.7
   com.unity.timeline from version 1.7.6 to 1.7.7
+
+=== Tue Mar 31 18:16:42 2026
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.modules.adaptiveperformance@1.0.0
+  com.unity.modules.vectorgraphics@1.0.0
+  com.unity.modules.accessibility@1.0.0
+  com.unity.multiplayer.center@1.0.1
+The following packages were updated:
+  com.unity.ai.navigation from version 1.1.6 to 2.0.11
+  com.unity.analytics from version 3.8.1 to 3.8.2
+  com.unity.collab-proxy from version 2.7.1 to 2.11.4
+  com.unity.ide.rider from version 3.0.36 to 3.0.39
+  com.unity.ide.visualstudio from version 2.0.22 to 2.0.26
+  com.unity.test-framework from version 1.1.33 to 1.6.0
+  com.unity.timeline from version 1.7.7 to 1.8.11
+  com.unity.ugui from version 1.0.0 to 2.0.0
+  com.unity.visualscripting from version 1.9.4 to 1.9.11
+The following packages were removed:
+  com.unity.textmeshpro@3.0.7
