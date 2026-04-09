@@ -12,6 +12,7 @@ public class Showcase : MonoBehaviour
     private void Awake()
     {
         respawnButton.onClick.AddListener(RespawnObject);
+        RespawnObject();
     }
     
     private void RespawnObject()
