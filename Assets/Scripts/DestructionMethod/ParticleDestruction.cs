@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DestructionMethod", menuName = "Scriptable Objects/DestructionMethod/ParticleDestruction")]
-public class ParticleDestruction
+[CreateAssetMenu(fileName = "newParticleDestruction", menuName = "Scriptable Objects/DestructionMethod/ParticleDestruction")]
+public class ParticleDestruction : DestructionMethod
 {
     
 }

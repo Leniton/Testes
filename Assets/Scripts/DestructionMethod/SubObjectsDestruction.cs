@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DestructionMethod", menuName = "Scriptable Objects/DestructionMethod/SubObjectsDestruction")]
-public class SubObjectsDestruction
+[CreateAssetMenu(fileName = "newSubObjectsDestruction", menuName = "Scriptable Objects/DestructionMethod/SubObjectsDestruction")]
+public class SubObjectsDestruction : DestructionMethod
 {
     
 }

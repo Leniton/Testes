@@ -17,7 +17,7 @@ public class Showcase : MonoBehaviour
     
     private void RespawnObject()
     {
-        if (!ReferenceEquals(destructible, null)) return;
+        if (destructible != null) return;
         destructible = Instantiate(destructiblePrefab);
     }
 }

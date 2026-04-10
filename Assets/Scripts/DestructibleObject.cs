@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class DestructibleObject : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private DestructionMethod destructionMethod;
 
-    // Update is called once per frame
-    void Update()
+    public void DestroyObject(Vector3? breakPoint = null, Vector3? breakDirection = null)
     {
-        
+        destructionMethod.Destroy(this, breakPoint, breakDirection);
     }
 }
