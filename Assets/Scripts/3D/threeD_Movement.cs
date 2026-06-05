@@ -49,7 +49,7 @@ public class threeD_Movement : MonoBehaviour
             RB.AddForce(Vector3.down * Gravidade);
         }
 
-        if ((RB.velocity.y > 0.1f || RB.velocity.y < -0.1f) &&
+        if ((RB.linearVelocity.y > 0.1f || RB.linearVelocity.y < -0.1f) &&
             estado != Estado.pulando && controleMovimento)
         {
             estado = Estado.pulando;
@@ -183,13 +183,13 @@ public class threeD_Movement : MonoBehaviour
                 {
                     if (nochao)
                     {
-                        RB.velocity = Vector2.zero;
+                        RB.linearVelocity = Vector2.zero;
                         frontBack = leftRight = 0;
                         estado = Estado.parado;
                     }
                     else
                     {
-                        RB.velocity = new Vector3(0, RB.velocity.y, 0); ;
+                        RB.linearVelocity = new Vector3(0, RB.linearVelocity.y, 0); ;
                         estado = Estado.pulando;
                     }
                 }
@@ -198,21 +198,21 @@ public class threeD_Movement : MonoBehaviour
             {
                 //print(frontBack + " | " + leftRight);
                 Vector3 movement = (transform.forward * vel * frontBack) + (transform.right * vel * leftRight);
-                movement = new Vector3(movement.x, RB.velocity.y, movement.z);
-                RB.velocity = movement;
+                movement = new Vector3(movement.x, RB.linearVelocity.y, movement.z);
+                RB.linearVelocity = movement;
 
                 //if (estado == Estado.pulando && leftRight != 0) print("assim?");
             }
 
         }
 
-        if (fallSpeed > 0 && (RB.velocity.y < 0 || (puloCurto && !jump && !nochao)))
+        if (fallSpeed > 0 && (RB.linearVelocity.y < 0 || (puloCurto && !jump && !nochao)))
         {
             print("caindo");
             estado = Estado.pulando;
-            Vector3 fall = RB.velocity;
+            Vector3 fall = RB.linearVelocity;
             fall += Vector3.up * Physics.gravity.y * (10 * Gravidade) * fallSpeed * Time.deltaTime;
-            RB.velocity = fall;
+            RB.linearVelocity = fall;
         }
         /*else if (RB.velocity.y == 0)
         {
@@ -243,7 +243,7 @@ public class threeD_Movement : MonoBehaviour
         {
             if (c.GetContact(0).normal.y >= 0.4f)
             {
-                RB.velocity = new Vector3(RB.velocity.x, 0, RB.velocity.z);
+                RB.linearVelocity = new Vector3(RB.linearVelocity.x, 0, RB.linearVelocity.z);
 
                 if (foward || backward
                   || left || right)

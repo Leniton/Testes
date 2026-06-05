@@ -9,7 +9,7 @@ namespace PhysicsHelper
     public class PhysicsHandler2D : PhysicsHandler
     {
         private Rigidbody2D rb;
-        public override Vector3 Velocity { get => rb.velocity; set => rb.velocity = value; }
+        public override Vector3 Velocity { get => rb.linearVelocity; set => rb.linearVelocity = value; }
 
         private void Reset()
         {

@@ -68,7 +68,7 @@ public class TopDown_Movement : MonoBehaviour
 	{
 		if(Aceleração == 1 && Desaceleração == 1) return v;
 
-		Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+		Vector2 vel = GetComponent<Rigidbody2D>().linearVelocity;
 		float newX = 0;
 		float newY = 0;
 
@@ -123,7 +123,7 @@ public class TopDown_Movement : MonoBehaviour
 		dir *= Velocidade;
 		//dir = AceDesce(dir);
 		//print(dir.x);
-		GetComponent<Rigidbody2D>().velocity = dir + AfflictedForce;
+		GetComponent<Rigidbody2D>().linearVelocity = dir + AfflictedForce;
     }
 
 	//when you can control the characterwhile moving
