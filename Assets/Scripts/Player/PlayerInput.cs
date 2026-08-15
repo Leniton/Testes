@@ -14,7 +14,6 @@ public class PlayerInput : MonoBehaviour
         var move = Input.Map("Player").Action("Move");
         move.performed += context =>
         {
-            var input = movement.input;
             movement.input = context.ReadValue<Vector2>();
             movement.MoveNow();
         };

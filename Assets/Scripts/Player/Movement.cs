@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public Vector2 input;
-    bool moved = false;
+    bool move = false;
 
     private void Awake()
     {
@@ -17,9 +17,8 @@ public class Movement : MonoBehaviour
     {
         while (true)
         {
-            // MoveNow();
             transform.Translate(input);
-            moved = false;
+            move = false;
             yield return Step();
         }
     }
@@ -30,7 +29,7 @@ public class Movement : MonoBehaviour
         float step = time;
         while (step > 0)
         {
-            if (step < time / 2f && moved) yield break;
+            if (step < time / 2f && move) yield break;
             yield return null;
             step -= Time.deltaTime;
         }
@@ -38,8 +37,6 @@ public class Movement : MonoBehaviour
 
     public void MoveNow()
     {
-        // if (moved) return;
-        // transform.Translate(input);
-        moved = true;
+        move = true;
     }
 }
