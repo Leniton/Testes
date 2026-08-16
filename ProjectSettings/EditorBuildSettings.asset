@@ -9,6 +9,8 @@ EditorBuildSettings:
     path: Assets/networkTests/network.unity
     guid: 30bdf9e703826234aae97543418eeefd
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 8fc89feceef931c48bad7b93be826c63,
+      type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 28e1cbd17776d73498401a0591ed70e2,
       type: 3}
   m_UseUCBPForAssetBundles: 0
