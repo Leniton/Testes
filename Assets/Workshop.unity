@@ -655,7 +655,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &218964791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &333504027
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &539011986
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &548351089
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &685022668
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2191,7 +2191,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &1249199975
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2627,7 +2627,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &1357268142
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3462,7 +3462,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &1997556694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3558,7 +3558,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.15
+  m_PixelsPerUnitMultiplier: 0.17
 --- !u!222 &2074524209
 CanvasRenderer:
   m_ObjectHideFlags: 0
