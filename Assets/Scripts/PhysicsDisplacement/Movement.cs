@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using PhysicsHelper;
+
+[Serializable]
+public class Movement : Displacement<Movement>
+{
+    //movement parameters
+    [Min(0)] public float topSpeed;
+    [SerializeField, Min(0)] float timeToTopSpeed, timeToStop;
+    //checks dot product when deciding when to slow down before changing direction
+    [SerializeField, Range(-1, 1)] private float dotProductDirectionChange = 0;
+    //multiplier to accelerationRate when slowing down befo
+    [SerializeField, Min(.001f)] private float directionChangeFactor = 1f;
+    private float accelerationRate, decelerationRate;
+    private float lastUpdateTime = -1;
+    private float currentTime = 0;
+    private Vector3 lastDirection;
+    enum CollisionRule { block, slide }
+    [SerializeField] CollisionRule collisionRule;
+    private List<CollisionData> lastCollision = new();
+
+    public override Movement GetCopy()
+    {
+        CollisionData[] collisionCopy = Array.Empty<CollisionData>();
+        lastCollision.CopyTo(collisionCopy);
+        return new Movement()
+        {
+            topSpeed = topSpeed,
+            timeToTopSpeed = timeToTopSpeed,
+            timeToStop = timeToStop,
+            accelerationRate = accelerationRate,
+            decelerationRate = decelerationRate,
+            lastUpdateTime = lastUpdateTime,
+            currentTime = currentTime,
+            lastDirection = lastDirection,
+            collisionRule = collisionRule,
+            dotProductDirectionChange = dotProductDirectionChange,
+            directionChangeFactor = directionChangeFactor,
+            lastCollision = collisionCopy.ToList(),
+        };
+    }
+
+    public override void Initialize(PhysicsHandler handler)
+    {
+        base.Initialize(handler);
+        physicsHandler.CollisionEnter += CollisionEnter;
+        physicsHandler.CollisionExit += CollisionExit;
+    }
+
+    public override void CalculateParameters()
+    {
+        accelerationRate = timeToTopSpeed > 0 ? 1f / timeToTopSpeed : 999999999f;
+        decelerationRate = timeToStop > 0 ? 1f / timeToStop : 999999999f;
+    }
+
+    public Vector3 Move(Vector3 direction)
+    {
+        if (lastUpdateTime < 0) lastUpdateTime = Time.time;
+        float elapsedTime = Time.time - lastUpdateTime;
+        float modifier;
+
+        if (direction == Vector3.zero)
+        {
+            modifier = -decelerationRate;
+            direction = lastDirection;
+            if (elapsedTime <= 0) lastDirection = Vector3.zero;
+        }
+        else
+        {
+            if (lastDirection == Vector3.zero || Vector3.Dot(lastDirection, direction) >= dotProductDirectionChange)
+            {
+                modifier = accelerationRate;
+                lastDirection = direction;
+            }
+            else //changing direction, reduce speed before changing
+            {
+                modifier = -accelerationRate * directionChangeFactor;
+                if (elapsedTime <= 0) lastDirection = direction;
+                else direction = lastDirection;
+            }
+        }
+
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if (Vector3.Angle(-lastCollision[i].contacts[0].normal, direction) < 90)
+            {
+                if (collisionRule == CollisionRule.slide)
+                    direction = AdjustToNormal(direction, lastCollision[i].contacts[0].normal);
+                else
+                    direction = Vector3.zero;
+                break;
+            }
+        }
+
+        modifier *= elapsedTime;
+        currentTime = Mathf.Clamp01(currentTime + modifier);
+        float adjustedSpeed = Mathf.Lerp(0, topSpeed, currentTime);
+        direction *= adjustedSpeed;
+
+        lastUpdateTime = Time.time;
+        if (currentTime <= 0 && modifier < 0) lastUpdateTime = -1;
+
+        return direction;
+    }
+
+    public Vector3 AdjustToNormal(Vector3 input, Vector3 normal)
+    {
+        if (input == Vector3.zero) return Vector3.zero;
+
+        Vector3 direction = input;
+        Vector3.OrthoNormalize(ref normal, ref direction);
+        return direction;
+    }
+
+    void CollisionEnter(CollisionData data)
+    {
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if (data.gameObject == lastCollision[i].gameObject)
+            {
+                break;
+            }
+        }
+        lastCollision.Add(data);
+    }
+    void CollisionExit(CollisionData data)
+    {
+        for (int i = 0; i < lastCollision.Count; i++)
+        {
+            if(data.gameObject == lastCollision[i].gameObject)
+            {
+                lastCollision.RemoveAt(i);
+                break;
+            }
+        }
+    }
+}
