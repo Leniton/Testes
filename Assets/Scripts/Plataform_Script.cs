@@ -10,7 +10,7 @@ public class Plataform_Script : MonoBehaviour
     public float levelOfControl = 1;//change to float level of control?(0 no control, 1 full control)
     public bool useGravity = true;
     public enum State { idle, walking, jumping }
-    [SerializeField] public State state = new State();
+    [SerializeField] public State state;
 
     public Vector3 input = Vector3.zero;
     //Movement

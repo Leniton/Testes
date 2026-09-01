@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fc28f28b196f74fb99f9603dc7f892, type: 3}
   m_Name: LoggerSettingsSO
   m_EditorClassIdentifier: Assembly-CSharp::LenixSO.Logger.LoggerSettingsSO
-  restoreLogsOnChange: 1
+  restoreLogsOnChange: 0
   ignoreLoggerOnStackTrace: 1
   supressRegularLogs: 0
   activeFlags: 1

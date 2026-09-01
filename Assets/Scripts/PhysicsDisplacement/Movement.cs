@@ -8,8 +8,9 @@ using PhysicsHelper;
 public class Movement : Displacement<Movement>
 {
     //movement parameters
-    [Min(0)] public float topSpeed;
-    [SerializeField, Min(0)] float timeToTopSpeed, timeToStop;
+    [Min(0)] public float topSpeed = 5;
+    [SerializeField, Min(0)]
+    private float timeToTopSpeed = .01f, timeToStop = .01f;
     //checks dot product when deciding when to slow down before changing direction
     [SerializeField, Range(-1, 1)] private float dotProductDirectionChange = 0;
     //multiplier to accelerationRate when slowing down befo

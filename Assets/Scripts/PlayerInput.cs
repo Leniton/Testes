@@ -14,10 +14,17 @@ public class PlayerInput : MonoBehaviour
         if (plataform == null) return;
         Input.Map("Player").Action("Move").performed += OnMove;
         Input.Map("Player").Action("Move").canceled += OnMove;
+        Input.Map("Player").Action("Jump").canceled += OnSwitch;
     }
+
     private void OnMove(InputAction.CallbackContext obj)
     {
         var data = obj.ReadValue<Vector2>();
         plataform.input = data;
+    }
+    
+    private void OnSwitch(InputAction.CallbackContext obj)
+    {
+        
     }
 }

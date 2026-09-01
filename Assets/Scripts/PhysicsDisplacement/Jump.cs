@@ -6,12 +6,12 @@ using PhysicsHelper;
 public class Jump : Displacement<Jump>
 {
     //Jump parameters
-    [SerializeField] private float jumpHeight; //the height the jump will reach
-    [SerializeField, Min(.2f)] float timeToMaxHeight; //the time it will take to reach max height
-    [SerializeField, Min(.2f)] private float timeToLand;
+    [SerializeField] private float jumpHeight = 5; //the height the jump will reach
+    [SerializeField, Min(.2f)] float timeToMaxHeight = .5f; //the time it will take to reach max height
+    [SerializeField, Min(.2f)] private float timeToLand = .3f;
     [Space]
     [Tooltip("How steep a slope can be to still be considered a floor")]
-    [SerializeField] private float maxSlopeAngle;
+    [SerializeField] private float maxSlopeAngle = 45;
     private float jumpSpeed;
 
     private Gravity jumpGravity;    
@@ -114,24 +114,21 @@ public class Jump : Displacement<Jump>
     }
     private void CollisionEnter(CollisionData data)
     {
-        //print($"collided with {data.collider.gameObject.name}");
-        if (Vector3.Angle(orientation, data.contacts[0].normal) <= maxSlopeAngle)
-        {
-            standingFloor = data.collider.gameObject;
-            onGround = true;
+        var angle = Vector3.Angle(orientation, data.contacts[0].normal);
+        if (angle > maxSlopeAngle) return;
+        // Debug.Log($"collided with {data.collider.gameObject.name}");
+        standingFloor = data.collider.gameObject;
+        onGround = true;
 
-            floorNormal = data.contacts[0].normal;
-            OnLand?.Invoke(data);
-        }
+        floorNormal = data.contacts[0].normal;
+        OnLand?.Invoke(data);
     }
     private void CollisionExit(CollisionData data)
     {
-        //print($"Exit {data.collider.gameObject.name}");
-        if (data.gameObject == standingFloor)
-        {
-            floorNormal = orientation;
-            standingFloor = null;
-            onGround = false;
-        }
+        if (data.gameObject != standingFloor) return;
+        // Debug.Log($"Exit {data.collider.gameObject.name}");
+        floorNormal = orientation;
+        standingFloor = null;
+        onGround = false;
     }
 }
