@@ -116,7 +116,7 @@ public class Movement : Displacement<Movement>
         return direction;
     }
 
-    void CollisionEnter(CollisionData data)
+    private void CollisionEnter(CollisionData data)
     {
         for (int i = 0; i < lastCollision.Count; i++)
         {
@@ -127,7 +127,7 @@ public class Movement : Displacement<Movement>
         }
         lastCollision.Add(data);
     }
-    void CollisionExit(CollisionData data)
+    private void CollisionExit(CollisionData data)
     {
         for (int i = 0; i < lastCollision.Count; i++)
         {
