@@ -1,11 +1,25 @@
 {
   "dependencies": {
+    "com.lenix.logger": {
+      "version": "https://github.com/LenixSO/LenixSO-Logger.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d95adb84ef7255724526fbb64b6fabd3f3e7ebf0"
+    },
     "com.lenix.numberutils": {
       "version": "https://github.com/LenixSO/NumberUtilities.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "d2a51f13ea08bd3e73c01457c9f191c02a1316ee"
+    },
+    "com.lenix.sequences": {
+      "version": "https://github.com/LenixSO/Sequences.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6e61939abfe2ff9320fa75492a791d5dd22f2e2c"
     },
     "com.lenix.serialized-method": {
       "version": "https://github.com/LenixSO/SerializedMethod.git#upm",
@@ -29,12 +43,19 @@
         "com.unity.modules.uielements": "1.0.0"
       }
     },
-    "com.unity.ai.navigation": {
-      "version": "2.0.13",
+    "com.unity.addressables": {
+      "version": "2.9.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.ai": "1.0.0"
+        "com.unity.profiling.core": "1.0.2",
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.scriptablebuildpipeline": "2.6.1",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -70,15 +91,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.ide.visualstudio": {
-      "version": "2.0.26",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.33"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.multiplayer.center": {
       "version": "1.0.1",
       "depth": 0,
@@ -92,6 +104,23 @@
       "depth": 3,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.profiling.core": {
+      "version": "1.0.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "2.6.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.services.analytics": {
@@ -146,16 +175,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.visualscripting": {
-      "version": "1.9.11",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
