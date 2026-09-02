@@ -44,16 +44,19 @@ public class Plataform_Script : MonoBehaviour
     private PhysicsHandler physicsSurface;
     private bool jumped = false;
 
-    void Awake()
+    private AppliedForce plataformForce;
+
+    private void Awake()
     {
         physicsHandler = GetComponent<PhysicsHandler>();
         Jump.Initialize(physicsHandler);
         Jump.OnLand += OnLanding;
         movement.Initialize(physicsHandler);
         physicsHandler.CollisionExit += OnLeavingPlataform;
+        plataformForce = physicsHandler.ApplyForce(Vector3.zero, 1);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
 #if UNITY_EDITOR
         if (testMode)
@@ -64,9 +67,8 @@ public class Plataform_Script : MonoBehaviour
 #endif
 
         Vector3 xInput = Movement.AdjustToNormal(input * Vector2.right, Jump.floorNormal);
-        Vector3 inputVelocity = physicsHandler.Velocity;
-        inputVelocity = (inputVelocity * (1 - levelOfControl)) + (Movement.Move(xInput) * levelOfControl);
-        inputVelocity.y = physicsHandler.Velocity.y;
+        Vector3 inputVelocity = Movement.Move(xInput) * (levelOfControl);
+        inputVelocity.y = plataformForce.Direction.y;
 
         if (levelOfControl >= controlJumpThreshold)
         {
@@ -81,7 +83,9 @@ public class Plataform_Script : MonoBehaviour
             }
         }
 
+        // inputVelocity.y = 0;
         if (useGravity) inputVelocity.y -= Jump.GravityForce();
+        // Debug.Log(inputVelocity);
 
         Vector3 finalVelocity = inputVelocity;
         if (!jumped && Jump.onGround && physicsSurface)
@@ -91,7 +95,7 @@ public class Plataform_Script : MonoBehaviour
             finalVelocity += surfaceVelocity;
         }
 
-        physicsHandler.Velocity = finalVelocity;
+        plataformForce.Direction = finalVelocity;
 
         //Update state
         if (!Jump.onGround)
@@ -102,10 +106,8 @@ public class Plataform_Script : MonoBehaviour
         else
         {
             Vector3 moving = inputVelocity - Vector3.Scale(inputVelocity, _jump.orientation);
-            if (moving == Vector3.zero)
-                state = State.idle;
-            else
-                state = State.walking;
+            if (moving == Vector3.zero) state = State.idle;
+            else state = State.walking;
         }
     }
 
@@ -113,6 +115,7 @@ public class Plataform_Script : MonoBehaviour
     {
         jumped = false;
         physicsSurface = data.gameObject.GetComponent<PhysicsHandler>();
+        plataformForce.y = 0;
     }
     private void OnLeavingPlataform(CollisionData data)
     {

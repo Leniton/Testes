@@ -87,6 +87,26 @@ namespace PhysicsHelper
             }
         }
 
+        public float x
+        {
+            get => _direction.x;
+            set
+            {
+                _direction.x = value;
+                OnValueChanged?.Invoke();
+            }
+        }
+
+        public float y
+        {
+            get => _direction.y; 
+            set
+            {
+                _direction.y = value;
+                OnValueChanged?.Invoke();
+            }
+        }
+        
         public float Force
         {
             get { return _force; }
