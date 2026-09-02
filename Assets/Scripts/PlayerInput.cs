@@ -7,6 +7,7 @@ using LenixSO.Sequences.Decorator;
 using PhysicsHelper;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util.Extensions;
 using Input = InputSystemHelper.Input;
 using Logger = LenixSO.Logger.Logger;
 
@@ -35,15 +36,16 @@ public class PlayerInput : MonoBehaviour
                     plataform.levelOfControl = 0;
                 })
             .AddFinishedCallback(() => Time.timeScale = 1f);
-        launchSequence = new CustomSequence(
-            () => appliedForce.Force = 10,
-            () =>
+        launchSequence = new QueuedSequences(
+            new CoroutineSequence(new(()=>ScriptAnimations.Animate(f => appliedForce.Force = Mathf.Lerp(5, 30, f), customDuration: .2f))),
+            new CustomSequence(null, () =>
             {
+                Debug.Log(appliedForce.Force);
                 float duration = 1f;
                 plataform.useGravity = true;
                 plataform.levelOfControl = 1;
                 plataform.physicsHandler.RemoveForce(appliedForce, duration);
-            });
+            }));
 
         moveSequence = new QueuedSequences(directionSequence, launchSequence);
         
@@ -104,6 +106,7 @@ public class PlayerInput : MonoBehaviour
         float distance = 0;
         if (exitDirection == Vector2.zero)
         {
+            // Debug.Log("no input");
             exitDirection = Vector2.right;
             distance = float.MaxValue;
             GetSmallerDistance(new Vector3(collider.bounds.min.x, collider.bounds.center.y, 0), Vector3.right); //left
@@ -122,7 +125,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         plataform.physicsHandler.TriggerExit += OnLeaveCollider;
-        // Debug.Log(exitDirection);
+        Debug.Log(exitDirection);
         appliedForce = plataform.physicsHandler.ApplyForce(exitDirection, 0);
         moveSequence.Begin();
         return;
