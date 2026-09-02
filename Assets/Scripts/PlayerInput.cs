@@ -97,37 +97,57 @@ public class PlayerInput : MonoBehaviour
         if (!insideCollider) return;
         // return;
         //slowdown + launch
-        var exitDirection = Vector3.right;
-        float distance = GetDistance(new Vector3(collider.bounds.min.x, collider.bounds.center.y, 0), Vector3.right);//left
-        GetSmallerDistance(new Vector3(collider.bounds.center.x, collider.bounds.max.y, 0), Vector3.down);//top
-        GetSmallerDistance(new Vector3(collider.bounds.max.x, collider.bounds.center.y, 0), Vector3.left);//right
-        GetSmallerDistance(new Vector3(collider.bounds.center.x, collider.bounds.min.y, 0), Vector3.up);//bot
+        var input = Input.Map("Player").Action("Move").ReadValue<Vector2>();
+        var exitDirection = input;
+        float distance = 0;
+        if (exitDirection == Vector2.zero)
+        {
+            exitDirection = Vector2.right;
+            distance = float.MaxValue;
+            GetSmallerDistance(new Vector3(collider.bounds.min.x, collider.bounds.center.y, 0), Vector3.right); //left
+            GetSmallerDistance(new Vector3(collider.bounds.center.x, collider.bounds.max.y, 0), Vector3.down); //top
+            GetSmallerDistance(new Vector3(collider.bounds.max.x, collider.bounds.center.y, 0), Vector3.left); //right
+            GetSmallerDistance(new Vector3(collider.bounds.center.x, collider.bounds.min.y, 0), Vector3.up); //bot
+        }
+
+        if (distance == float.MaxValue) //player completely inside collider
+        {
+            // Debug.Log("inside");
+            GetSmallerDistance(new Vector3(other.bounds.min.x, collider.bounds.center.y, 0), Vector3.right, collider);//left
+            GetSmallerDistance(new Vector3(collider.bounds.center.x, other.bounds.max.y, 0), Vector3.down, collider);//top
+            GetSmallerDistance(new Vector3(other.bounds.max.x, collider.bounds.center.y, 0), Vector3.left, collider);//right
+            GetSmallerDistance(new Vector3(collider.bounds.center.x, other.bounds.min.y, 0), Vector3.up, collider);//bot
+        }
+        
         plataform.physicsHandler.TriggerExit += OnLeaveCollider;
-        Debug.Log(exitDirection);
+        // Debug.Log(exitDirection);
         appliedForce = plataform.physicsHandler.ApplyForce(exitDirection, 0);
         moveSequence.Begin();
         return;
 
-        void GetSmallerDistance(Vector3 origin, Vector3 direction)
+        void GetSmallerDistance(Vector3 origin, Vector3 direction, Collider2D target = null)
         {
-            float newDistance = GetDistance(origin, direction);
+            target ??= other;
+            float newDistance = GetDistance(origin, direction, target);
             // Debug.Log($"{direction} : {newDistance} - {distance}");
             if (newDistance >= distance) return;
             distance = newDistance;
-            exitDirection = direction;
+            exitDirection = -direction;
         }
 
-        float GetDistance(Vector3 origin, Vector3 direction)
+        float GetDistance(Vector3 origin, Vector3 direction, Collider2D target = null)
         {
+            target ??= other;
             var results = new List<RaycastHit2D>();
-            var hits = Physics2D.Raycast(origin, direction*0.8f, new ContactFilter2D(), results);
+            var hits = Physics2D.Raycast(origin, direction, new ContactFilter2D { useTriggers = true }, results);
             // Debug.Log(hits);
             for (int i = 0; i < hits; i++)
             {
-                // Debug.Log(results[i].collider.gameObject.name);
-                if (results[i].collider != other) continue;
-                Debug.Log($"{direction} | {results[i].distance} | {results[i].normal}");
-                Debug.DrawRay(origin, direction, Color.red, 1);
+                // Debug.Log($"hit {results[i].collider.name}, looking for {target}");
+                if (results[i].collider != target) continue;
+                if (results[i].distance <= 0) break;//inside collider
+                // Debug.Log($"{results[i].collider.name} => {direction} | {results[i].distance}");
+                // Debug.DrawRay(origin, direction, Color.red, 1);
                 return results[i].distance;
             }
             return float.MaxValue;
