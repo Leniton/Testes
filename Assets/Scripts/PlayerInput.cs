@@ -16,6 +16,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Collider2D aCollider;
     [SerializeField] private Collider2D bCollider;
     
+    private InputAction moveAction;
+    
     private ISequence directionSequence;
     private ISequence launchSequence;
     private ISequence moveSequence;
@@ -47,8 +49,9 @@ public class PlayerInput : MonoBehaviour
         
         plataform ??= GetComponent<Plataform_Script>();
         if (plataform == null) return;
-        Input.Map("Player").Action("Move").performed += OnMove;
-        Input.Map("Player").Action("Move").canceled += OnMove;
+        moveAction = Input.Map("Player").Action("Move");
+        moveAction.performed += OnMove;
+        moveAction.canceled += OnMove;
         Input.Map("Player").Action("Jump").canceled += OnSwitch;
         OnSwitch(new());
     }
@@ -95,9 +98,8 @@ public class PlayerInput : MonoBehaviour
         }
         collider.isTrigger = insideCollider;
         if (!insideCollider) return;
-        // return;
         //slowdown + launch
-        var input = Input.Map("Player").Action("Move").ReadValue<Vector2>();
+        var input = moveAction.ReadValue<Vector2>();
         var exitDirection = input;
         float distance = 0;
         if (exitDirection == Vector2.zero)
