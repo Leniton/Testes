@@ -68,7 +68,7 @@ public class Plataform_Script : MonoBehaviour
 
         Vector3 xInput = Movement.AdjustToNormal(input * Vector2.right, Jump.floorNormal);
         Vector3 inputVelocity = Movement.Move(xInput) * (levelOfControl);
-        inputVelocity.y = plataformForce.Direction.y;
+        inputVelocity.y = useGravity ? plataformForce.Direction.y : 0;
 
         if (levelOfControl >= controlJumpThreshold)
         {

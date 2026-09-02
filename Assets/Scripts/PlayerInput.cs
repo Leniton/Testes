@@ -39,12 +39,9 @@ public class PlayerInput : MonoBehaviour
             () =>
             {
                 float duration = 1f;
+                plataform.useGravity = true;
+                plataform.levelOfControl = 1;
                 plataform.physicsHandler.RemoveForce(appliedForce, duration);
-                CoroutineExtensions.AwaitCoroutine(CoroutineExtensions.DelayCoroutine(duration), () =>
-                {
-                    plataform.useGravity = true;
-                    plataform.levelOfControl = 1;
-                });
             });
 
         moveSequence = new QueuedSequences(directionSequence, launchSequence);
@@ -61,10 +58,8 @@ public class PlayerInput : MonoBehaviour
     {
         var data = obj.ReadValue<Vector2>();
         if (directionSequence.running)
-        {
             if (data != Vector2.zero) appliedForce.Direction = data;
-        }
-        else plataform.input = data;
+        plataform.input = data;
     }
     
     private void OnSwitch(InputAction.CallbackContext obj)
@@ -107,7 +102,6 @@ public class PlayerInput : MonoBehaviour
 
         void OnLeaveCollider(ColliderData c)
         {
-            Debug.Log("left");
             plataform.physicsHandler.TriggerExit -= OnLeaveCollider;
             collider.isTrigger = false;
             moveSequence.End();
