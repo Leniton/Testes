@@ -100,6 +100,11 @@ public class PlayerInput : MonoBehaviour
         }
         collider.isTrigger = insideCollider;
         if (!insideCollider) return;
+        if (moveSequence.running)
+        {
+            plataform.physicsHandler.RemoveForce(appliedForce);
+            moveSequence.End();
+        }
         //slowdown + launch
         var input = moveAction.ReadValue<Vector2>();
         var exitDirection = input;
