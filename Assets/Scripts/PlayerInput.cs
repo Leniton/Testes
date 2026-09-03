@@ -125,6 +125,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         plataform.physicsHandler.TriggerExit += OnLeaveCollider;
+        plataform.physicsHandler.CollisionEnter += OnHitOtherCollider;
         // Debug.Log(exitDirection);
         appliedForce = plataform.physicsHandler.ApplyForce(exitDirection, 0);
         moveSequence.Begin();
@@ -158,11 +159,26 @@ public class PlayerInput : MonoBehaviour
             return float.MaxValue;
         }
 
-        void OnLeaveCollider(ColliderData c)
+        void RemoveListeners()
         {
             plataform.physicsHandler.TriggerExit -= OnLeaveCollider;
+            plataform.physicsHandler.CollisionEnter -= OnHitOtherCollider;
+        }
+        
+        void OnLeaveCollider(ColliderData c)
+        {
+            RemoveListeners();
             collider.isTrigger = false;
             moveSequence.End();
+        }
+
+        void OnHitOtherCollider(CollisionData c)
+        {
+            if (!moveSequence.running) return;
+            RemoveListeners();
+            moveSequence.End();
+            collider.isTrigger = false;
+            PlayerScript.KillPlayer();
         }
     }
 }
