@@ -40,7 +40,7 @@ public class PlayerInput : MonoBehaviour
             new CoroutineSequence(new(()=>ScriptAnimations.Animate(f => appliedForce.Force = Mathf.Lerp(5, 30, f), customDuration: .2f))),
             new CustomSequence(null, () =>
             {
-                Debug.Log(appliedForce.Force);
+                // Debug.Log(appliedForce.Force);
                 float duration = 1f;
                 plataform.useGravity = true;
                 plataform.levelOfControl = 1;
@@ -125,7 +125,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         plataform.physicsHandler.TriggerExit += OnLeaveCollider;
-        Debug.Log(exitDirection);
+        // Debug.Log(exitDirection);
         appliedForce = plataform.physicsHandler.ApplyForce(exitDirection, 0);
         moveSequence.Begin();
         return;
