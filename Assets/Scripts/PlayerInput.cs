@@ -18,6 +18,9 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Collider2D aCollider;
     [SerializeField] private Collider2D bCollider;
     [SerializeField] private GameObject directionIndicator;
+    [SerializeField] private SpriteRenderer colorIndicator;
+    [SerializeField] private Color aColor;
+    [SerializeField] private Color bColor;
     
     private InputAction moveAction;
     
@@ -87,12 +90,14 @@ public class PlayerInput : MonoBehaviour
     {
         if (bCollider.enabled)
         {
+            colorIndicator.color = aColor;
             bCollider.isTrigger = false;
             bCollider.enabled = false;
             EnableCollision(aCollider);
         }
         else
         {
+            colorIndicator.color = bColor;
             aCollider.isTrigger = false;
             aCollider.enabled = false;
             EnableCollision(bCollider);
@@ -197,7 +202,7 @@ public class PlayerInput : MonoBehaviour
 
         void OnHitOtherCollider(CollisionData c)
         {
-            if (!moveSequence.running) return;
+            if (c.gameObject == other.gameObject || !moveSequence.running) return;
             RemoveListeners();
             moveSequence.End();
             collider.isTrigger = false;
