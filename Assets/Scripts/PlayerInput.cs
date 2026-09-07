@@ -17,10 +17,14 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Plataform_Script plataform;
     [SerializeField] private Collider2D aCollider;
     [SerializeField] private Collider2D bCollider;
+    [Header("Indicators")]
     [SerializeField] private GameObject directionIndicator;
     [SerializeField] private SpriteRenderer colorIndicator;
     [SerializeField] private Color aColor;
     [SerializeField] private Color bColor;
+    [SerializeField] private ParticleSystem particles;
+    [SerializeField] private ParticleSystem particleExit;
+    [SerializeField] private Material particleMaterial;
     
     private InputAction moveAction;
     
@@ -52,9 +56,16 @@ public class PlayerInput : MonoBehaviour
             });
         launchSequence = new QueuedSequences(
             new CoroutineSequence(new(()=>ScriptAnimations.Animate(f => appliedForce.Force = Mathf.Lerp(5, 30, f), customDuration: .2f))),
-            new CustomSequence(null, () =>
+            new CustomSequence(() =>
+            {
+                var angle = Vector2.SignedAngle(Vector2.right, appliedForce.Direction);
+                particles.transform.eulerAngles = new(angle, 90, 0);
+                particles.gameObject.SetActive(true);
+            }, () =>
             {
                 // Debug.Log(appliedForce.Force);
+                PlayExitParticle();
+                particles.gameObject.SetActive(false);
                 SetDirectionIndicator(null);
                 float duration = 1f;
                 plataform.useGravity = true;
@@ -217,5 +228,27 @@ public class PlayerInput : MonoBehaviour
         var direction = dir.Value;
         directionIndicator.transform.eulerAngles =
             Vector3.forward * Vector2.SignedAngle(Vector2.up, appliedForce.Direction);
+    }
+
+    private void PlayExitParticle()
+    {
+        particleMaterial.color = bCollider.enabled ? aColor : bColor;
+        var angle = Vector2.SignedAngle(Vector2.up, appliedForce.Direction);
+        
+        var results = new List<RaycastHit2D>();
+        var hits = Physics2D.Raycast(transform.position, -appliedForce.Direction, new ContactFilter2D { useTriggers = true }, results);
+        // Debug.Log(hits);
+        var position = transform.position;
+        for (int i = 0; i < hits; i++)
+        {
+            // Debug.Log($"hit {results[i].collider.name}, looking for {target}");
+            if (results[i].collider.gameObject == gameObject ||
+                results[i].collider.transform.parent == transform) continue;
+            position = results[i].point;
+            break;
+        }
+
+        var instance = Instantiate(particleExit, position, Quaternion.AngleAxis(angle, Vector3.forward));
+        instance.gameObject.SetActive(true);
     }
 }
