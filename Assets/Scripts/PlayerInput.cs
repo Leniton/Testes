@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Plataform_Script plataform;
     [SerializeField] private Collider2D aCollider;
     [SerializeField] private Collider2D bCollider;
+    [SerializeField] private GameObject directionIndicator;
     
     private InputAction moveAction;
     
@@ -41,6 +42,7 @@ public class PlayerInput : MonoBehaviour
             new CustomSequence(null, () =>
             {
                 // Debug.Log(appliedForce.Force);
+                SetDirectionIndicator(null);
                 float duration = 1f;
                 plataform.useGravity = true;
                 plataform.levelOfControl = 1;
@@ -62,7 +64,11 @@ public class PlayerInput : MonoBehaviour
     {
         var data = obj.ReadValue<Vector2>();
         if (directionSequence.running)
-            if (data != Vector2.zero) appliedForce.Direction = data;
+            if (data != Vector2.zero)
+            {
+                appliedForce.Direction = data;
+                SetDirectionIndicator(data);
+            }
         plataform.input = data;
     }
     
@@ -120,7 +126,7 @@ public class PlayerInput : MonoBehaviour
             GetSmallerDistance(new Vector3(collider.bounds.center.x, collider.bounds.min.y, 0), Vector3.up); //bot
         }
 
-        if (distance == float.MaxValue) //player completely inside collider
+        if (Mathf.Approximately(distance, float.MaxValue)) //player completely inside collider
         {
             // Debug.Log("inside");
             GetSmallerDistance(new Vector3(other.bounds.min.x, collider.bounds.center.y, 0), Vector3.right, collider);//left
@@ -133,6 +139,7 @@ public class PlayerInput : MonoBehaviour
         plataform.physicsHandler.CollisionEnter += OnHitOtherCollider;
         // Debug.Log(exitDirection);
         appliedForce = plataform.physicsHandler.ApplyForce(exitDirection, 0);
+        SetDirectionIndicator(exitDirection);
         moveSequence.Begin();
         return;
 
@@ -185,5 +192,14 @@ public class PlayerInput : MonoBehaviour
             collider.isTrigger = false;
             PlayerScript.KillPlayer();
         }
+    }
+
+    private void SetDirectionIndicator(Vector2? dir)
+    {
+        directionIndicator.SetActive(dir.HasValue);
+        if (!dir.HasValue) return;
+        var direction = dir.Value;
+        directionIndicator.transform.eulerAngles =
+            Vector3.forward * Vector2.SignedAngle(Vector2.up, appliedForce.Direction);
     }
 }
