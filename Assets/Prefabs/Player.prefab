@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 6750520549487479138}
   - component: {fileID: 8229120235516625195}
   - component: {fileID: 802120343721789996}
+  - component: {fileID: 7894202236603353091}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -511,6 +512,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41597e82899548878bcf22ef8e0a83b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
+--- !u!114 &7894202236603353091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5282594869461534583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da0d33ac44faf940b5ac62ae5cc26a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EjectionScript
+  playerInput: {fileID: 8229120235516625195}
+  cam: {fileID: 0}
 --- !u!1 &5958225156301530274
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +711,7 @@ GameObject:
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3772061346378073992
 Transform:
   m_ObjectHideFlags: 0

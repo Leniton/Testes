@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using InputSystemHelper;
 using LenixSO.Sequences;
@@ -26,17 +27,26 @@ public class PlayerInput : MonoBehaviour
     
     private AppliedForce appliedForce;
 
+    public event Action onEjectSetup;
+    public event Action onEjectBegin;
+    public event Action onEjectEnd;
+
     private void Awake()
     {
-        directionSequence = new ObserverSequence(new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.1f))),
+        directionSequence = new ObserverSequence(new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(0.8f))),
                 () =>
                 {
-                    Time.timeScale = .2f;
+                    // Time.timeScale = .2f;
                     plataform.input = Vector2.zero;
                     plataform.useGravity = false;
                     plataform.levelOfControl = 0;
+                    onEjectSetup?.Invoke();
                 })
-            .AddFinishedCallback(() => Time.timeScale = 1f);
+            .AddFinishedCallback(() =>
+            {
+                // Time.timeScale = 1f;
+                onEjectBegin?.Invoke();
+            });
         launchSequence = new QueuedSequences(
             new CoroutineSequence(new(()=>ScriptAnimations.Animate(f => appliedForce.Force = Mathf.Lerp(5, 30, f), customDuration: .2f))),
             new CustomSequence(null, () =>
@@ -47,6 +57,7 @@ public class PlayerInput : MonoBehaviour
                 plataform.useGravity = true;
                 plataform.levelOfControl = 1;
                 plataform.physicsHandler.RemoveForce(appliedForce, duration);
+                onEjectEnd?.Invoke();
             }));
 
         moveSequence = new QueuedSequences(directionSequence, launchSequence);
