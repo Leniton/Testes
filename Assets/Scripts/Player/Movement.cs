@@ -17,7 +17,9 @@ public class Movement : MonoBehaviour
     {
         while (true)
         {
+            GridManager.SetElement(transform.position, null);
             transform.Translate(input);
+            GridManager.SetElement(transform.position, gameObject);
             move = false;
             yield return Step();
         }
