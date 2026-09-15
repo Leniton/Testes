@@ -47,9 +47,12 @@ namespace UI.Utils
             return element;
         }
 
-        public static T Position<T>(this T element, Vector2 position) where T : VisualElement
+        public static T Position<T>(this T element, Vector2 position, LengthUnit unit = LengthUnit.Percent) where T : VisualElement
         {
-            element.transform.position = position;
+            // element.transform.position = position;
+            element.style.translate = new StyleTranslate(new Translate(
+                new Length(position.x, unit), 
+                new Length(position.y, unit)));
             return element;
         }
         
@@ -59,15 +62,17 @@ namespace UI.Utils
             return element;
         }
 
-        public static T Rotation<T>(this T element, float angle) where T : VisualElement
+        public static T Rotation<T>(this T element, float angle, AngleUnit unit = AngleUnit.Degree) where T : VisualElement
         {
-            element.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // element.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            element.style.rotate = new StyleRotate(new Rotate(new Angle(angle, unit)));
             return element;
         }
 
         public static T Scale<T>(this T element, Vector3 scale) where T : VisualElement
         {
-            element.transform.scale = scale;
+            // element.transform.scale = scale;
+            element.style.scale = new StyleScale(new Scale(scale));
             return element;
         }
 
