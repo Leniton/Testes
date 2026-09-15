@@ -14,6 +14,7 @@ namespace SpellCasting
     public class Spell
     {
         public Vector2 origin;
+        public Vector2 Direction = Vector2.up;
         public GameObject target;
 
         public event Action<Spell> OnActivate; 
@@ -23,5 +24,10 @@ namespace SpellCasting
             origin = point;
             OnActivate?.Invoke(this);
         }
+    }
+
+    public interface IDirectionalSign : ISign
+    {
+        public Vector2 Direction { get; set; }
     }
 }
