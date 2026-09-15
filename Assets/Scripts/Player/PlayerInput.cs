@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using InputSystemHelper;
 using SpellCasting;
 using UnityEngine;
@@ -21,8 +23,26 @@ public class PlayerInput : MonoBehaviour
     private void TestSpell()
     {
         var spell = new FireSigil().Create();
+        var signs = new List<ISign>(8);
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        signs.Add(new MoveSign());
+        spell.PositionSigns(signs.ToArray());
+        
         spell.Direction = movement.input;
-        new MoveSign(Vector2.left).Modify(spell);
+        // new MoveSign(Vector2.left).Modify(spell);
         spell.target = gameObject;
         spell.Activate(transform.position);
     }
