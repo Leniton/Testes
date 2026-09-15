@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
     {
         var spell = new FireSigil().Create();
         spell.Direction = movement.input;
-        new MoveSign(Vector2.right).Modify(spell);
+        new MoveSign(Vector2.left).Modify(spell);
         spell.target = gameObject;
         spell.Activate(transform.position);
     }
@@ -47,8 +47,7 @@ public class PlayerInput : MonoBehaviour
 
         private void Move(Spell spell)
         {
-            Vector2 direction = Quaternion.AngleAxis(-Vector2.SignedAngle(Direction, spell.Direction), Vector3.forward) * spell.Direction;
-            spell.target?.transform.Translate(direction);
+            spell.target?.transform.Translate(IDirectionalSign.GetRelativeDirection(this, spell));
         }
     }
     

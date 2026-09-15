@@ -29,5 +29,12 @@ namespace SpellCasting
     public interface IDirectionalSign : ISign
     {
         public Vector2 Direction { get; set; }
+
+        public static Vector2 GetRelativeDirection(IDirectionalSign sign, Spell spell)
+        {
+            var angle = Vector2.SignedAngle(Vector2.up, spell.Direction);
+            Vector2 direction = Quaternion.AngleAxis(angle, Vector3.forward) * sign.Direction;
+            return direction;
+        }
     }
 }
