@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
 {
     public Vector2 input;
     bool move = false;
+    bool reset = false;
 
     private void Awake()
     {
@@ -17,16 +18,22 @@ public class Movement : MonoBehaviour
     {
         while (true)
         {
+            move = false;
             GridManager.SetElement(transform.position, null);
             transform.Translate(input);
             GridManager.SetElement(transform.position, gameObject);
-            move = false;
+            if (reset)
+            {
+                input = Vector2.zero;
+                reset = false;
+            }
             yield return Step();
         }
     }
 
     private IEnumerator Step()
     {
+        if (input == Vector2.zero) yield break;
         float time = .3f;
         float step = time;
         while (step > 0)
@@ -37,8 +44,15 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void MoveNow()
+    public void MoveNow(Vector2 direction)
     {
+        input = direction;
         move = true;
+    }
+
+    public void ResetMovement()
+    {
+        if (move) reset = true;
+        else input = Vector2.zero;
     }
 }

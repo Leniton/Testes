@@ -13,12 +13,8 @@ public class PlayerInput : MonoBehaviour
     {
         movement ??= GetComponent<Movement>();
         var move = Input.Map("Player").Action("Move");
-        move.performed += context =>
-        {
-            movement.input = context.ReadValue<Vector2>();
-            movement.MoveNow();
-        };
-        move.canceled += _ => movement.input = Vector2.zero;
+        move.performed += context => movement.MoveNow(context.ReadValue<Vector2>());
+        move.canceled += _ => movement.ResetMovement();
         Input.Map("Player").Action("Jump").performed += _ => TestSpell();
     }
 
