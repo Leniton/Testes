@@ -34,6 +34,8 @@ namespace SpellCasting
         {
             var angle = Vector2.SignedAngle(Vector2.up, spell.Direction);
             Vector2 direction = Quaternion.AngleAxis(angle, Vector3.forward) * sign.Direction;
+            direction.x = Mathf.Round(direction.x);
+            direction.y = Mathf.Round(direction.y);
             return direction;
         }
     }
