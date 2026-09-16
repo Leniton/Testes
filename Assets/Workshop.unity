@@ -1904,6 +1904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   movement: {fileID: 1264975713}
+  spellWindow: {fileID: 404483863}
 --- !u!1 &1273126710
 GameObject:
   m_ObjectHideFlags: 0

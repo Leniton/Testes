@@ -8,7 +8,7 @@ public class SpellWindow : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
 
     private VisualElement root;
-
+    
     private void Awake()
     {
         uiDocument ??= GetComponent<UIDocument>();
@@ -19,7 +19,6 @@ public class SpellWindow : MonoBehaviour
     private void Setup()
     {
         root.Add(new VisualElement()
-            // .Display(DisplayStyle.None)
             .FlexDirection(FlexDirection.Row)
             .JustifyContent(Justify.Center)
             .AlignItems(Align.Center)
@@ -55,5 +54,15 @@ public class SpellWindow : MonoBehaviour
             //     .Size(450,900))
             .Size(100, unit: LengthUnit.Percent)
             .BgColor(Color.black.Transparent(.6f)));
+        Close();
+    }
+
+    public void Open()
+    {
+        root.Display(DisplayStyle.Flex);
+    }
+    public void Close()
+    {
+        root.Display(DisplayStyle.None);
     }
 }

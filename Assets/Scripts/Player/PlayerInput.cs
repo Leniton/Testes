@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using GridSystem;
 using InputSystemHelper;
+using LenixSO.Sequences;
+using LenixSO.Sequences.Coroutines;
 using SpellCasting;
 using UnityEngine;
 using Input = InputSystemHelper.Input;
@@ -11,6 +13,8 @@ using Input = InputSystemHelper.Input;
 public class PlayerInput : MonoBehaviour, IPiece
 {
     [SerializeField] private Movement movement;
+    [SerializeField] private SpellWindow spellWindow;
+    
     public Action onEnter { get; set; }
     public Action onExit { get; set; }
     public string Name { get; set; }
@@ -18,6 +22,8 @@ public class PlayerInput : MonoBehaviour, IPiece
     public Coordinate coordinate { get; set; }
     public Action onClick { get; set; }
     public List<Characteristic> characteristics { get; set; }
+    
+    private ISequence castSequence;
     
     private void Awake()
     {
@@ -27,7 +33,21 @@ public class PlayerInput : MonoBehaviour, IPiece
         var move = Input.Map("Player").Action("Move");
         move.performed += context => movement.MoveNow(context.ReadValue<Vector2>());
         move.canceled += _ => movement.ResetMovement();
-        Input.Map("Player").Action("Jump").performed += _ => TestSpell();
+        // Input.Map("Player").Action("Jump").performed += _ => TestSpell();
+        var jump = Input.Map("Player").Action("Jump");
+        var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
+        castSequence = new CustomSequence(()=>
+        {
+            delay.ListenNextFinishedCallback(() =>
+            {
+                if (!jump.inProgress) return;
+                spellWindow.Open();
+            });
+            delay.Begin();
+        }, delay.End);
+        castSequence.OnFinished += TestSpell;
+        jump.performed += _ => castSequence.Begin();
+        jump.canceled += _ => castSequence.End();
     }
     
     public void StylePiece(Sprite sprite, Color color) { }
@@ -42,6 +62,7 @@ public class PlayerInput : MonoBehaviour, IPiece
 
     private void TestSpell()
     {
+        spellWindow.Close();
         var spell = new FireSigil().Create();
         var signs = new List<ISign>(8);
         //signs.Add(new MoveSign());
