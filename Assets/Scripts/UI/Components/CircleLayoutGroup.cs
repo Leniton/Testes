@@ -163,6 +163,12 @@ namespace UI.Components
             style.minWidth = diameter;
             style.minHeight = diameter;
         }
+
+        public CircleLayoutGroup SetRadius(float radius, LengthUnit unit = LengthUnit.Pixel)
+        {
+            _radius = new Length(radius, unit);
+            return this;
+        }
     }
 
     public enum Rotation

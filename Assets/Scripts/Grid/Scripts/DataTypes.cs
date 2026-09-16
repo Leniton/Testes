@@ -15,6 +15,8 @@ namespace GridSystem
         }
 
         public static int Distance(Coordinate a, Coordinate b) => Mathf.Max(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
+        
+        #region Operators
         public static implicit operator Vector2(Coordinate c) => new Vector2(c.x, c.y);
         public static implicit operator Vector3(Coordinate c) => new Vector3(c.x, c.y);
         public static implicit operator Coordinate(Vector2 c) => new Coordinate((int)c.x, (int)c.y);
@@ -40,6 +42,7 @@ namespace GridSystem
         public static Coordinate operator /(Vector2 c2, Coordinate c1) => new Coordinate((int)c2.x / c1.x, (int)c2.y / c1.y);
         public static Coordinate operator /(Coordinate c1, Vector3 c2) => new Coordinate(c1.x / (int)c2.x, c1.y / (int)c2.y);
         public static Coordinate operator /(Vector3 c2, Coordinate c1) => new Coordinate((int)c2.x / c1.x, (int)c2.y / c1.y);
+        #endregion
 
         public int Distance(Coordinate coordinate) =>
             Mathf.Max(Mathf.Abs(x - coordinate.x), Mathf.Abs(y - coordinate.y));
