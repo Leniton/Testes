@@ -12,8 +12,8 @@ namespace GridSystem
         {
             get
             {
-                if (pieces.Count <= 0) return (int)PieceType.none;
-                int value = (int)PieceType.generic;
+                if (pieces.Count <= 0) return 1;
+                int value = 2;
                 for (int i = 0; i < pieces.Count; i++)
                 {
                     value |= pieces[i].id;
