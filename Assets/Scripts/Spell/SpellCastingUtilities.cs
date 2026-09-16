@@ -21,7 +21,7 @@ namespace SpellCasting
             //signs above 8 are ignored
             int signCount = Math.Min(signs.Length, maxSigns);
             int progress = Mathf.CeilToInt(maxSigns / (float)signCount);
-            Debug.Log(progress);
+            // Debug.Log(progress);
             for (int i = 0; i < signCount; i++)
             {
                 int id = i * progress;
