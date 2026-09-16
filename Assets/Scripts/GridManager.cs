@@ -66,7 +66,7 @@ public class DebugTile : ITile
 {
     public List<IPiece> pieces { get; set; } = new();
     public Color defaultColor { get; private set; } = Color.white.Transparent(.02f);
-    public Color selectableColor { get; }
+    public Color selectableColor { get; } = Color.red.Transparent(.2f);
     public Color validColor { get; }
     public Color invalidColor { get; }
     public ITile.State state { get; set; }
@@ -93,11 +93,13 @@ public class DebugTile : ITile
 
     private void DrawTile()
     {
+        var tile = this as ITile;
+        Color color = (tile.pieceID & 1) == 0 ? selectableColor : defaultColor;
         float offset = size / 2f;
-        Debug.DrawLine(new(origin.x - offset, origin.y - offset), new(origin.x - offset, origin.y + offset), defaultColor, .2f);
-        Debug.DrawLine(new(origin.x - offset, origin.y + offset), new(origin.x + offset, origin.y + offset), defaultColor, .2f);
-        Debug.DrawLine(new(origin.x + offset, origin.y + offset), new(origin.x + offset, origin.y - offset), defaultColor, .2f);
-        Debug.DrawLine(new(origin.x + offset, origin.y - offset), new(origin.x - offset, origin.y - offset), defaultColor, .2f);
+        Debug.DrawLine(new(origin.x - offset, origin.y - offset), new(origin.x - offset, origin.y + offset), color, .2f);
+        Debug.DrawLine(new(origin.x - offset, origin.y + offset), new(origin.x + offset, origin.y + offset), color, .2f);
+        Debug.DrawLine(new(origin.x + offset, origin.y + offset), new(origin.x + offset, origin.y - offset), color, .2f);
+        Debug.DrawLine(new(origin.x + offset, origin.y - offset), new(origin.x - offset, origin.y - offset), color, .2f);
     }
     
     public void ApplyColor(Color color)
