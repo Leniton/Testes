@@ -9,6 +9,7 @@ using UnityEngine;
 public class GridManager : MonoBehaviour, IGrid
 {
     private Dictionary<Vector2, GameObject> grid = new();
+    private Vector2 offset;
     
     private static GridManager instance;
 
@@ -31,9 +32,8 @@ public class GridManager : MonoBehaviour, IGrid
     public void SetUpGrid()
     {
         var grid = this as IGrid;
-        Vector2 offset = new(Width / 2, Height / 2);
+        offset = new(Width / 2, Height / 2);
         // offset = Vector2.zero;
-        Debug.Log(offset);
         int size = Width * Height;
         for (int i = 0; i < size; i++)
         {
@@ -41,6 +41,14 @@ public class GridManager : MonoBehaviour, IGrid
             tiles.Add(tile);
             tile.origin = grid.GetTileCoordinates(tile) - offset;
         }
+    }
+
+    public ITile GetTileAt(Coordinate coordinates)
+    {
+        coordinates += offset;
+        return (coordinates.x < 0 || coordinates.y < 0 || coordinates.x >= Width || coordinates.y >= Height)
+                ? null
+                : tiles[(Width * coordinates.y) + coordinates.x];
     }
 
     public static GameObject GetElement(Vector2 point)
@@ -56,13 +64,13 @@ public class GridManager : MonoBehaviour, IGrid
 
 public class DebugTile : ITile
 {
-    public List<IPiece> pieces { get; set; }
-    public Color defaultColor { get; } = Color.white.Transparent(.02f);
+    public List<IPiece> pieces { get; set; } = new();
+    public Color defaultColor { get; private set; } = Color.white.Transparent(.02f);
     public Color selectableColor { get; }
     public Color validColor { get; }
     public Color invalidColor { get; }
     public ITile.State state { get; set; }
-    public List<Color> colors { get; set; }
+    public List<Color> colors { get; set; } = new();
     public Action<ITile> onClick { get; set; }
     public Action<ITile> onEnter { get; set; }
     public Action<ITile> onExit { get; set; }
@@ -94,6 +102,6 @@ public class DebugTile : ITile
     
     public void ApplyColor(Color color)
     {
-        
+        defaultColor = color;
     }
 }

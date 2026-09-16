@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GridSystem;
 using UnityEngine;
 
 [DefaultExecutionOrder(1)]
@@ -8,6 +9,8 @@ public class Movement : MonoBehaviour
     public Vector2 input;
     bool move = false;
     bool reset = false;
+
+    public IPiece piece;
 
     private void Awake()
     {
@@ -19,9 +22,7 @@ public class Movement : MonoBehaviour
         while (true)
         {
             move = false;
-            GridManager.SetElement(transform.position, null);
-            transform.Translate(input);
-            GridManager.SetElement(transform.position, gameObject);
+            MovePiece();
             if (reset)
             {
                 input = Vector2.zero;
@@ -29,6 +30,21 @@ public class Movement : MonoBehaviour
             }
             yield return Step();
         }
+    }
+
+    private void MovePiece()
+    {
+        if (input == Vector2.zero) return;
+        var current = IGrid.Instance.GetTileAt((Vector2)transform.position);
+        Coordinate coordinate = (Vector2)transform.position + input;
+        var target = IGrid.Instance.GetTileAt(coordinate);
+        if (target == null) return;
+        var targetId = target.pieceID;
+        if ((targetId ^ 1) == targetId) return;//not empty
+        piece.SetCurrentTile(current, target, coordinate);
+        GridManager.SetElement(transform.position, null);
+        // transform.Translate(input);
+        GridManager.SetElement(transform.position, gameObject);
     }
 
     private IEnumerator Step()
