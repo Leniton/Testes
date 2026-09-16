@@ -1,3 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <UI.Components.TestCustomVisualElement style="width: 100px; height: 100px;"/>
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.58); width: 50px; height: 50px; position: absolute; flex-shrink: 0; translate: 0% 0%; transform-origin: center; right: 0; bottom: 0;"/>
+    </ui:VisualElement>
 </ui:UXML>
