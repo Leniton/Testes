@@ -16,6 +16,7 @@ namespace GridSystem
         public void Initialize()
         {
             id = (int)PieceType.generic;
+            characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
             {
                 id = characteristics[i].ModifyID(id);
