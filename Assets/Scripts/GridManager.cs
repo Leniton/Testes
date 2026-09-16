@@ -1,15 +1,47 @@
 using System;
 using System.Collections.Generic;
+using GridSystem;
+using LenixSO.Sequences.Coroutines;
+using LenixSO.Sequences.Decorator;
 using UnityEngine;
 
 [DefaultExecutionOrder(-99)]
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGrid
 {
     private Dictionary<Vector2, GameObject> grid = new();
     
     private static GridManager instance;
 
-    private void Awake() => instance = this;
+    public int Width { get; } = 17;
+    public int Height { get; } = 9;
+    public List<ITile> tiles { get; set; } = new();
+    public ITile hoveredTile { get; set; } = null;
+    public bool currentlySelecting { get; set; }
+    public Action<ITile> onClick { get; set; }
+    public Action<ITile> onEnter { get; set; }
+    public Action<ITile> onExit { get; set; }
+    
+    private void Awake()
+    {
+        instance = this;
+        IGrid.Instance = this;
+        SetUpGrid();
+    }
+    
+    public void SetUpGrid()
+    {
+        var grid = this as IGrid;
+        Vector2 offset = new(Width / 2, Height / 2);
+        // offset = Vector2.zero;
+        Debug.Log(offset);
+        int size = Width * Height;
+        for (int i = 0; i < size; i++)
+        {
+            var tile = new DebugTile(Vector2.zero);
+            tiles.Add(tile);
+            tile.origin = grid.GetTileCoordinates(tile) - offset;
+        }
+    }
 
     public static GameObject GetElement(Vector2 point)
     {
@@ -19,5 +51,49 @@ public class GridManager : MonoBehaviour
     public static void SetElement(Vector2 point, GameObject element)
     {
         instance.grid[point] = element;
+    }
+}
+
+public class DebugTile : ITile
+{
+    public List<IPiece> pieces { get; set; }
+    public Color defaultColor { get; } = Color.white.Transparent(.02f);
+    public Color selectableColor { get; }
+    public Color validColor { get; }
+    public Color invalidColor { get; }
+    public ITile.State state { get; set; }
+    public List<Color> colors { get; set; }
+    public Action<ITile> onClick { get; set; }
+    public Action<ITile> onEnter { get; set; }
+    public Action<ITile> onExit { get; set; }
+
+    private float size;
+    public Vector2 origin;
+
+    public DebugTile(Vector2 center, float size = 1)
+    {
+        origin = center;
+        this.size = size;
+        new LoopingSequence(
+            new SetupSequence(DrawTile,
+                new CoroutineSequence(
+                    new(CoroutineExtensions.DelayCoroutine(.2f))
+                    )
+                )
+            ).Begin();
+    }
+
+    private void DrawTile()
+    {
+        float offset = size / 2f;
+        Debug.DrawLine(new(origin.x - offset, origin.y - offset), new(origin.x - offset, origin.y + offset), defaultColor, .2f);
+        Debug.DrawLine(new(origin.x - offset, origin.y + offset), new(origin.x + offset, origin.y + offset), defaultColor, .2f);
+        Debug.DrawLine(new(origin.x + offset, origin.y + offset), new(origin.x + offset, origin.y - offset), defaultColor, .2f);
+        Debug.DrawLine(new(origin.x + offset, origin.y - offset), new(origin.x - offset, origin.y - offset), defaultColor, .2f);
+    }
+    
+    public void ApplyColor(Color color)
+    {
+        
     }
 }
