@@ -1,4 +1,5 @@
 using System;
+using GridSystem;
 using UnityEngine;
 
 namespace SpellCasting
@@ -13,9 +14,9 @@ namespace SpellCasting
     }
     public class Spell
     {
-        public Vector2 origin;
+        public Coordinate origin;
         public Vector2 Direction = Vector2.up;
-        public GameObject target;
+        public IPiece target;
 
         public event Action<Spell> OnActivate; 
 

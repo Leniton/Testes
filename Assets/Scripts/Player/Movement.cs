@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
         var target = IGrid.Instance.GetTileAt(coordinate);
         if (target == null) return;
         var targetId = target.pieceID;
-        if ((targetId ^ 1) == targetId) return;//not empty
+        if ((targetId & 1) == 0) return;//not empty
         piece.SetCurrentTile(current, target, coordinate);
         GridManager.SetElement(transform.position, null);
         // transform.Translate(input);
