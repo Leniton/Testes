@@ -11,6 +11,7 @@ public class SpellWindow : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
 
     private VisualElement root;
+    private VisualElement spellContainer;
     private VisualElement sigil;
     private UI.Components.CircleLayoutGroup signContainer;
 
@@ -43,7 +44,7 @@ public class SpellWindow : MonoBehaviour
             .JustifyContent(Justify.Center)
             .AlignItems(Align.Center)
             //spell view
-            .AddElement(new VisualElement()
+            .AddElement(spellContainer = new VisualElement()
                 .AlignItems(Align.Center)
                 .JustifyContent(Justify.Center)
                 .AddElement(signContainer = new UI.Components.CircleLayoutGroup()
@@ -82,8 +83,8 @@ public class SpellWindow : MonoBehaviour
     private void RenderSpell(Spell spell)
     {
         if (spell == null) return;
+        spellContainer.Rotation(Vector2.SignedAngle(spell.Direction, Vector2.up));
         sigil.BgImage(sprites.TryGetValue(spell.sigil.GetType(), out var sprite) ? sprite : null);
-        // Debug.Log($"{} => {sigil.style.backgroundImage.value.sprite}");
         for (int i = 0; i < signContainer.childCount; i++)
         {
             var sign = spell[i];

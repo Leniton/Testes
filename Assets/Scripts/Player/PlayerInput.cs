@@ -71,6 +71,7 @@ public class PlayerInput : MonoBehaviour, IPiece
             [1] = new MoveSign(),
             [3] = new MoveSign(Vector2.left),
         };
+        spell.Direction = movement.input;
         var signs = new List<ISign>(8);
         //signs.Add(new MoveSign());
         //spell.PositionSigns(signs.ToArray());
@@ -93,7 +94,6 @@ public class PlayerInput : MonoBehaviour, IPiece
     private void TestSpell()
     {
         spellWindow.Close();
-        spell.Direction = movement.input;
         spell.Activate(transform.position);
     }
 
