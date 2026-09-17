@@ -483,8 +483,8 @@ TextureImporter:
       name: spell_atlas_15
       rect:
         serializedVersion: 2
-        x: 105
-        y: 85
+        x: 84
+        y: 22
         width: 21
         height: 21
       alignment: 0
