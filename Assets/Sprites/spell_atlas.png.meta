@@ -457,6 +457,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: spell_atlas_14
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 121
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9ed0589c4a8a204fb255acd9168ddd8
+      internalID: -709208580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_atlas_15
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 85
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f88134f3868c274fb307a9862029f2b
+      internalID: -1829979111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -477,6 +521,8 @@ TextureImporter:
       spell_atlas_11: -2056053160
       spell_atlas_12: 1558033099
       spell_atlas_13: 1324908653
+      spell_atlas_14: -709208580
+      spell_atlas_15: -1829979111
       spell_atlas_2: -5992783831815367457
       spell_atlas_3: -705406993899372868
       spell_atlas_4: -6558105703887772920

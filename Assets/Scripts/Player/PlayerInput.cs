@@ -24,6 +24,8 @@ public class PlayerInput : MonoBehaviour, IPiece
     public List<Characteristic> characteristics { get; set; }
     
     private ISequence castSequence;
+
+    private Spell spell;
     
     private void Awake()
     {
@@ -38,10 +40,11 @@ public class PlayerInput : MonoBehaviour, IPiece
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = new CustomSequence(()=>
         {
+            CreateSpell();
             delay.ListenNextFinishedCallback(() =>
             {
                 if (!jump.inProgress) return;
-                spellWindow.Open();
+                spellWindow.Open(spell);
             });
             delay.Begin();
         }, delay.End);
@@ -60,11 +63,14 @@ public class PlayerInput : MonoBehaviour, IPiece
         transform.localPosition = newCoordinates;
     }
 
-    private void TestSpell()
+    private void CreateSpell()
     {
-        spellWindow.Close();
-        var spell = new Spell() { sigil = new FireSigil() };
-        spell[0] = new MoveSign(Vector2.left);
+        spell = new Spell { 
+            sigil = new FireSigil(),
+            [0] = new MoveSign(Vector2.right),
+            [1] = new MoveSign(),
+            [3] = new MoveSign(Vector2.left),
+        };
         var signs = new List<ISign>(8);
         //signs.Add(new MoveSign());
         //spell.PositionSigns(signs.ToArray());
@@ -82,7 +88,11 @@ public class PlayerInput : MonoBehaviour, IPiece
         //spell.PositionSigns(signs.ToArray());
         //signs.Add(new MoveSign());
         //spell.PositionSigns(signs.ToArray());
-        
+    }
+    
+    private void TestSpell()
+    {
+        spellWindow.Close();
         spell.Direction = movement.input;
         spell.Activate(transform.position);
     }

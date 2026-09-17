@@ -169,6 +169,24 @@ namespace UI.Components
             _radius = new Length(radius, unit);
             return this;
         }
+        public CircleLayoutGroup SetOffset(float _offset)
+        {
+            offset = _offset;
+            return this;
+        }
+        public CircleLayoutGroup SetRotation(Rotation direction)
+        {
+            rotation = direction;
+            return this;
+        }
+        public CircleLayoutGroup SetElementRotation(float offset = 0, Rotation? direction = null)
+        {
+            rotateElements = true;
+            rotationOffset = offset;
+            if(direction.HasValue) 
+                elementRotation = direction.Value;
+            return this;
+        }
     }
 
     public enum Rotation

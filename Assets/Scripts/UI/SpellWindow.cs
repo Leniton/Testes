@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using SpellCasting;
 using UI.Utils;
+using UI.Utils.Builder;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,12 +11,29 @@ public class SpellWindow : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
 
     private VisualElement root;
+    private VisualElement sigil;
+    private UI.Components.CircleLayoutGroup signContainer;
+
+    #region SpriteReference
+    private Dictionary<Type, Sprite> sprites = new();
+
+    private Sprite moveSign => Resources.Load<Sprite>("sign_move");
+    private Sprite fireSigil => Resources.Load<Sprite>("sigil_fire");
+
+    private void SetupSpriteDictionary()
+    {
+        sprites.Clear();
+        sprites[typeof(PlayerInput.MoveSign)] = moveSign;
+        sprites[typeof(PlayerInput.FireSigil)] = fireSigil;
+    }
+    #endregion
     
     private void Awake()
     {
         uiDocument ??= GetComponent<UIDocument>();
         root = uiDocument.rootVisualElement;
         Setup();
+        SetupSpriteDictionary();
     }
 
     private void Setup()
@@ -26,17 +46,19 @@ public class SpellWindow : MonoBehaviour
             .AddElement(new VisualElement()
                 .AlignItems(Align.Center)
                 .JustifyContent(Justify.Center)
-                .AddElement(new UI.Components.CircleLayoutGroup()
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black))
+                .AddElement(signContainer = new UI.Components.CircleLayoutGroup()
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
+                    .SetOffset(.5f)
+                    .SetRotation(UI.Components.Rotation.CounterClockwise)
                     .SetRadius(300))
-                .AddElement(new VisualElement()
+                .AddElement(sigil = new VisualElement()
                     .AbsPos()
                     .LayoutOffset(50, unit: LengthUnit.Percent)
                     .Position(-50)
@@ -57,8 +79,24 @@ public class SpellWindow : MonoBehaviour
         Close();
     }
 
-    public void Open()
+    private void RenderSpell(Spell spell)
     {
+        if (spell == null) return;
+        sigil.BgImage(sprites.TryGetValue(spell.sigil.GetType(), out var sprite) ? sprite : null);
+        // Debug.Log($"{} => {sigil.style.backgroundImage.value.sprite}");
+        for (int i = 0; i < signContainer.childCount; i++)
+        {
+            var sign = spell[i];
+            var img = signContainer[i][0].BgImage(sign == null ? null : 
+                sprites.TryGetValue(sign.GetType(), out sprite) ? sprite : null);
+            if (sign is not IDirectionalSign dirSign) continue;
+            img.Rotation(Vector2.SignedAngle(dirSign.Direction, Vector2.up));
+        }
+    }
+
+    public void Open(Spell spell = null)
+    {
+        RenderSpell(spell);
         root.Display(DisplayStyle.Flex);
     }
     public void Close()
