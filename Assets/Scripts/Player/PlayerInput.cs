@@ -7,6 +7,7 @@ using LenixSO.Sequences;
 using LenixSO.Sequences.Coroutines;
 using SpellCasting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Input = InputSystemHelper.Input;
 
 [RequireComponent(typeof(Movement))]
@@ -33,8 +34,8 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece = this;
         movement.piece.Initialize();
         var move = Input.Map("Player").Action("Move");
-        move.performed += context => movement.MoveNow(context.ReadValue<Vector2>());
-        move.canceled += _ => movement.ResetMovement();
+        move.performed += OnMovePerformed;
+        move.canceled += OnMoveCanceled;
         // Input.Map("Player").Action("Jump").performed += _ => TestSpell();
         var jump = Input.Map("Player").Action("Jump");
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
@@ -51,6 +52,20 @@ public class PlayerInput : MonoBehaviour, IPiece
         castSequence.OnFinished += TestSpell;
         jump.performed += _ => castSequence.Begin();
         jump.canceled += _ => castSequence.End();
+    }
+
+    private void OnMovePerformed(InputAction.CallbackContext context)
+    {
+        var direction = context.ReadValue<Vector2>();
+        movement.MoveNow(direction);
+        if (direction == Vector2.zero || !castSequence.running) return;
+        spell.Direction = direction;
+        spellWindow.RenderSpell(spell);
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        movement.ResetMovement();
     }
     
     public void StylePiece(Sprite sprite, Color color) { }

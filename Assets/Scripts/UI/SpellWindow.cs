@@ -45,26 +45,6 @@ public class SpellWindow : MonoBehaviour
             .AlignItems(Align.Center)
             //spell view
             .AddElement(spellContainer = new VisualElement()
-                .AlignItems(Align.Center)
-                .JustifyContent(Justify.Center)
-                .AddElement(signContainer = new UI.Components.CircleLayoutGroup()
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit:LengthUnit.Percent)))
-                    .SetOffset(.5f)
-                    .SetRotation(UI.Components.Rotation.CounterClockwise)
-                    .SetRadius(300))
-                .AddElement(sigil = new VisualElement()
-                    .AbsPos()
-                    .LayoutOffset(50, unit: LengthUnit.Percent)
-                    .Position(-50)
-                    .BgColor(Color.black)
-                    .Size(200))
                 .Size(900)
                 .BgColor(ColorExtension.GrayShade(.6f)))
             //side list (not here probably, this one is just for viewing
@@ -78,9 +58,44 @@ public class SpellWindow : MonoBehaviour
             .Size(100, unit: LengthUnit.Percent)
             .BgColor(Color.black.Transparent(.6f)));
         Close();
+        SetupSpellView();
     }
 
-    private void RenderSpell(Spell spell)
+    private void SetupSpellView()
+    {
+        spellContainer.Add(new VisualElement()
+            .BgImage(Resources.Load<Sprite>("circle"))
+            .Size(96, unit: LengthUnit.Percent)
+            .LayoutOffset(50, unit: LengthUnit.Percent)
+            .Position(-50)
+            .AbsPos());
+        spellContainer.Add(spellContainer = new VisualElement()
+            .AlignItems(Align.Center)
+            .JustifyContent(Justify.Center)
+            .Size(96, unit: LengthUnit.Percent)
+            .Margin(2, unit: LengthUnit.Percent)
+            .AddElement(signContainer = new UI.Components.CircleLayoutGroup()
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .AddElement(new VisualElement().Size(90).BgColor(Color.black).AddElement(new VisualElement().Size(100, unit: LengthUnit.Percent)))
+                .SetOffset(.5f)
+                .SetRotation(UI.Components.Rotation.CounterClockwise)
+                .SetRadius(300))
+            .AddElement(sigil = new VisualElement()
+                .AbsPos()
+                .LayoutOffset(50, unit: LengthUnit.Percent)
+                .Position(-50)
+                .BgColor(Color.black)
+                .Size(200))
+            );
+    }
+
+    public void RenderSpell(Spell spell)
     {
         if (spell == null) return;
         spellContainer.Rotation(Vector2.SignedAngle(spell.Direction, Vector2.up));
