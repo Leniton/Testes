@@ -6,7 +6,7 @@ namespace SpellCasting
 {
     public interface ISigil
     {
-        public Spell Create();
+        public void Create(Spell spell);
     }
     public interface ISign
     {
@@ -14,16 +14,26 @@ namespace SpellCasting
     }
     public class Spell
     {
+        private ISign[] signs = new ISign[8];
+
         public Coordinate origin;
         public Vector2 Direction = Vector2.up;
         public IPiece target;
 
-        public event Action<Spell> OnActivate; 
+        public ISigil sigil;
+        public ISign this[int id]
+        {
+            get { return signs[id]; }
+            set { signs[id] = value; }
+        }
 
         public void Activate(Vector2 point)
         {
             origin = point;
-            OnActivate?.Invoke(this);
+            sigil?.Create(this);
+            target ??= IGrid.Instance.GetTileAt(origin).GetPiece();
+            for (int i = 0; i < signs.Length; i++)
+                signs[i]?.Modify(this);
         }
     }
 

@@ -63,7 +63,8 @@ public class PlayerInput : MonoBehaviour, IPiece
     private void TestSpell()
     {
         spellWindow.Close();
-        var spell = new FireSigil().Create();
+        var spell = new Spell() { sigil = new FireSigil() };
+        spell[0] = new MoveSign(Vector2.left);
         var signs = new List<ISign>(8);
         //signs.Add(new MoveSign());
         //spell.PositionSigns(signs.ToArray());
@@ -83,8 +84,6 @@ public class PlayerInput : MonoBehaviour, IPiece
         //spell.PositionSigns(signs.ToArray());
         
         spell.Direction = movement.input;
-        new MoveSign(Vector2.left).Modify(spell);
-        spell.target = this;
         spell.Activate(transform.position);
     }
 
@@ -94,20 +93,19 @@ public class PlayerInput : MonoBehaviour, IPiece
 
         public MoveSign(Vector2? direction = null) => Direction = direction ?? Vector2.up;
 
-        public Spell Create()
+        public void Create(Spell spell)
         {
-            var spell = new Spell();
-            spell.OnActivate += s => s.target = IGrid.Instance.GetTileAt(spell.origin).GetPiece();
-            spell.OnActivate += Move;
-            return spell;
+            spell.target = IGrid.Instance.GetTileAt(spell.origin).GetPiece();
+            Move(spell);
         }
         public void Modify(Spell spell)
         {
-            spell.OnActivate += Move;
+            Move(spell);
         }
 
         private void Move(Spell spell)
         {
+            if (spell.target == null) return;
             var position = spell.target.coordinate + IDirectionalSign.GetRelativeDirection(this, spell);
             var current = IGrid.Instance.GetTileAt(spell.target.coordinate);
             var target = IGrid.Instance.GetTileAt(position);
@@ -118,15 +116,10 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     public class FireSigil : ISigil
     {
-        public Spell Create()
+        public void Create(Spell spell)
         {
-            var spell = new Spell();
-            spell.OnActivate += s =>
-            {
-                var fire = Resources.Load<GameObject>("fire");
-                s.target = new ObjectPiece(Instantiate(fire, s.origin, Quaternion.identity));
-            };
-            return spell;
+            var fire = Resources.Load<GameObject>("fire");
+            spell.target = new ObjectPiece(Instantiate(fire, spell.origin, Quaternion.identity));
         }
     }
     
