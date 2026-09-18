@@ -58,8 +58,11 @@ public class PlayerInput : MonoBehaviour, IPiece
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         var direction = context.ReadValue<Vector2>();
-        movement.MoveNow(direction);
-        if (direction == Vector2.zero || !castSequence.running) return;
+        if (direction == Vector2.zero || !castSequence.running)
+        {
+            movement.MoveNow(direction);
+            return;
+        }
         spell.Direction = direction;
         spellWindow.RenderSpell(spell);
     }
