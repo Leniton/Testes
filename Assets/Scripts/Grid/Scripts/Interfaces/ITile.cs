@@ -56,7 +56,7 @@ namespace GridSystem
 
         public IPiece GetPiece(int id = 0) => id < pieces.Count ? pieces[id] : null;
 
-        public T GetFirstWith<T>() where T : ICharacteristic
+        public T GetFirstWith<T>() where T : ITrait
         {
             for (int i = 0; i < pieces.Count; i++)
             {
@@ -68,7 +68,7 @@ namespace GridSystem
             return default(T);
         }
 
-        public T GetLastWith<T>() where T : ICharacteristic
+        public T GetLastWith<T>() where T : ITrait
         {
             for (int i = pieces.Count - 1; i >= 0; i--)
             {
@@ -80,7 +80,7 @@ namespace GridSystem
             return default(T);
         }
 
-        public List<T> GetPiecesWith<T>() where T : ICharacteristic
+        public List<T> GetPiecesWith<T>() where T : ITrait
         {
             List<T> returnValue = new();
             for (int i = 0; i < pieces.Count; i++)

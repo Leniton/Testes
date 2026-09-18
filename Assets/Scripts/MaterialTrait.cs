@@ -2,13 +2,13 @@ using GridSystem;
 using UnityEngine;
 namespace GameData
 {
-    public class MaterialCharacteristic : ICharacteristic
+    public class MaterialTrait : ITrait
     {
         public IPiece Piece { get; private set; }
         public State state { get; private set; }
         public int idModifier => StateToId();
 
-        public MaterialCharacteristic(State startingState = State.Solid)
+        public MaterialTrait(State startingState = State.Solid)
         {
             state = startingState;
         }

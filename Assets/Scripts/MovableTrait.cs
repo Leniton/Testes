@@ -4,7 +4,7 @@ using UnityEngine;
 using Util;
 namespace GameData
 {
-    public class MovableCharacteristic : ICharacteristic
+    public class MovableTrait : ITrait
     {
         public IPiece Piece { get; private set; }
 

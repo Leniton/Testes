@@ -1,7 +1,7 @@
 
 namespace GridSystem
 {
-    public interface ICharacteristic
+    public interface ITrait
     {
         public IPiece Piece { get; }
         public int idModifier => 0;

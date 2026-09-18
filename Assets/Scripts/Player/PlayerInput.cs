@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour, IPiece
     public int id { get; set; }
     public Coordinate coordinate { get; set; }
     public Action onClick { get; set; }
-    public List<ICharacteristic> characteristics { get; set; }
+    public List<ITrait> characteristics { get; set; }
     
     private ISequence castSequence;
 
@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement ??= GetComponent<Movement>();
         movement.piece = this;
         movement.piece.Initialize();
-        movement.piece.AddCharacteristic(new MovableCharacteristic());
+        movement.piece.AddCharacteristic(new MovableTrait());
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
@@ -140,7 +140,7 @@ public class PlayerInput : MonoBehaviour, IPiece
             if (spell.target == null) return;
             var direction = IDirectionalSign.GetRelativeDirection(this, spell);
             var current = IGrid.Instance.GetTileAt(spell.target.coordinate);
-            var movable = spell.target.GetCharacteristic<MovableCharacteristic>();
+            var movable = spell.target.GetCharacteristic<MovableTrait>();
             if (movable != null)
             {
                 movable.TryMove(direction, out var finalCoordinate, out var blockingTile);
@@ -161,10 +161,10 @@ public class PlayerInput : MonoBehaviour, IPiece
             var piece = new ObjectPiece(Instantiate(fire, spell.origin, Quaternion.identity));
             piece.onTileChanged += tile =>
             {
-                var materials = tile.GetPiecesWith<MaterialCharacteristic>();
+                var materials = tile.GetPiecesWith<MaterialTrait>();
                 if (materials is not { Count: > 0 }) return;
                 for (int i = 0; i < materials.Count; i++)
-                    materials[i].Expose(MaterialCharacteristic.ExposureType.Heat);
+                    materials[i].Expose(MaterialTrait.ExposureType.Heat);
             };
             spell.target = piece;
         }
@@ -178,7 +178,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<ICharacteristic> characteristics { get; set; } = new();
+        public List<ITrait> characteristics { get; set; } = new();
 
         public event Action<ITile> onTileChanged;
         

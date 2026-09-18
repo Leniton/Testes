@@ -11,7 +11,7 @@ namespace GridSystem
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<ICharacteristic> characteristics { get; set; }
+        public List<ITrait> characteristics { get; set; }
 
         public void Initialize()
         {
@@ -31,7 +31,7 @@ namespace GridSystem
 
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates);
 
-        public bool AddCharacteristic<T>(T characteristic) where T : ICharacteristic
+        public bool AddCharacteristic<T>(T characteristic) where T : ITrait
         {
             characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
@@ -51,7 +51,7 @@ namespace GridSystem
             return true;
         }
 
-        public T GetCharacteristic<T>() where T : ICharacteristic
+        public T GetCharacteristic<T>() where T : ITrait
         {
             T returnValue = default(T);
             characteristics ??= new();
