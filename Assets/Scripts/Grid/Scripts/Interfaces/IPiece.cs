@@ -33,6 +33,7 @@ namespace GridSystem
 
         public bool AddCharacteristic<T>(T characteristic) where T : ICharacteristic
         {
+            characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
             {
                 if (characteristics[i].GetType().IsAssignableFrom(typeof(T)) ||
@@ -53,6 +54,7 @@ namespace GridSystem
         public T GetCharacteristic<T>() where T : ICharacteristic
         {
             T returnValue = default(T);
+            characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
             {
                 try
@@ -71,6 +73,7 @@ namespace GridSystem
 
         public string CharacteristicsInfo()
         {
+            characteristics ??= new();
             StringBuilder value = new();
 
             for (int i = 0; i < characteristics.Count; i++)
