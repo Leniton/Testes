@@ -23,10 +23,7 @@ namespace GridSystem
             var newId = (int)PieceType.generic;
             characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
-            {
                 characteristics[i].ModifyID(ref newId);
-                characteristics[i].SetUp(this);
-            }
             id = newId;
         }
 
@@ -48,6 +45,7 @@ namespace GridSystem
 
             //Debug.Log($"adding {characteristic.GetType().Name}");
             characteristics.Add(characteristic);
+            characteristic.SetUp(this);
             RefreshId();
             return true;
         }

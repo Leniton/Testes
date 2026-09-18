@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameData;
 using GridSystem;
 using InputSystemHelper;
 using LenixSO.Sequences;
@@ -142,7 +143,15 @@ public class PlayerInput : MonoBehaviour, IPiece
         public void Create(Spell spell)
         {
             var fire = Resources.Load<GameObject>("fire");
-            spell.target = new ObjectPiece(Instantiate(fire, spell.origin, Quaternion.identity));
+            var piece = new ObjectPiece(Instantiate(fire, spell.origin, Quaternion.identity));
+            piece.onTileChanged += tile =>
+            {
+                var materials = tile.GetPiecesWith<MaterialCharacteristic>();
+                if (materials is not { Count: > 0 }) return;
+                for (int i = 0; i < materials.Count; i++)
+                    materials[i].Expose(MaterialCharacteristic.ExposureType.Heat);
+            };
+            spell.target = piece;
         }
     }
     
@@ -155,15 +164,17 @@ public class PlayerInput : MonoBehaviour, IPiece
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
         public List<ICharacteristic> characteristics { get; set; } = new();
-        public void StylePiece(Sprite sprite, Color color) { }
+
+        public event Action<ITile> onTileChanged;
         
         private GameObject target;
         
-        public ObjectPiece(GameObject target)
+        public ObjectPiece(GameObject target, Action<ITile> OnTileChanged = null)
         {
             this.target = target;
             coordinate = target.transform.localPosition;
             var piece = this as IPiece;
+            onTileChanged += OnTileChanged;
             piece?.Initialize();
         }
 
@@ -173,6 +184,9 @@ public class PlayerInput : MonoBehaviour, IPiece
             newTile?.PlacePiece(this);
             coordinate = newCoordinates;
             target.transform.localPosition = newCoordinates;
+            onTileChanged?.Invoke(newTile);
         }
+        
+        public void StylePiece(Sprite sprite, Color color) { }
     }
 }
