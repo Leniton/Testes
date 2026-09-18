@@ -45,6 +45,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         castSequence = new CustomSequence(()=>
         {
             CreateSpell();
+            movement.input = Vector2.zero;
             delay.ListenNextFinishedCallback(() =>
             {
                 if (!jump.inProgress) return;
