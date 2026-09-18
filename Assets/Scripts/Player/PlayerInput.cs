@@ -126,6 +126,7 @@ public class PlayerInput : MonoBehaviour, IPiece
 
         public void Create(Spell spell)
         {
+            Direction = Vector2.up;//forced as sigils can't rotate
             spell.target = IGrid.Instance.GetTileAt(spell.origin).GetPiece();
             Move(spell);
         }
@@ -142,21 +143,13 @@ public class PlayerInput : MonoBehaviour, IPiece
             var movable = spell.target.GetCharacteristic<MovableCharacteristic>();
             if (movable != null)
             {
-                MovableMovement();
+                movable.TryMove(direction, out var finalCoordinate, out var blockingTile);
                 return;
             }
             var position = spell.target.coordinate + direction;
             var target = IGrid.Instance.GetTileAt(position);
             if (target == null) return;
             spell.target?.SetCurrentTile(current, target, position);
-            return;
-            void MovableMovement()
-            {
-                movable.TryMove(direction, out var finalCoordinate);
-                var goal = IGrid.Instance.GetTileAt(finalCoordinate);
-                if (goal == null) return;
-                spell.target.SetCurrentTile(current, goal, finalCoordinate);
-            }
         }
     }
     
