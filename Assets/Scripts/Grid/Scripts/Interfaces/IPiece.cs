@@ -11,24 +11,30 @@ namespace GridSystem
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<Characteristic> characteristics { get; set; }
+        public List<ICharacteristic> characteristics { get; set; }
 
         public void Initialize()
         {
-            id = (int)PieceType.generic;
+            RefreshId();
+        }
+
+        public void RefreshId()
+        {
+            var newId = (int)PieceType.generic;
             characteristics ??= new();
             for (int i = 0; i < characteristics.Count; i++)
             {
-                id = characteristics[i].ModifyID(id);
+                characteristics[i].ModifyID(ref newId);
                 characteristics[i].SetUp(this);
             }
+            id = newId;
         }
 
         public void StylePiece(Sprite sprite, Color color);
 
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates);
 
-        public bool AddCharacteristic<T>(T characteristic) where T : Characteristic
+        public bool AddCharacteristic<T>(T characteristic) where T : ICharacteristic
         {
             for (int i = 0; i < characteristics.Count; i++)
             {
@@ -42,12 +48,13 @@ namespace GridSystem
 
             //Debug.Log($"adding {characteristic.GetType().Name}");
             characteristics.Add(characteristic);
+            RefreshId();
             return true;
         }
 
-        public T GetCharacteristic<T>() where T : Characteristic
+        public T GetCharacteristic<T>() where T : ICharacteristic
         {
-            T returnValue = null;
+            T returnValue = default(T);
             for (int i = 0; i < characteristics.Count; i++)
             {
                 try
@@ -57,6 +64,7 @@ namespace GridSystem
                 }
                 catch
                 {
+                    // ignored
                 }
             }
 

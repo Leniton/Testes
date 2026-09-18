@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameData;
 using GridSystem;
 using LenixSO.Sequences.Coroutines;
 using LenixSO.Sequences.Decorator;
@@ -42,8 +43,11 @@ public class GridManager : MonoBehaviour, IGrid
             tile.origin = grid.GetTileCoordinates(tile) - offset;
         }
         
+        //Debug barricades
+        
         IPiece b = new PlayerInput.ObjectPiece(new("barricade"));
         b.Initialize();
+        b.AddCharacteristic(new MaterialCharacteristic());
         Coordinate c = new Coordinate(0, 1);
         b.SetCurrentTile(null, GetTileAt(c), c);
         

@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour, IPiece
     public int id { get; set; }
     public Coordinate coordinate { get; set; }
     public Action onClick { get; set; }
-    public List<Characteristic> characteristics { get; set; }
+    public List<ICharacteristic> characteristics { get; set; }
     
     private ISequence castSequence;
 
@@ -82,9 +82,7 @@ public class PlayerInput : MonoBehaviour, IPiece
     {
         spell = new Spell { 
             sigil = new FireSigil(),
-            [0] = new MoveSign(Vector2.right),
-            [1] = new MoveSign(),
-            [3] = new MoveSign(Vector2.left),
+            [0] = new MoveSign(),
         };
         spell.Direction = movement.input;
         var signs = new List<ISign>(8);
@@ -156,7 +154,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<Characteristic> characteristics { get; set; } = new();
+        public List<ICharacteristic> characteristics { get; set; } = new();
         public void StylePiece(Sprite sprite, Color color) { }
         
         private GameObject target;

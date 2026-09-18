@@ -14,7 +14,7 @@ namespace GridSystem.VisualElements
         public Action onEnter { get; set; }
         public Action onExit { get; set; }
         public Action onClick { get; set; }
-        public List<Characteristic> characteristics { get; set; } = new();
+        public List<ICharacteristic> characteristics { get; set; } = new();
 
         public Piece()
         {
