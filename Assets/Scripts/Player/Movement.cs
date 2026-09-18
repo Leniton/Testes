@@ -42,9 +42,6 @@ public class Movement : MonoBehaviour
         var targetId = target.pieceID;
         if ((targetId & 1) == 0) return;//not empty
         piece.SetCurrentTile(current, target, coordinate);
-        GridManager.SetElement(transform.position, null);
-        // transform.Translate(input);
-        GridManager.SetElement(transform.position, gameObject);
     }
 
     private IEnumerator Step()

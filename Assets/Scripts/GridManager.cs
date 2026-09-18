@@ -9,10 +9,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-99)]
 public class GridManager : MonoBehaviour, IGrid
 {
-    private Dictionary<Vector2, GameObject> grid = new();
     private Vector2 offset;
-    
-    private static GridManager instance;
 
     public int Width { get; } = 17;
     public int Height { get; } = 9;
@@ -25,7 +22,6 @@ public class GridManager : MonoBehaviour, IGrid
     
     private void Awake()
     {
-        instance = this;
         IGrid.Instance = this;
         SetUpGrid();
     }
@@ -73,16 +69,6 @@ public class GridManager : MonoBehaviour, IGrid
         return (coordinates.x < 0 || coordinates.y < 0 || coordinates.x >= Width || coordinates.y >= Height)
                 ? null
                 : tiles[(Width * coordinates.y) + coordinates.x];
-    }
-
-    public static GameObject GetElement(Vector2 point)
-    {
-        return instance.grid.GetValueOrDefault(point);
-    }
-
-    public static void SetElement(Vector2 point, GameObject element)
-    {
-        instance.grid[point] = element;
     }
 }
 
