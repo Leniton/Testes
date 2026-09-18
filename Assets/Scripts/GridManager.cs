@@ -43,7 +43,7 @@ public class GridManager : MonoBehaviour, IGrid
         
         IPiece b = new PlayerInput.ObjectPiece(new("barricade"));
         b.Initialize();
-        b.AddCharacteristic(new MaterialCharacteristic());
+        b.AddCharacteristic(new MaterialTrait());
         Coordinate c = new Coordinate(0, 1);
         b.SetCurrentTile(null, GetTileAt(c), c);
         
