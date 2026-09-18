@@ -143,7 +143,7 @@ public class PlayerInput : MonoBehaviour, IPiece
             var movable = spell.target.GetCharacteristic<MovableTrait>();
             if (movable != null)
             {
-                movable.TryMove(direction, out var finalCoordinate, out var blockingTile);
+                movable.TryMove(direction);
                 return;
             }
             var position = spell.target.coordinate + direction;

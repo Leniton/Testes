@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
         var movable = piece.GetCharacteristic<MovableTrait>();
         if (movable != null)
         {
-            movable.TryMove(input, out var finalCoordinate, out var blockingTile);
+            movable.TryMove(input);
             return;
         }
         Coordinate coordinate = (Vector2)transform.position + input;

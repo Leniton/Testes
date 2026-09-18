@@ -10,10 +10,9 @@ namespace GameData
 
         public void SetUp(IPiece _piece) => Piece = _piece;
 
-        public void TryMove(Vector2 direction, out Coordinate finalCoordinate, out ITile blockingTile)
+        public bool TryMove(Vector2 direction)
         {
-            finalCoordinate = Piece.coordinate;
-            var coordinate = finalCoordinate;
+            var finalCoordinate = Piece.coordinate;
             Coordinate step = new Coordinate(Math.Clamp((int)direction.x, -1, 1), Math.Clamp((int)direction.y, -1, 1));//update each step to afford uneven steps?
             Coordinate next = Piece.coordinate + step;
             Coordinate goal = Piece.coordinate + direction;
@@ -21,35 +20,48 @@ namespace GameData
             while (next != goal)
             {
                 ITile targetTile = IGrid.Instance.GetTileAt(next);
-                blockingTile = targetTile;
-                if (!ValidTile(targetTile).OnFalse(() => Move(coordinate))) return;
+                if (!ValidTile(targetTile).OnFalse(() => MovePiece(finalCoordinate))) return Moved();
                 finalCoordinate = next;
-                coordinate = finalCoordinate;
                 next += step;
             }
             ITile goalTile = IGrid.Instance.GetTileAt(goal);
-            blockingTile = goalTile;
-            if (!ValidTile(goalTile).OnFalse(() => Move(coordinate))) return;
+            if (!ValidTile(goalTile).OnFalse(() => MovePiece(finalCoordinate))) return Moved();
             finalCoordinate = goal;
-            blockingTile = null;
-            Move(finalCoordinate);
-            return;
+            MovePiece(finalCoordinate);
+            return Moved();
 
             bool ValidTile(ITile tile)
             {
                 // Debug.Log($"checking {next}/{goal}");
-                if (tile == null) return false;
-                int id = tile.pieceID;
-                return (id & 2) == 0;
+                bool valid = tile != null;
+                if (valid) valid = (tile.pieceID & 2) == 0;
+                if (!valid) valid = TryPush(tile, direction);
+                return valid;
             }
+
+            bool Moved() => finalCoordinate != Piece.coordinate;
         }
 
-        private void Move(Coordinate coordinate)
+        private void MovePiece(Coordinate coordinate)
         {
             var currentTile = IGrid.Instance.GetTileAt(Piece.coordinate);
             var target = IGrid.Instance.GetTileAt(coordinate);
             if (target == null) return;
             Piece.SetCurrentTile(currentTile, target, coordinate);
+        }
+
+        private bool TryPush(ITile tile, Vector2 direction)
+        {
+            if (tile == null) return false;
+            var pieces = tile.pieces;
+            pieces ??= new();
+            int id = 0;
+            while (id < pieces.Count)
+            {
+                var movable = pieces[id]?.GetCharacteristic<MovableTrait>();
+                if (movable == null || !movable.TryMove(direction)) id++;
+            }
+            return tile.pieces is { Count: <= 0 };
         }
     }
 }
