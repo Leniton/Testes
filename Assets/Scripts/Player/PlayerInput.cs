@@ -34,6 +34,8 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement ??= GetComponent<Movement>();
         movement.piece = this;
         movement.piece.Initialize();
+        movement.piece.AddCharacteristic(new MovableCharacteristic());
+        
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
         move.canceled += OnMoveCanceled;
@@ -85,8 +87,9 @@ public class PlayerInput : MonoBehaviour, IPiece
     private void CreateSpell()
     {
         spell = new Spell { 
-            sigil = new FireSigil(),
+            sigil = new MoveSign(),
             [0] = new MoveSign(),
+            [1] = new MoveSign(),
         };
         spell.Direction = movement.input;
         var signs = new List<ISign>(8);
@@ -133,11 +136,26 @@ public class PlayerInput : MonoBehaviour, IPiece
         private void Move(Spell spell)
         {
             if (spell.target == null) return;
-            var position = spell.target.coordinate + IDirectionalSign.GetRelativeDirection(this, spell);
+            var direction = IDirectionalSign.GetRelativeDirection(this, spell);
             var current = IGrid.Instance.GetTileAt(spell.target.coordinate);
+            var movable = spell.target.GetCharacteristic<MovableCharacteristic>();
+            if (movable != null)
+            {
+                MovableMovement();
+                return;
+            }
+            var position = spell.target.coordinate + direction;
             var target = IGrid.Instance.GetTileAt(position);
             if (target == null) return;
             spell.target?.SetCurrentTile(current, target, position);
+            return;
+            void MovableMovement()
+            {
+                movable.TryMove(direction, out var finalCoordinate);
+                var goal = IGrid.Instance.GetTileAt(finalCoordinate);
+                if (goal == null) return;
+                spell.target.SetCurrentTile(current, goal, finalCoordinate);
+            }
         }
     }
     

@@ -57,10 +57,10 @@ public class GridManager : MonoBehaviour, IGrid
         c = new Coordinate(1, 0);
         b.SetCurrentTile(null, GetTileAt(c), c);
         
-        b = new PlayerInput.ObjectPiece(new("barricade"));
-        b.Initialize();
-        c = new Coordinate(-1, 0);
-        b.SetCurrentTile(null, GetTileAt(c), c);
+        // b = new PlayerInput.ObjectPiece(new("barricade"));
+        // b.Initialize();
+        // c = new Coordinate(-1, 0);
+        // b.SetCurrentTile(null, GetTileAt(c), c);
     }
 
     public ITile GetTileAt(Coordinate coordinates)

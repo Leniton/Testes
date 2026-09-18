@@ -42,6 +42,9 @@ namespace GridSystem
         public static Coordinate operator /(Vector2 c2, Coordinate c1) => new Coordinate((int)c2.x / c1.x, (int)c2.y / c1.y);
         public static Coordinate operator /(Coordinate c1, Vector3 c2) => new Coordinate(c1.x / (int)c2.x, c1.y / (int)c2.y);
         public static Coordinate operator /(Vector3 c2, Coordinate c1) => new Coordinate((int)c2.x / c1.x, (int)c2.y / c1.y);
+
+        public static bool operator ==(Coordinate c1, Coordinate c2) => c1.x == c2.x && c1.y == c2.y;
+        public static bool operator !=(Coordinate c1, Coordinate c2) => !(c1 == c2);
         #endregion
 
         public int Distance(Coordinate coordinate) =>
@@ -53,6 +56,10 @@ namespace GridSystem
         public static Coordinate Zero => new Coordinate();
 
         public override string ToString() => $"coordinate:({x},{y})";
+
+        public override bool Equals(object obj) => obj is Coordinate other && this == other;
+
+        public override int GetHashCode() => x * 397 ^ y;
     }
 
     [System.Serializable]

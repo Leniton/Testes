@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GameData;
 using GridSystem;
 using UnityEngine;
 
@@ -36,12 +37,26 @@ public class Movement : MonoBehaviour
     {
         if (input == Vector2.zero) return;
         var current = IGrid.Instance.GetTileAt((Vector2)transform.position);
+        var movable = piece.GetCharacteristic<MovableCharacteristic>();
+        if (movable != null)
+        {
+            MovableMovement(movable, current);
+            return;
+        }
         Coordinate coordinate = (Vector2)transform.position + input;
         var target = IGrid.Instance.GetTileAt(coordinate);
         if (target == null) return;
         var targetId = target.pieceID;
         if ((targetId & 1) == 0) return;//not empty
         piece.SetCurrentTile(current, target, coordinate);
+    }
+
+    private void MovableMovement(MovableCharacteristic movable, ITile currentTile)
+    {
+        movable.TryMove(input, out var finalCoordinate);
+        var target = IGrid.Instance.GetTileAt(finalCoordinate);
+        if (target == null) return;
+        piece.SetCurrentTile(currentTile, target, finalCoordinate);
     }
 
     private IEnumerator Step()
