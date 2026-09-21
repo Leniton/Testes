@@ -88,9 +88,13 @@ public class PlayerInput : MonoBehaviour, IPiece
     private void CreateSpell()
     {
         spell = new Spell { 
-            sigil = new MoveSign(),
+            sigil = new FireSigil(),
             [0] = new MoveSign(),
-            [1] = new MoveSign(),
+            // [1] = new MoveSign(),
+            [2] = new BlankSign(),
+            [3] = new BlankSign(),
+            [4] = new BlankSign(),
+            [5] = new BlankSign(),
         };
         spell.Direction = movement.input;
         var signs = new List<ISign>(8);
@@ -159,6 +163,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         {
             var fire = Resources.Load<GameObject>("fire");
             var piece = new ObjectPiece(Instantiate(fire, spell.origin, Quaternion.identity));
+            piece.id = 1;
             piece.onTileChanged += tile =>
             {
                 var materials = tile.GetPiecesWith<MaterialTrait>();
@@ -203,5 +208,10 @@ public class PlayerInput : MonoBehaviour, IPiece
         }
         
         public void StylePiece(Sprite sprite, Color color) { }
+    }
+    
+    public class BlankSign : ISign
+    {
+        public void Modify(Spell spell) { }
     }
 }

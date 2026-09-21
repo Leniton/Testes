@@ -17,12 +17,14 @@ public class SpellWindow : MonoBehaviour
 
     #region SpriteReference
     private Dictionary<Type, Sprite> sprites = new();
-
+    private Sprite blankSprite;
+    
     private Sprite moveSign => Resources.Load<Sprite>("sign_move");
     private Sprite fireSigil => Resources.Load<Sprite>("sigil_fire");
 
     private void SetupSpriteDictionary()
     {
+        blankSprite = Resources.Load<Sprite>("sign_blank");
         sprites.Clear();
         sprites[typeof(PlayerInput.MoveSign)] = moveSign;
         sprites[typeof(PlayerInput.FireSigil)] = fireSigil;
@@ -99,14 +101,16 @@ public class SpellWindow : MonoBehaviour
     {
         if (spell == null) return;
         spellContainer.Rotation(Vector2.SignedAngle(spell.Direction, Vector2.up));
-        sigil.BgImage(sprites.TryGetValue(spell.sigil.GetType(), out var sprite) ? sprite : null);
+        sigil.BgImage(sprites.TryGetValue(spell.sigil.GetType(), out var sprite) ? sprite : blankSprite);
         for (int i = 0; i < signContainer.childCount; i++)
         {
             var sign = spell[i];
             var img = signContainer[i][0].BgImage(sign == null ? null : 
-                sprites.TryGetValue(sign.GetType(), out sprite) ? sprite : null);
-            if (sign is not IDirectionalSign dirSign) continue;
-            img.Rotation(Vector2.SignedAngle(dirSign.Direction, Vector2.up));
+                sprites.TryGetValue(sign.GetType(), out sprite) ? sprite : blankSprite);
+            Vector2 direction;
+            if (sign is IDirectionalSign dirSign) direction = dirSign.Direction;
+            else direction = SpellCastingUtilities.IdToDirection(i);
+            img.Rotation(Vector2.SignedAngle(direction, Vector2.up));
         }
     }
 
