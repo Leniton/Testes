@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UI.Utils;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,7 +28,7 @@ namespace GridSystem.VisualElements
 
         public Tile()
         {
-            this.SetPadding(0);
+            this.Padding(0);
             style.backgroundColor = defaultColor;
             RegisterCallback<PointerEnterEvent>(OnPointerEnter);
             RegisterCallback<PointerLeaveEvent>(OnPointerExit);

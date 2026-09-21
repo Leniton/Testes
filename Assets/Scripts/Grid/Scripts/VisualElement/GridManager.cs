@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UI.Utils;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -54,7 +55,7 @@ namespace GridSystem.VisualElements
             grid.style.backgroundColor = ColorExtension.GrayShade(.3f);
             grid.style.width = (cellSize * Width) + padding * 2 + (spacing * (Width - 1));
             grid.style.height = (cellSize * Height) + padding * 2 + (spacing * (Height - 1));
-            grid.SetMargin(padding);
+            grid.Margin(padding);
             //grid.style.marginLeft = (screenSize.x - grid.style.width.value.value) / 2f;
             grid.style.paddingLeft = padding / 2f;
             grid.style.paddingTop = padding / 2f;
@@ -69,7 +70,7 @@ namespace GridSystem.VisualElements
                 cell.name = $"Tile [{i % width},{i / width}]";
                 cell.style.width = cellSize;
                 cell.style.height = cellSize;
-                cell.SetMargin(spacing);
+                cell.Margin(spacing);
                 cell.style.marginRight = 0;
                 if (i >= Width) cell.style.marginTop = 0;
                 grid.Add(cell);
