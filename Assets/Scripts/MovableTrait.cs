@@ -34,7 +34,7 @@ namespace GameData
             {
                 // Debug.Log($"checking {next}/{goal}");
                 bool valid = tile != null;
-                if (valid) valid = (tile.pieceID & 2) == 0;
+                if (valid) valid = (tile.pieceID & 1) != 0;
                 if (!valid) valid = TryPush(tile, direction);
                 return valid;
             }
