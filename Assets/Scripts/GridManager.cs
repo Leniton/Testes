@@ -43,7 +43,15 @@ public class GridManager : MonoBehaviour, IGrid
         
         IPiece b = new PlayerInput.ObjectPiece(new("barricade"));
         b.Initialize();
-        b.AddCharacteristic(new MaterialTrait());
+        var material = new MaterialTrait();
+        material.RegisterCallback(MaterialTrait.ExposureType.Heat, () =>
+        {
+            if (material.state == MaterialTrait.State.Solid)
+                material.ChangeState(MaterialTrait.State.Dust, MaterialTrait.ExposureType.Heat);
+            else if (material.state == MaterialTrait.State.Dust)
+                material.ChangeState(MaterialTrait.State.Gas, MaterialTrait.ExposureType.Heat);
+        });
+        b.AddCharacteristic(material);
         Coordinate c = new Coordinate(0, 1);
         b.SetCurrentTile(null, GetTileAt(c), c);
         

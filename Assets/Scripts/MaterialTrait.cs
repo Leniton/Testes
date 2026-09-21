@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using GridSystem;
 using UnityEngine;
 namespace GameData
@@ -7,6 +9,8 @@ namespace GameData
         public IPiece Piece { get; private set; }
         public State state { get; private set; }
         public int idModifier => StateToId();
+
+        private Dictionary<ExposureType, Action> exposureReactions = new();
 
         public MaterialTrait(State startingState = State.Solid)
         {
@@ -33,76 +37,26 @@ namespace GameData
         public void Expose(ExposureType exposure)
         {
             //after state changes, refresh the id
-            switch (exposure)
-            {
-                case ExposureType.Heat:
-                    HeatExposure();
-                    break;
-                case ExposureType.Water:
-                    WaterExposure();
-                    break;
-                case ExposureType.Pressure:
-                    PressureExposure();
-                    break;
-            }
-            Piece.RefreshId();
+            if (!exposureReactions.TryGetValue(exposure, out Action action)) return;
+            action?.Invoke();
         }
 
-        private void HeatExposure()
+        public void RegisterCallback(ExposureType exposureType, Action callback)
         {
-            switch (state)
-            {
-                case State.Solid:
-                    ChangeState(State.Dust, ExposureType.Heat);
-                    break;
-                case State.Liquid:
-                    break;
-                case State.Gas:
-                    break;
-                case State.Dust:
-                    ChangeState(State.Gas, ExposureType.Heat);
-                    break;
-                case State.Mud:
-                    break;
-            }
-        }
-        private void WaterExposure()
-        {
-            switch (state)
-            {
-                case State.Solid:
-                    break;
-                case State.Liquid:
-                    break;
-                case State.Gas:
-                    break;
-                case State.Dust:
-                    break;
-                case State.Mud:
-                    break;
-            }
-        }
-        private void PressureExposure()
-        {
-            switch (state)
-            {
-                case State.Solid:
-                    break;
-                case State.Liquid:
-                    break;
-                case State.Gas:
-                    break;
-                case State.Dust:
-                    break;
-                case State.Mud:
-                    break;
-            }
+            if(!exposureReactions.TryAdd(exposureType, callback))
+                exposureReactions[exposureType] += callback;
         }
 
-        private void ChangeState(State newStage, ExposureType? changeSource = null)
+        public void UnregisterCallback(ExposureType exposureType, Action callback)
         {
-            Debug.Log($"{state} to {newStage}; source: {changeSource?.ToString() ?? "unknown"}");
-            state = newStage;
+            if(exposureReactions.TryGetValue(exposureType, out _))
+                exposureReactions[exposureType] -= callback;
+        }
+
+        public void ChangeState(State newState, ExposureType? changeSource = null)
+        {
+            // Debug.Log($"{state} to {newState}; source: {changeSource?.ToString() ?? "unknown"}");
+            state = newState;
             Piece.RefreshId();
         }
 
