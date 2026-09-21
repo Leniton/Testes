@@ -57,16 +57,15 @@ namespace GridSystem
                 {
                     tile.onEnter += (value) => SelectArea(currentCoordinate, selectArea, selectFilter);
                     tile.onExit += (value) => UnSelectArea(currentCoordinate, selectArea, selectFilter);
-                    tile.onClick += (value) =>
-                        ClickArea(onSelectTile, origin, currentCoordinate, selectArea, selectFilter);
+                    tile.onClick += (value) => ClickArea(onSelectTile, origin, currentCoordinate, selectArea, selectFilter);
                     if (IsInFilter(tile.pieceID, filter))
                     {
-                        tile.state = (ITile.State.selectable);
+                        tile.state = ITile.State.selectable;
                         tile.AddColor(tile.selectableColor);
                     }
                     else
                     {
-                        tile.state = (ITile.State.invalid);
+                        tile.state = ITile.State.invalid;
                         tile.AddColor(tile.invalidColor);
                     }
                 }
@@ -104,10 +103,9 @@ namespace GridSystem
             for (int i = 0; i < coordinates.Count; i++)
             {
                 ITile currentTile = GetTileAt(coordinates[i]);
-                Color color = Color.white;
                 if (currentTile != null)
                 {
-                    color = IsInFilter(currentTile.pieceID, filter) ? currentTile.validColor : currentTile.invalidColor;
+                    var color = IsInFilter(currentTile.pieceID, filter) ? currentTile.validColor : currentTile.invalidColor;
                     if (currentTile.state == ITile.State.generic) currentTile.SetColor(currentTile.defaultColor);
                     currentTile.RemoveColor(color);
                 }
@@ -124,7 +122,6 @@ namespace GridSystem
             for (int i = 0; i < coordinates.Count; i++)
             {
                 ITile currentTile = GetTileAt(coordinates[i]);
-                Color color = Color.white;
                 if (currentTile != null && IsInFilter(currentTile.pieceID, filter))
                 {
                     clickAction?.Invoke(origin, point, area);
