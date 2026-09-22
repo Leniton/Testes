@@ -15,9 +15,9 @@ namespace Tests
             IGrid.Instance.ChooseTileInRange(new(5, 3)
                 , Area.Diamond(2)
                 , Area.Square(1)
-                , (coordinate, coordinate1, area) =>
+                , (evt) =>
                 {
-                    Debug.Log($"{coordinate} | {coordinate1}");
+                    Debug.Log($"{evt.origin} | {evt.point}");
                     IGrid.Instance.StopSelecting();
                 }
                 , -1
