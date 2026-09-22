@@ -37,6 +37,7 @@ namespace GridSystem.UI
 
         public Color invalidColor => InvalidColor;
         public List<Color> colors { get; set; } = new();
+        private Color? selectedColor;
 
         //callbacks
         public Action<ITile> onClick { get; set; }
@@ -137,8 +138,29 @@ namespace GridSystem.UI
             return false;
         }
     
-        public void SetState(ITile.State newState) { }
-        public void Select(int filter) { }
-        public void Deselect() { }
+        private Color StateColor() => state switch
+        {
+            ITile.State.selectable => selectableColor,
+            ITile.State.invalid => invalidColor,
+            _ => defaultColor,
+        };
+        public void SetState(ITile.State newState)
+        {
+            RemoveColor(StateColor());
+            state = newState;
+            AddColor(StateColor());
+        }
+        
+        public void Select(int filter)
+        {
+            ITile tile = this;
+            selectedColor = IGrid.IsInFilter(tile.pieceID, filter) ? validColor : invalidColor;
+            AddColor(selectedColor.Value);
+        }
+        public void Deselect()
+        {
+            if (!selectedColor.HasValue) return;
+            RemoveColor(selectedColor.Value);
+        }
     }
 }
