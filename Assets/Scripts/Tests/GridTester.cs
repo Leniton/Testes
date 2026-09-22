@@ -57,10 +57,6 @@ namespace Tests
             get;
             set;
         }
-        public void StylePiece(Sprite sprite, Color color)
-        {
-            throw new NotImplementedException();
-        }
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates) { }
     }
 }

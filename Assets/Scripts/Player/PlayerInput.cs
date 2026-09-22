@@ -75,7 +75,6 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.ResetMovement();
     }
     
-    public void StylePiece(Sprite sprite, Color color) { }
     public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
     {
         // Debug.Log($"{previousTile == null} | {newTile == null} | {newCoordinates}");
@@ -206,8 +205,6 @@ public class PlayerInput : MonoBehaviour, IPiece
             target.transform.localPosition = newCoordinates;
             onTileChanged?.Invoke(newTile);
         }
-        
-        public void StylePiece(Sprite sprite, Color color) { }
     }
     
     public class BlankSign : ISign

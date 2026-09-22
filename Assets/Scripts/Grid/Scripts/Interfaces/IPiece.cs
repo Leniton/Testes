@@ -27,8 +27,6 @@ namespace GridSystem
             id = newId;
         }
 
-        public void StylePiece(Sprite sprite, Color color);
-
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates);
 
         public bool AddCharacteristic<T>(T characteristic) where T : ITrait
