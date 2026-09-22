@@ -66,9 +66,9 @@ namespace GridSystem
                 ITile tile = GetTileAt(currentCoordinate);
                 if (tile != null)
                 {
-                    tile.onEnter += (value) => SelectArea(currentCoordinate, selectArea, selectFilter);
-                    tile.onExit += (value) => UnSelectArea(currentCoordinate, selectArea, selectFilter);
-                    tile.onClick += (value) => ClickArea(onSelectTile, origin, currentCoordinate, selectArea, selectFilter);
+                    tile.onSelectionEnter += (value) => SelectArea(currentCoordinate, selectArea, selectFilter);
+                    tile.onSelectionExit += (value) => UnSelectArea(currentCoordinate, selectArea, selectFilter);
+                    tile.onPickTile += (value) => ClickArea(onSelectTile, origin, currentCoordinate, selectArea, selectFilter);
                     tile.SetState(IsInFilter(tile.pieceID, filter) ? ITile.State.selectable : ITile.State.invalid);
                     // if (IsInFilter(tile.pieceID, filter))
                     // {
@@ -150,9 +150,9 @@ namespace GridSystem
             {
                 tiles[i].SetState(ITile.State.generic);
                 tiles[i].Deselect();
-                tiles[i].onClick = OnClick;
-                tiles[i].onEnter = OnEnter;
-                tiles[i].onExit = OnExit;
+                tiles[i].onPickTile = OnClick;
+                tiles[i].onSelectionEnter = OnEnter;
+                tiles[i].onSelectionExit = OnExit;
             }
 
             currentlySelecting = false;

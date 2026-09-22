@@ -40,9 +40,11 @@ namespace GridSystem.UI
         private Color? selectedColor;
 
         //callbacks
-        public Action<ITile> onClick { get; set; }
-        public Action<ITile> onEnter { get; set; }
-        public Action<ITile> onExit { get; set; }
+        public Action<ITile> onPickTile { get; set; }
+        public Action<ITile> onSelectionEnter { get; set; }
+        public Action<ITile> onSelectionExit { get; set; }
+        public Action<IPiece> onPiecePlaced { get; set; }
+        public Action<IPiece> onPieceRemoved { get; set; }
 
         private GraphicRaycaster raycaster;
         private bool left = true;
@@ -62,7 +64,7 @@ namespace GridSystem.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             for (int i = 0; i < pieces.Count; i++) pieces[i].onClick?.Invoke();
-            onClick?.Invoke(this);
+            onPickTile?.Invoke(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -71,7 +73,7 @@ namespace GridSystem.UI
             left = false;
 
             for (int i = 0; i < pieces.Count; i++) pieces[i].onEnter?.Invoke();
-            onEnter?.Invoke(this);
+            onSelectionEnter?.Invoke(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -80,7 +82,7 @@ namespace GridSystem.UI
             left = true;
 
             for (int i = 0; i < pieces.Count; i++) pieces[i].onExit?.Invoke();
-            onExit?.Invoke(this);
+            onSelectionExit?.Invoke(this);
         }
 
         public void SetColor(Color color)

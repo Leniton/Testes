@@ -92,9 +92,11 @@ public class DebugTile : ITile
     public Color invalidColor { get; }
     public ITile.State state { get; set; }
     public List<Color> colors { get; set; } = new();
-    public Action<ITile> onClick { get; set; }
-    public Action<ITile> onEnter { get; set; }
-    public Action<ITile> onExit { get; set; }
+    public Action<ITile> onPickTile { get; set; }
+    public Action<ITile> onSelectionEnter { get; set; }
+    public Action<ITile> onSelectionExit { get; set; }
+    public Action<IPiece> onPiecePlaced { get; set; }
+    public Action<IPiece> onPieceRemoved { get; set; }
     private float size;
     public Vector2 origin;
 

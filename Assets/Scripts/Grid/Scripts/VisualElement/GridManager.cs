@@ -77,9 +77,9 @@ namespace GridSystem.VisualElements
                 grid.Add(cell);
 
                 tiles.Add(cell);
-                tiles[i].onClick = _grid.OnClick;
-                tiles[i].onEnter = _grid.OnEnter;
-                tiles[i].onExit = _grid.OnExit;
+                tiles[i].onPickTile = _grid.OnClick;
+                tiles[i].onSelectionEnter = _grid.OnEnter;
+                tiles[i].onSelectionExit = _grid.OnExit;
             }
 
             document.rootVisualElement.Add(grid);

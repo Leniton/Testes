@@ -31,17 +31,24 @@ namespace GridSystem
         public State state { get; }
 
         //callbacks
-        public Action<ITile> onClick { get; set; }
-        public Action<ITile> onEnter { get; set; }
-        public Action<ITile> onExit { get; set; }
+        public Action<ITile> onPickTile { get; set; }
+        public Action<ITile> onSelectionEnter { get; set; }
+        public Action<ITile> onSelectionExit { get; set; }
+        public Action<IPiece> onPiecePlaced { get; set; }
+        public Action<IPiece> onPieceRemoved { get; set; }
 
         public void PlacePiece(IPiece piece)
         {
-            if (!pieces.Contains(piece))
-                pieces.Add(piece);
+            if (pieces.Contains(piece)) return;
+            pieces.Add(piece);
+            onPiecePlaced?.Invoke(piece);
         }
 
-        public void RemovePiece(IPiece piece) => pieces.Remove(piece);
+        public void RemovePiece(IPiece piece)
+        {
+            pieces.Remove(piece);
+            onPieceRemoved?.Invoke(piece);
+        }
 
         public IPiece GetFirstPiece() => pieces[0];
 

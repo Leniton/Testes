@@ -20,9 +20,11 @@ namespace GridSystem.VisualElements
         public List<Color> colors { get; set; } = new();
 
         public ITile.State state { get; set; }
-        public Action<ITile> onClick { get; set; }
-        public Action<ITile> onEnter { get; set; }
-        public Action<ITile> onExit { get; set; }
+        public Action<ITile> onPickTile { get; set; }
+        public Action<ITile> onSelectionEnter { get; set; }
+        public Action<ITile> onSelectionExit { get; set; }
+        public Action<IPiece> onPiecePlaced { get; set; }
+        public Action<IPiece> onPieceRemoved { get; set; }
         
         private Color? selectedColor;
 
@@ -45,7 +47,7 @@ namespace GridSystem.VisualElements
         private void OnPointerClick()
         {
             for (int i = 0; i < pieces.Count; i++) pieces[i].onClick?.Invoke();
-            onClick?.Invoke(this);
+            onPickTile?.Invoke(this);
         }
 
         private void OnPointerEnter(PointerEnterEvent eventData)
@@ -54,7 +56,7 @@ namespace GridSystem.VisualElements
             left = false;
 
             for (int i = 0; i < pieces.Count; i++) pieces[i].onEnter?.Invoke();
-            onEnter?.Invoke(this);
+            onSelectionEnter?.Invoke(this);
         }
 
         private void OnPointerExit(PointerLeaveEvent eventData)
@@ -63,7 +65,7 @@ namespace GridSystem.VisualElements
             left = true;
 
             for (int i = 0; i < pieces.Count; i++) pieces[i].onExit?.Invoke();
-            onExit?.Invoke(this);
+            onSelectionExit?.Invoke(this);
         }
 
         public void SetColor(Color color)

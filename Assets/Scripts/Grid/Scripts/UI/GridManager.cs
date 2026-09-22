@@ -63,9 +63,9 @@ namespace GridSystem.UI
                 Tile tile = Instantiate(gridTile, transform);
                 tile.name = $"Tile [{i % width},{i / width}]";
                 tiles.Add(tile);
-                tiles[i].onClick = _grid.OnClick;
-                tiles[i].onEnter = _grid.OnEnter;
-                tiles[i].onExit = _grid.OnExit;
+                tiles[i].onPickTile = _grid.OnClick;
+                tiles[i].onSelectionEnter = _grid.OnEnter;
+                tiles[i].onSelectionExit = _grid.OnExit;
             }
         }
     }
