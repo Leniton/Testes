@@ -8,10 +8,16 @@ namespace GameData
     {
         public IPiece Piece { get; private set; }
 
+        public int pushLimit { get; private set; }
+        
+        public MovableTrait(int _pushLimit = -1) => pushLimit = _pushLimit;
+
         public void SetUp(IPiece _piece) => Piece = _piece;
 
-        public bool TryMove(Vector2 direction)
+        public bool TryMove(Vector2 direction, int? maxPush = null)
         {
+            int limit = maxPush ?? pushLimit;
+            bool push = limit != 0;
             var finalCoordinate = Piece.coordinate;
             Coordinate step = new Coordinate(Math.Clamp((int)direction.x, -1, 1), Math.Clamp((int)direction.y, -1, 1));//update each step to afford uneven steps?
             Coordinate next = Piece.coordinate + step;
@@ -35,7 +41,7 @@ namespace GameData
                 // Debug.Log($"checking {next}/{goal}");
                 bool valid = tile != null;
                 if (valid) valid = (tile.pieceID & 1) != 0;
-                if (!valid) valid = TryPush(tile, direction);
+                if (!valid && push) valid = TryPush(tile, direction, limit);
                 return valid;
             }
 
@@ -50,7 +56,7 @@ namespace GameData
             IPiece.PlacePieceOnTile(Piece, target, coordinate, currentTile);
         }
 
-        private bool TryPush(ITile tile, Vector2 direction)
+        private bool TryPush(ITile tile, Vector2 direction, int maxPush)
         {
             if (tile == null) return false;
             var pieces = tile.pieces;
@@ -59,7 +65,7 @@ namespace GameData
             while (id < pieces.Count)
             {
                 var movable = pieces[id]?.GetTrait<MovableTrait>();
-                if (movable == null || !movable.TryMove(direction)) id++;
+                if (movable == null || !movable.TryMove(direction, maxPush - 1)) id++;
             }
             return tile.pieces is { Count: <= 0 };
         }
