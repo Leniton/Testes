@@ -52,7 +52,7 @@ namespace Tests
             get;
             set;
         }
-        public List<ITrait> characteristics
+        public List<ITrait> traits
         {
             get;
             set;

@@ -53,13 +53,13 @@ public class GridManager : MonoBehaviour, IGrid
             else if (material.state == MaterialTrait.State.Dust)
                 material.ChangeState(MaterialTrait.State.Gas, MaterialTrait.ExposureType.Heat);
         });
-        b.AddCharacteristic(material);
+        b.AddTrait(material);
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         
         b = new PlayerInput.ObjectPiece(new("barricade"));
         b.Initialize();
-        b.AddCharacteristic(new MovableTrait());
+        b.AddTrait(new MovableTrait());
         c = new Coordinate(0, -1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         

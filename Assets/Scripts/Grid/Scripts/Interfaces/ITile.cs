@@ -59,7 +59,7 @@ namespace GridSystem
             for (int i = 0; i < pieces.Count; i++)
             {
                 IPiece piece = pieces[i];
-                T c = piece.GetCharacteristic<T>();
+                T c = piece.GetTrait<T>();
                 if (c != null) return c;
             }
 
@@ -71,7 +71,7 @@ namespace GridSystem
             for (int i = pieces.Count - 1; i >= 0; i--)
             {
                 IPiece piece = pieces[i];
-                T c = piece.GetCharacteristic<T>();
+                T c = piece.GetTrait<T>();
                 if (c != null) return c;
             }
 
@@ -84,7 +84,7 @@ namespace GridSystem
             for (int i = 0; i < pieces.Count; i++)
             {
                 IPiece piece = pieces[i];
-                T c = piece.GetCharacteristic<T>();
+                T c = piece.GetTrait<T>();
                 if (c != null) returnValue.Add(c);
             }
 

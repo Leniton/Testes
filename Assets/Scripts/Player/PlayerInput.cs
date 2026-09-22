@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour, IPiece
     public int id { get; set; }
     public Coordinate coordinate { get; set; }
     public Action onClick { get; set; }
-    public List<ITrait> characteristics { get; set; }
+    public List<ITrait> traits { get; set; }
     
     private ISequence castSequence;
 
@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement ??= GetComponent<Movement>();
         movement.piece = this;
         movement.piece.Initialize();
-        movement.piece.AddCharacteristic(new MovableTrait());
+        movement.piece.AddTrait(new MovableTrait());
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
@@ -143,7 +143,7 @@ public class PlayerInput : MonoBehaviour, IPiece
             if (spell.target == null) return;
             var direction = IDirectionalSign.GetRelativeDirection(this, spell);
             var current = IGrid.Instance.GetTileAt(spell.target.coordinate);
-            var movable = spell.target.GetCharacteristic<MovableTrait>();
+            var movable = spell.target.GetTrait<MovableTrait>();
             if (movable != null)
             {
                 movable.TryMove(direction);
@@ -182,7 +182,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<ITrait> characteristics { get; set; } = new();
+        public List<ITrait> traits { get; set; } = new();
 
         public event Action<ITile> onTileChanged;
         

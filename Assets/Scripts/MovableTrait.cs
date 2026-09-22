@@ -58,7 +58,7 @@ namespace GameData
             int id = 0;
             while (id < pieces.Count)
             {
-                var movable = pieces[id]?.GetCharacteristic<MovableTrait>();
+                var movable = pieces[id]?.GetTrait<MovableTrait>();
                 if (movable == null || !movable.TryMove(direction)) id++;
             }
             return tile.pieces is { Count: <= 0 };

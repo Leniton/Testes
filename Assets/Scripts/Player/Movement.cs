@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
     {
         if (input == Vector2.zero) return;
         var current = IGrid.Instance.GetTileAt((Vector2)transform.position);
-        var movable = piece.GetCharacteristic<MovableTrait>();
+        var movable = piece.GetTrait<MovableTrait>();
         if (movable != null)
         {
             movable.TryMove(input);

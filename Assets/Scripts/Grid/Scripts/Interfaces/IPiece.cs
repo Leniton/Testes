@@ -11,7 +11,7 @@ namespace GridSystem
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
-        public List<ITrait> characteristics { get; set; }
+        public List<ITrait> traits { get; set; }
 
         public void Initialize()
         {
@@ -21,43 +21,43 @@ namespace GridSystem
         public void RefreshId()
         {
             var newId = (int)PieceType.generic;
-            characteristics ??= new();
-            for (int i = 0; i < characteristics.Count; i++)
-                characteristics[i].ModifyID(ref newId);
+            traits ??= new();
+            for (int i = 0; i < traits.Count; i++)
+                traits[i].ModifyID(ref newId);
             id = newId;
         }
 
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates);
 
-        public bool AddCharacteristic<T>(T characteristic) where T : ITrait
+        public bool AddTrait<T>(T trait) where T : ITrait
         {
-            characteristics ??= new();
-            for (int i = 0; i < characteristics.Count; i++)
+            traits ??= new();
+            for (int i = 0; i < traits.Count; i++)
             {
-                if (characteristics[i].GetType().IsAssignableFrom(typeof(T)) ||
-                    characteristics[i].GetType().IsSubclassOf(typeof(T)))
+                if (traits[i].GetType().IsAssignableFrom(typeof(T)) ||
+                    traits[i].GetType().IsSubclassOf(typeof(T)))
                 {
-                    Debug.LogWarning($"Characteristic {characteristics[i].GetType().Name} already exists!");
+                    Debug.LogWarning($"Trait {traits[i].GetType().Name} already exists!");
                     return false;
                 }
             }
 
-            //Debug.Log($"adding {characteristic.GetType().Name}");
-            characteristics.Add(characteristic);
-            characteristic.SetUp(this);
+            //Debug.Log($"adding {trait.GetType().Name}");
+            traits.Add(trait);
+            trait.SetUp(this);
             RefreshId();
             return true;
         }
 
-        public T GetCharacteristic<T>() where T : ITrait
+        public T GetTrait<T>() where T : ITrait
         {
             T returnValue = default(T);
-            characteristics ??= new();
-            for (int i = 0; i < characteristics.Count; i++)
+            traits ??= new();
+            for (int i = 0; i < traits.Count; i++)
             {
                 try
                 {
-                    returnValue = (T)characteristics[i];
+                    returnValue = (T)traits[i];
                     break;
                 }
                 catch
@@ -69,15 +69,15 @@ namespace GridSystem
             return returnValue;
         }
 
-        public string CharacteristicsInfo()
+        public string TraitsInfo()
         {
-            characteristics ??= new();
+            traits ??= new();
             StringBuilder value = new();
 
-            for (int i = 0; i < characteristics.Count; i++)
+            for (int i = 0; i < traits.Count; i++)
             {
-                value.Append(characteristics[i]);
-                if (i < characteristics.Count - 1) value.Append('\n');
+                value.Append(traits[i]);
+                if (i < traits.Count - 1) value.Append('\n');
             }
 
             return value.ToString();
@@ -87,7 +87,7 @@ namespace GridSystem
         {
             string value = Name;
             value += $"({coordinate.x},{coordinate.y})";
-            value += CharacteristicsInfo();
+            value += TraitsInfo();
 
             return value;
         }

@@ -28,7 +28,7 @@ namespace GridSystem.UI
         public Action onEnter { get; set; }
         public Action onExit { get; set; }
         public Action onClick { get; set; }
-        public List<ITrait> characteristics { get; set; } = new();
+        public List<ITrait> traits { get; set; } = new();
 
         public void StylePiece(Sprite sprite, Color color)
         {
