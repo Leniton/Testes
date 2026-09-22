@@ -16,6 +16,8 @@ public class GridManager : MonoBehaviour, IGrid
     public List<ITile> tiles { get; set; } = new();
     public ITile hoveredTile { get; set; } = null;
     public bool currentlySelecting { get; set; }
+    public SelectData selectData { get; set; }
+    
     public Action<ITile> onClick { get; set; }
     public Action<ITile> onEnter { get; set; }
     public Action<ITile> onExit { get; set; }
@@ -93,7 +95,6 @@ public class DebugTile : ITile
     public Action<ITile> onClick { get; set; }
     public Action<ITile> onEnter { get; set; }
     public Action<ITile> onExit { get; set; }
-
     private float size;
     public Vector2 origin;
 
@@ -125,4 +126,8 @@ public class DebugTile : ITile
     {
         defaultColor = color;
     }
+    
+    public void SetState(ITile.State newState) { }
+    public void Select(int filter) { }
+    public void Deselect() { }
 }

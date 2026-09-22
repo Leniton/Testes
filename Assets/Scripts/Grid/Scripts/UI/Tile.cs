@@ -82,6 +82,48 @@ namespace GridSystem.UI
             onExit?.Invoke(this);
         }
 
+        public void SetColor(Color color)
+        {
+            colors.Clear();
+            AddColor(color);
+        }
+
+        public void AddColor(Color color)
+        {
+            Color invertedColor = ColorExtension.InvertColor(color);
+            invertedColor.a = 0;
+
+            colors.Add(invertedColor);
+            UpdateColor();
+        }
+
+        public void UpdateColor()
+        {
+            Color newColor = Color.white;
+            for (int i = 0; i < colors.Count; i++)
+            {
+                newColor -= colors[i] * (.25f + (1f / (colors.Count + 1f)));
+            }
+
+            ApplyColor(newColor);
+        }
+
+        public void RemoveColor(Color color)
+        {
+            Color invertedColor = ColorExtension.InvertColor(color);
+            invertedColor.a = 0;
+
+            for (int i = 0; i < colors.Count; i++)
+            {
+                if (colors[i] == invertedColor)
+                {
+                    colors.RemoveAt(i);
+                    UpdateColor();
+                    break;
+                }
+            }
+        }
+
         private bool Contains(Vector2 mousePosition)
         {
             PointerEventData eventData = new(EventSystem.current) { position = mousePosition };
@@ -94,5 +136,9 @@ namespace GridSystem.UI
 
             return false;
         }
+    
+        public void SetState(ITile.State newState) { }
+        public void Select(int filter) { }
+        public void Deselect() { }
     }
 }

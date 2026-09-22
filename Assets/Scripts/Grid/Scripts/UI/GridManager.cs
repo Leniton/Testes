@@ -26,6 +26,7 @@ namespace GridSystem.UI
         public List<ITile> tiles { get; set; } = new();
         public ITile hoveredTile { get; set; }
         public bool currentlySelecting { get; set; }
+        public SelectData selectData { get; set; }
 
         public Action<ITile> onClick { get; set; }
         public Action<ITile> onEnter { get; set; }
