@@ -47,7 +47,7 @@ namespace GameData
             var currentTile = IGrid.Instance.GetTileAt(Piece.coordinate);
             var target = IGrid.Instance.GetTileAt(coordinate);
             if (target == null) return;
-            Piece.SetCurrentTile(currentTile, target, coordinate);
+            IPiece.PlacePieceOnTile(Piece, target, coordinate, currentTile);
         }
 
         private bool TryPush(ITile tile, Vector2 direction)

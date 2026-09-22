@@ -11,7 +11,7 @@ namespace Tests
         private void Awake()
         {
             Coordinate point = new(5, 3);
-            new BlankPiece().SetCurrentTile(null, IGrid.Instance.GetTileAt(point), point);
+            IPiece.PlacePieceOnTile(new BlankPiece(), IGrid.Instance.GetTileAt(point), point);
             IGrid.Instance.ChooseTileInRange(new(5, 3)
                 , Area.Diamond(2)
                 , Area.Square(1)
@@ -61,11 +61,6 @@ namespace Tests
         {
             throw new NotImplementedException();
         }
-        public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
-        {
-            coordinate = newCoordinates;
-            previousTile?.PlacePiece(this);
-            newTile?.PlacePiece(this);
-        }
+        public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates) { }
     }
 }

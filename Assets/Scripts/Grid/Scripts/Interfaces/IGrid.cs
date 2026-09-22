@@ -41,7 +41,7 @@ namespace GridSystem
                 : tiles[(Width * coordinates.y) + coordinates.x];
 
         public void WarpToSpot(IPiece piece, Coordinate coordinates) =>
-            piece.SetCurrentTile(GetTileAt(piece.coordinate), GetTileAt(coordinates), coordinates);
+            IPiece.PlacePieceOnTile(piece, GetTileAt(coordinates), coordinates, GetTileAt(piece.coordinate));
 
         public void ChooseTileInRange(Coordinate origin, Area area, Area selectArea,
             Action<Coordinate, Coordinate, Area> onSelectTile,

@@ -93,5 +93,14 @@ namespace GridSystem
 
             return value;
         }
+
+        public static void PlacePieceOnTile(IPiece piece, ITile tile, Coordinate coordinates, ITile currentTile = null)
+        {
+            if (piece == null) return;
+            piece.coordinate = coordinates;
+            currentTile?.RemovePiece(piece);
+            tile?.PlacePiece(piece);
+            piece.SetCurrentTile(currentTile, tile, coordinates);
+        }
     }
 }

@@ -153,7 +153,7 @@ public class PlayerInput : MonoBehaviour, IPiece
             var position = spell.target.coordinate + direction;
             var target = IGrid.Instance.GetTileAt(position);
             if (target == null) return;
-            spell.target?.SetCurrentTile(current, target, position);
+            IPiece.PlacePieceOnTile(spell.target, target, position, current);
         }
     }
     

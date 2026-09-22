@@ -48,7 +48,7 @@ public class Movement : MonoBehaviour
         if (target == null) return;
         var targetId = target.pieceID;
         if ((targetId & 1) == 0) return;//not empty
-        piece.SetCurrentTile(current, target, coordinate);
+        IPiece.PlacePieceOnTile(piece, target, coordinate, current);
     }
 
     private IEnumerator Step()
