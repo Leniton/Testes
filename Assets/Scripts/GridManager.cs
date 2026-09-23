@@ -42,8 +42,8 @@ public class GridManager : MonoBehaviour, IGrid
         }
         
         //Debug barricades
-        
-        IPiece b = new PlayerInput.ObjectPiece(new("barricade"));
+        var prefab = Resources.Load("box") as GameObject;
+        IPiece b = new PlayerInput.ObjectPiece(Instantiate(prefab));
         b.Initialize();
         var material = new MaterialTrait();
         material.RegisterCallback(MaterialTrait.ExposureType.Heat, () =>
@@ -56,14 +56,14 @@ public class GridManager : MonoBehaviour, IGrid
         b.AddTrait(material);
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
-        
-        b = new PlayerInput.ObjectPiece(new("barricade"));
+
+        b = new PlayerInput.ObjectPiece(Instantiate(prefab));
         b.Initialize();
         b.AddTrait(new MovableTrait());
         c = new Coordinate(0, -1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         
-        b = new PlayerInput.ObjectPiece(new("barricade"));
+        b = new PlayerInput.ObjectPiece(Instantiate(prefab));
         b.Initialize();
         c = new Coordinate(1, 0);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
