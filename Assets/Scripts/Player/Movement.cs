@@ -13,26 +13,6 @@ public class Movement : MonoBehaviour
 
     public IPiece piece;
 
-    private void Awake()
-    {
-        StartCoroutine(Move());
-    }
-
-    private IEnumerator Move()
-    {
-        while (true)
-        {
-            move = false;
-            MovePiece();
-            if (reset)
-            {
-                input = Vector2.zero;
-                reset = false;
-            }
-            yield return Step();
-        }
-    }
-
     private void MovePiece()
     {
         if (input == Vector2.zero) return;
@@ -51,23 +31,10 @@ public class Movement : MonoBehaviour
         IPiece.PlacePieceOnTile(piece, target, coordinate, current);
     }
 
-    private IEnumerator Step()
-    {
-        if (input == Vector2.zero) yield break;
-        float time = .3f;
-        float step = time;
-        while (step > 0)
-        {
-            if (step < time / 2f && move) yield break;
-            yield return null;
-            step -= Time.deltaTime;
-        }
-    }
-
     public void MoveNow(Vector2 direction)
     {
         input = direction;
-        move = true;
+        MovePiece();
     }
 
     public void ResetMovement()
