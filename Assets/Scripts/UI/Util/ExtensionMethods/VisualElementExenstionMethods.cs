@@ -47,27 +47,34 @@ namespace UI.Utils
             return element;
         }
 
-        public static T Position<T>(this T element, Vector2 position) where T : VisualElement
+        public static T Position<T>(this T element, Vector2 position, LengthUnit unit = LengthUnit.Percent) where T : VisualElement
         {
-            element.transform.position = position;
+            // element.transform.position = position;
+            element.style.translate = new StyleTranslate(new Translate(
+                new Length(position.x, unit), 
+                new Length(position.y, unit)));
             return element;
         }
         
-        public static T Position<T>(this T element, int x, int? y = null) where T : VisualElement
+        public static T Position<T>(this T element, int x, int? y = null, LengthUnit unit = LengthUnit.Percent) where T : VisualElement
         {
-            element.transform.position = new(x, y ?? x);
+            element.style.translate = new StyleTranslate(new Translate(
+                new Length(x, unit), 
+                new Length(y ?? x, unit)));
             return element;
         }
 
-        public static T Rotation<T>(this T element, float angle) where T : VisualElement
+        public static T Rotation<T>(this T element, float angle, AngleUnit unit = AngleUnit.Degree) where T : VisualElement
         {
-            element.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // element.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            element.style.rotate = new StyleRotate(new Rotate(new Angle(angle, unit)));
             return element;
         }
 
         public static T Scale<T>(this T element, Vector3 scale) where T : VisualElement
         {
-            element.transform.scale = scale;
+            // element.transform.scale = scale;
+            element.style.scale = new StyleScale(new Scale(scale));
             return element;
         }
 
@@ -107,46 +114,41 @@ namespace UI.Utils
             return element;
         }
 
-        public static T LayoutOffset<T>(this T element, float x, float? y = null, LengthUnit unit = LengthUnit.Pixel) where T : VisualElement
+        public static T LayoutOffset<T>(this T element, float x, float? y = null, LengthUnit unit = LengthUnit.Pixel, FlexDirection? flexDirection = null) where T : VisualElement
         {
+            var auto = new StyleLength(StyleKeyword.Auto);
+            element.style.top = auto;
+            element.style.bottom = auto;
+            element.style.left = auto;
+            element.style.right = auto;
+            
             var xValue = new Length(x, unit);
             var yValue = new Length(y ?? x, unit);
-                element.style.top = yValue;
-                element.style.left = xValue;
-            if (element.parent == null)
+            var direction = flexDirection ?? element.parent?.style.flexDirection.value ?? UnityEngine.UIElements.FlexDirection.Column;
+            var align = element.style.alignSelf.value;
+            if (direction is UnityEngine.UIElements.FlexDirection.Row or UnityEngine.UIElements.FlexDirection.RowReverse)
             {
-                element.style.top = yValue;
-                element.style.left = xValue;
+                if (direction == UnityEngine.UIElements.FlexDirection.Row)
+                    element.style.left = xValue;
+                else
+                    element.style.right = xValue;
+
+                if (align != UnityEngine.UIElements.Align.FlexEnd)
+                    element.style.top = yValue;
+                else
+                    element.style.bottom = yValue;
             }
             else
             {
-                var direction = element.parent.style.flexDirection.value;
-                var align = element.style.alignSelf.value;
-                if (direction == UnityEngine.UIElements.FlexDirection.Row || 
-                    direction == UnityEngine.UIElements.FlexDirection.RowReverse)
-                {
-                    if (direction == UnityEngine.UIElements.FlexDirection.Row)
-                        element.style.left = xValue;
-                    else
-                        element.style.right = xValue;
-                    
-                    if (align != UnityEngine.UIElements.Align.FlexEnd)
-                        element.style.top = yValue;
-                    else
-                        element.style.bottom = yValue;
-                }
+                if (direction == UnityEngine.UIElements.FlexDirection.Column)
+                    element.style.top = yValue;
                 else
-                {
-                    if (direction == UnityEngine.UIElements.FlexDirection.Column)
-                        element.style.top = yValue;
-                    else
-                        element.style.bottom = yValue;
-                    
-                    if (align != UnityEngine.UIElements.Align.FlexEnd)
-                        element.style.left = xValue;
-                    else
-                        element.style.right = xValue;
-                }
+                    element.style.bottom = yValue;
+
+                if (align != UnityEngine.UIElements.Align.FlexEnd)
+                    element.style.left = xValue;
+                else
+                    element.style.right = xValue;
             }
             return element;
         }
