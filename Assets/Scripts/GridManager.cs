@@ -45,15 +45,6 @@ public class GridManager : MonoBehaviour, IGrid
         var prefab = Resources.Load("box") as GameObject;
         IPiece b = new PlayerInput.ObjectPiece(Instantiate(prefab));
         b.Initialize();
-        var material = new MaterialTrait();
-        material.RegisterCallback(MaterialTrait.ExposureType.Heat, () =>
-        {
-            if (material.state == MaterialTrait.State.Solid)
-                material.ChangeState(MaterialTrait.State.Dust, MaterialTrait.ExposureType.Heat);
-            else if (material.state == MaterialTrait.State.Dust)
-                material.ChangeState(MaterialTrait.State.Gas, MaterialTrait.ExposureType.Heat);
-        });
-        b.AddTrait(material);
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
 
