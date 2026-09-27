@@ -54,7 +54,7 @@ public class GridManager : MonoBehaviour, IGrid
         c = new Coordinate(0, -1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         
-        b = new PlayerInput.ObjectPiece(Instantiate(prefab));
+        b = Instantiate(Resources.Load<DamageZonePiece>("dmg_zone"));
         b.Initialize();
         c = new Coordinate(1, 0);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);

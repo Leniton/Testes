@@ -31,6 +31,9 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece = this;
         movement.piece.Initialize();
         movement.piece.AddTrait(new MovableTrait());
+        var health = new HealthTrait(5);
+        health.onDamaged += () => Debug.Log($"{health.Health}/{health.MaxHealth}");
+        movement.piece.AddTrait(health);
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
@@ -60,10 +63,6 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
     {
-        // Debug.Log($"{previousTile == null} | {newTile == null} | {newCoordinates}");
-        previousTile?.RemovePiece(this);
-        newTile?.PlacePiece(this);
-        coordinate = newCoordinates;
         transform.localPosition = newCoordinates;
     }
     
