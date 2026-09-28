@@ -20,6 +20,9 @@ namespace GameData
         public List<ITrait> traits { get; set; }
         public Action<ITile, ITile> onTileChanged { get; set; }
 
+        public float delay = 1;
+        public int damage = 1;
+
         private void Awake()
         {
             var piece = this as IPiece;
@@ -38,7 +41,7 @@ namespace GameData
 
         private IEnumerator DamageDelay()
         {
-            yield return CoroutineExtensions.DelayCoroutine(1);
+            yield return CoroutineExtensions.DelayCoroutine(delay);
             DamagePieces();
             if (pool != null) pool.Release(this);
         }
@@ -47,7 +50,7 @@ namespace GameData
         {
             var pieces = IGrid.Instance.GetTileAt(coordinate)?.GetPiecesWith<HealthTrait>();
             if (pieces == null) return;
-            IValue<int> dmg = new Value<int>(1);
+            IValue<int> dmg = new Value<int>(damage);
             for (int i = 0; i < pieces.Count; i++)
                 pieces[i].Damage(dmg);
         }
@@ -77,13 +80,15 @@ namespace GameData
                 });
         }
         
-        public static void CreateDamageZone(Coordinate point, Area area)
+        public static void CreateDamageZone(Coordinate point, Area area, int damage = 1, float delay = 1)
         {
             if (pool == null) CreatePool();
             var coordinates = area.GetCoordinates(point);
             for (int i = 0; i < coordinates.Count; i++)
             {
                 var piece = pool.Get();
+                piece.damage = damage;
+                piece.delay = delay;
                 var coordinate = coordinates[i];
                 IPiece.PlacePieceOnTile(piece, IGrid.Instance.GetTileAt(coordinate), coordinate);
             }
