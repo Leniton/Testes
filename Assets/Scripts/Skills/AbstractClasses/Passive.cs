@@ -4,6 +4,7 @@ namespace GameData.Skills
 {
     public abstract class Passive
     {
-        public abstract void Setup(IPiece target);
+        public IPiece user { get; protected set; }
+        public virtual void Setup(IPiece source) => user = source;
     }
 }
