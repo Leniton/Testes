@@ -50,22 +50,20 @@ namespace GridSystem
             return true;
         }
 
+        public bool RemoveTrait<T>(T trait) where T : ITrait
+        {
+            bool removed = traits.Remove(trait);
+            if (removed) RefreshId();
+            return  removed;
+        }
+
         public T GetTrait<T>() where T : ITrait
         {
             T returnValue = default(T);
             traits ??= new();
             for (int i = 0; i < traits.Count; i++)
-            {
-                try
-                {
-                    returnValue = (T)traits[i];
-                    break;
-                }
-                catch
-                {
-                    // ignored
-                }
-            }
+                if (traits[i] is T trait) 
+                    return trait;
 
             return returnValue;
         }
