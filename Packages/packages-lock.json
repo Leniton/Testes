@@ -19,7 +19,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6e61939abfe2ff9320fa75492a791d5dd22f2e2c"
+      "hash": "355349f08a6a57ca2c9dd3ed5de3602dee40e0c3"
     },
     "com.lenix.serialized-method": {
       "version": "https://github.com/LenixSO/SerializedMethod.git#upm",
@@ -83,12 +83,10 @@
       "dependencies": {}
     },
     "com.unity.ide.rider": {
-      "version": "3.0.40",
+      "version": "3.1.0",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.unity.ext.nunit": "1.0.6"
-      },
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
