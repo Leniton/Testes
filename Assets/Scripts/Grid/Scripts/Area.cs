@@ -374,8 +374,9 @@ namespace GridSystem
             }
         }
 
-        public List<Coordinate> GetCoordinates(Coordinate origin)
+        public List<Coordinate> GetCoordinates(Coordinate origin, IGrid grid = null)
         {
+            grid ??= IGrid.Instance;
             var coordinates = new List<Coordinate>(areaCoordinates.Count);
 
             for (int i = 0; i < areaCoordinates.Count; i++)
@@ -383,36 +384,11 @@ namespace GridSystem
                 Coordinate coordinate;
                 coordinate.x = origin.x + areaCoordinates[i].x;
                 coordinate.y = origin.y + areaCoordinates[i].y;
-                var tile = IGrid.Instance.GetTileAt(coordinate);
+                var tile = grid.GetTileAt(coordinate);
                 if (tile != null) coordinates.Add(coordinate);
             }
 
             return coordinates;
-        }
-        
-        public List<Coordinate> GetCoordinates(Coordinate origin, int width, int height)
-        {
-            var coordinates = new List<Coordinate>();
-            Coordinate coordinate;
-
-            int gridSize = width * height;
-
-            for (int i = 0; i < areaCoordinates.Count; i++)
-            {
-                coordinate.x = origin.x + areaCoordinates[i].x;
-                coordinate.y = origin.y + areaCoordinates[i].y;
-                if (coordinate.x >= 0 && coordinate.y < gridSize) coordinates.Add(coordinate);
-            }
-
-            return coordinates;
-        }
-
-        public List<Coordinate> GetCoordinates(int originIndex, int width, int height)
-        {
-            Coordinate coordinate;
-            coordinate.x = originIndex % width;
-            coordinate.y = originIndex / width;
-            return GetCoordinates(coordinate, width, height);
         }
 
         public void CopyForm(List<Coordinate> coordinates)

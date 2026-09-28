@@ -56,7 +56,7 @@ namespace GridSystem
                 onSelectTile = onSelectTile,
             };
 
-            List<Coordinate> coordinates = area.GetCoordinates(origin, Width, Height);
+            List<Coordinate> coordinates = area.GetCoordinates(origin, this);
             for (int i = 0; i < coordinates.Count; i++)
             {
                 Coordinate currentCoordinate = coordinates[i];
@@ -92,7 +92,7 @@ namespace GridSystem
             Area area = selectData.selectArea;
             int filter = selectData.selectFilter;
 
-            List<Coordinate> coordinates = area.GetCoordinates(origin, Width, Height);
+            List<Coordinate> coordinates = area.GetCoordinates(origin, this);
             for (int i = 0; i < coordinates.Count; i++)
             {
                 ITile currentTile = GetTileAt(coordinates[i]);
@@ -113,7 +113,7 @@ namespace GridSystem
             Coordinate origin = GetTileCoordinates(tile);
             Area area = selectData.selectArea;
 
-            List<Coordinate> coordinates = area.GetCoordinates(origin, Width, Height);
+            List<Coordinate> coordinates = area.GetCoordinates(origin, this);
             for (int i = 0; i < coordinates.Count; i++)
             {
                 ITile currentTile = GetTileAt(coordinates[i]);
@@ -137,7 +137,7 @@ namespace GridSystem
             int filter = selectData.selectFilter;
             var clickAction = selectData.onSelectTile;
 
-            List<Coordinate> coordinates = area.GetCoordinates(point, Width, Height);
+            List<Coordinate> coordinates = area.GetCoordinates(point, this);
             for (int i = 0; i < coordinates.Count; i++)
             {
                 ITile currentTile = GetTileAt(coordinates[i]);
