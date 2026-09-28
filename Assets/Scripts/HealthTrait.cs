@@ -37,6 +37,7 @@ namespace GameData
                 .JustifyContent(Justify.Center)
                 .AlignItems(Align.Center);
             container.Add(hpBar = new VisualElement()
+                .AbsPos()
                 .BgColor(Color.white)
                 .JustifyContent(Justify.Center)
                 .AlignItems(Align.Center)
@@ -68,11 +69,12 @@ namespace GameData
             OnTileChanged(null, null);
             UpdateUI();
         }
+        
         private void OnTileChanged(ITile current, ITile newTile)
         {
             float tileSize = 108f;
             float x = Piece.coordinate.x * tileSize;
-            float y = -(Piece.coordinate.y * tileSize) + 50;
+            float y = -(Piece.coordinate.y * tileSize) - 80;
             hpBar.Position(new Vector2(x, y), LengthUnit.Pixel);
         }
 

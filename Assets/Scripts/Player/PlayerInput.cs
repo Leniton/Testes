@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameData;
+using GameData.Skills;
 using GridSystem;
 using InputSystemHelper;
 using LenixSO.Sequences;
 using LenixSO.Sequences.Coroutines;
+using UI.Utils.IValue;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Input = InputSystemHelper.Input;
@@ -26,8 +28,11 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     private ISequence castSequence;
     
+    private Skill skill;
+    
     private void Awake()
     {
+        IPiece.PlacePieceOnTile(this, IGrid.Instance.GetTileAt(transform.position), transform.position);
         movement ??= GetComponent<Movement>();
         movement.piece = this;
         movement.piece.Initialize();
@@ -44,13 +49,19 @@ public class PlayerInput : MonoBehaviour, IPiece
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
         castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2)));
-        jump.performed += _ => castSequence.Begin();
-        jump.canceled += _ => castSequence.End();
+        skill = new BasicAttackSkill(new Value<int>(10));
+        skill.Setup(this);
+        //jump.performed += _ => castSequence.Begin();
+        //jump.canceled += _ => castSequence.End();
+        
+        jump.performed += _ => skill.Begin();
+        jump.canceled += _ => skill.End();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         var direction = context.ReadValue<Vector2>();
+        if (direction != Vector2.zero) skill.direction = direction;
         if (direction == Vector2.zero || !castSequence.running)
         {
             movement.MoveNow(direction);
