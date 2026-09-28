@@ -15,11 +15,12 @@ namespace GameData
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
 
-        public event Action onDamaged;
-        public event Action onHealed;
+        public event Action<int> onDamaged;
+        public event Action<int> onHealed;
         public event Action onDeath;
 
         private VisualElement hpBar;
+        private VisualElement changingHpBar;
         private VisualElement currentHpBar;
         private Label hpText;
 
@@ -41,7 +42,12 @@ namespace GameData
                 .AlignItems(Align.Center)
                 .Padding(5)
                 .Size(100,30));
-            hpBar.Add(currentHpBar = new VisualElement()
+            hpBar.Add(changingHpBar = new VisualElement()
+                .BgColor(Color.darkGreen.Transparent(.6f))
+                .Align(Align.FlexStart)
+                .Size(100, unit: LengthUnit.Percent));
+            changingHpBar.Add(currentHpBar = new VisualElement()
+                .AbsPos()
                 .BgColor(Color.green)
                 .Align(Align.FlexStart)
                 .Size(100, unit: LengthUnit.Percent));
@@ -73,22 +79,24 @@ namespace GameData
         public void Damage(IValue<int> damage)
         {
             int health = Math.Max(Health - damage.GetValue(), 0);
+            int difference = Health - health;
             bool changed = health != Health;
             if (!changed) return;
             Health = health;
             UpdateUI();
-            onDamaged?.Invoke();
+            onDamaged?.Invoke(difference);
             if (Health <= 0) onDeath?.Invoke();
         }
 
         public void Heal(IValue<int> heal)
         {
             var health = Math.Min(Health + heal.GetValue(), MaxHealth);
+            int difference = Health - health;
             bool changed = health != Health;
             if (!changed) return;
             Health = health;
             UpdateUI();
-            onHealed?.Invoke();
+            onHealed?.Invoke(difference);
         }
 
         private void UpdateUI()
