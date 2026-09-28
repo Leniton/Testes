@@ -51,7 +51,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2)));
         Passive passive = new VitalStrikePassive();
         passive.Setup(this);
-        skill = new BasicAttackSkill(new Value<int>(10));
+        skill = new BasicAttackSkill(new Value<int>(1));
         skill.Setup(this);
         //jump.performed += _ => castSequence.Begin();
         //jump.canceled += _ => castSequence.End();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GridSystem;
+using UI.Utils.IValue;
 using UnityEngine;
 namespace GameData.Skills
 {
@@ -16,7 +17,6 @@ namespace GameData.Skills
 
         private void ClearData()
         {
-            if (currentTarget != null) currentTarget.onTileChanged -= OnTargetMoved;
             currentTarget = null;
             user.onTileChanged -= OnPieceMoved;
         }
@@ -27,18 +27,18 @@ namespace GameData.Skills
             //look for target in area
             Area area = Area.Square(2);
             var coordinates = area.GetCoordinates(user.coordinate);
-            List<IPiece> potentialTargets = new();
+            List<HealthTrait> potentialTargets = new();
             for (int i = 0; i < coordinates.Count; i++)
             {
                 var pieces = IGrid.Instance.GetTileAt(coordinates[i])?.GetPiecesWith<HealthTrait>();
                 if (pieces is not { Count: > 0 }) continue;
                 for (int p = 0; p < pieces.Count; p++)
                     if (pieces[p].Piece != user)
-                        potentialTargets.Add(pieces[p].Piece);
+                        potentialTargets.Add(pieces[p]);
             }
             if(potentialTargets is not { Count: > 0 }) return;
 
-            IPiece closest = null;
+            HealthTrait closest = null;
             for (int i = 0; i < potentialTargets.Count; i++)
             {
                 if (closest == null)
@@ -46,50 +46,60 @@ namespace GameData.Skills
                     closest = potentialTargets[i];
                     continue;
                 }
-                if (Coordinate.Distance(user.coordinate, closest.coordinate) <=
-                    Coordinate.Distance(user.coordinate, potentialTargets[i].coordinate)) continue;
+                if (Coordinate.Distance(user.coordinate, closest.Piece.coordinate) <=
+                    Coordinate.Distance(user.coordinate, potentialTargets[i].Piece.coordinate)) continue;
                 closest = potentialTargets[i];
             }
             SetupTarget(closest);
         }
 
-        private void SetupTarget(IPiece target)
+        private void SetupTarget(HealthTrait target)
         {
             if (target == null) return;
-            if (currentTarget != null)
-            {
-                currentTarget.onTileChanged -= OnTargetMoved;
-            }
-            currentTarget = target;
-            currentTarget.onTileChanged += OnTargetMoved;
-            var mark = new VitalMark(currentTarget, Vector2.right);
-        }
-        
-        private void OnTargetMoved(ITile current, ITile target)
-        {
-            
+            currentTarget = target.Piece;
+            var mark = new VitalMark(user, target);
         }
     }
 
     public class VitalMark
     {
-        private IPiece piece;
+        private HealthTrait trait;
+        private IPiece piece => trait.Piece;
+        private IPiece markSource;
         private GameObject markObject;
         public Vector2 markDirection;
         
-        public VitalMark(IPiece target, Vector2? direction = null)
+        public VitalMark(IPiece origin, HealthTrait target, Vector2? direction = null)
         {
-            markDirection = direction ?? Vector2.up;
+            markDirection = direction ?? RandomDirection();
+            markSource = origin;
+            trait = target;
             markObject = Object.Instantiate(Resources.Load<GameObject>("mark"));
-            piece = target;
+            trait.onDamaged += CheckMarkHit;
             piece.onTileChanged += PositionMark;
             PositionMark(null, null);
+        }
+
+        private Vector2 RandomDirection()
+        {
+            int r = Random.Range(0, 4);
+            return Quaternion.AngleAxis(90f * r, Vector3.forward) * Vector3.up;
         }
 
         private void PositionMark(ITile current, ITile target)
         {
             markObject.transform.position = piece.coordinate;
             markObject.transform.rotation = Quaternion.AngleAxis(Vector2.SignedAngle(Vector2.up, markDirection), Vector3.forward);
+        }
+
+        private void CheckMarkHit(int diff)
+        {
+            Vector2 hitDirection = markSource.coordinate - piece.coordinate;
+            if (hitDirection != markDirection) return;
+            //detonate mark
+            trait.onDamaged -= CheckMarkHit;
+            trait.Damage(new Value<int>(5));
+            trait.onDamaged += CheckMarkHit;
         }
     }
 }
