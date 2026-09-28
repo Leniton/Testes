@@ -1,6 +1,10 @@
 using System;
+using GameData.UI;
 using GridSystem;
+using UI.Utils;
 using UI.Utils.IValue;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GameData
 {
@@ -14,15 +18,41 @@ namespace GameData
         public event Action onHealed;
         public event Action onDeath;
 
+        private VisualElement hpBar;
+
         public HealthTrait(int health)
         {
             MaxHealth = health;
             Health = health;
+
+            var container = new VisualElement()
+                .Size(100, unit: LengthUnit.Percent)
+                // .BgColor(Color.white.Transparent(.5f))
+                .JustifyContent(Justify.Center)
+                .AlignItems(Align.Center)
+                ;
+            container.Add(hpBar = new VisualElement()
+                .BgColor(Color.white)
+                .AbsPos()
+                .Offset(100)
+                .Size(100,30));
+            UiController.instance.root.Add(container);
         }
         
         public void SetUp(IPiece _piece)
         {
-           Piece = _piece;
+            if (Piece != null) Piece.onTileChanged -= OnTileChanged;
+            Piece = _piece;
+            if (Piece == null) return;
+            Piece.onTileChanged += OnTileChanged;
+            OnTileChanged(null, null);
+        }
+        private void OnTileChanged(ITile current, ITile newTile)
+        {
+            float tileSize = 108f;
+            float x = Piece.coordinate.x * tileSize;
+            float y = -(Piece.coordinate.y * tileSize) + 50;
+            hpBar.Position(new Vector2(x, y), LengthUnit.Pixel);
         }
 
         public void Damage(IValue<int> damage)

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns:AddressablesGUI="UnityEditor.AddressableAssets.GUIElements" xmlns="UnityEditor.Accessibility" elementFormDefault="qualified" targetNamespace="UI.Components" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:simpleType name="CircleLayoutGroup_offset_Type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CircleLayoutGroup_rotation_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Clockwise" />
+      <xs:enumeration value="CounterClockwise" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CircleLayoutGroup_element-rotation_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Clockwise" />
+      <xs:enumeration value="CounterClockwise" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CircleLayoutGroup_rotation-offset_Type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="360" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CircleLayoutGroupType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="false" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute default="0" name="offset" xmlns:q1="UI.Components" type="q1:CircleLayoutGroup_offset_Type" use="optional" />
+        <xs:attribute default="0" name="radius" type="xs:string" use="optional" />
+        <xs:attribute default="0" name="end-offset" type="xs:int" use="optional" />
+        <xs:attribute default="Clockwise" name="rotation" xmlns:q2="UI.Components" type="q2:CircleLayoutGroup_rotation_Type" use="optional" />
+        <xs:attribute default="0" name="start-padding" type="xs:float" use="optional" />
+        <xs:attribute default="0" name="end-padding" type="xs:float" use="optional" />
+        <xs:attribute default="false" name="rotate-elements" type="xs:boolean" use="optional" />
+        <xs:attribute default="CounterClockwise" name="element-rotation" xmlns:q3="UI.Components" type="q3:CircleLayoutGroup_element-rotation_Type" use="optional" />
+        <xs:attribute default="0" name="rotation-offset" xmlns:q4="UI.Components" type="q4:CircleLayoutGroup_rotation-offset_Type" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CircleLayoutGroup" substitutionGroup="engine:VisualElement" xmlns:q5="UI.Components" type="q5:CircleLayoutGroupType" />
+</xs:schema>

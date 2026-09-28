@@ -28,6 +28,7 @@ namespace GridSystem.UI
         public Action onEnter { get; set; }
         public Action onExit { get; set; }
         public Action onClick { get; set; }
+        public Action<ITile, ITile> onTileChanged { get; set; }
         public List<ITrait> traits { get; set; } = new();
 
         public void StylePiece(Sprite sprite, Color color)

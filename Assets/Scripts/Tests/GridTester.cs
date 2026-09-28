@@ -52,6 +52,7 @@ namespace Tests
             get;
             set;
         }
+        public Action<ITile, ITile> onTileChanged { get; set; }
         public List<ITrait> traits
         {
             get;

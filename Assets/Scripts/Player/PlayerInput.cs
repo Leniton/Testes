@@ -22,6 +22,7 @@ public class PlayerInput : MonoBehaviour, IPiece
     public Coordinate coordinate { get; set; }
     public Action onClick { get; set; }
     public List<ITrait> traits { get; set; }
+    public Action<ITile, ITile> onTileChanged { get; set; }
     
     private ISequence castSequence;
     
@@ -75,12 +76,12 @@ public class PlayerInput : MonoBehaviour, IPiece
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
         public List<ITrait> traits { get; set; } = new();
+        public Action<ITile, ITile> onTileChanged { get; set; }
 
-        public event Action<ITile> onTileChanged;
         
         private GameObject target;
         
-        public ObjectPiece(GameObject target, Action<ITile> OnTileChanged = null)
+        public ObjectPiece(GameObject target, Action<ITile,ITile> OnTileChanged = null)
         {
             this.target = target;
             coordinate = target.transform.localPosition;
@@ -95,7 +96,6 @@ public class PlayerInput : MonoBehaviour, IPiece
             newTile?.PlacePiece(this);
             coordinate = newCoordinates;
             target.transform.localPosition = newCoordinates;
-            onTileChanged?.Invoke(newTile);
         }
     }
 }

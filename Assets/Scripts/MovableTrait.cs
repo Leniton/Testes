@@ -9,13 +9,27 @@ namespace GameData
         public IPiece Piece { get; private set; }
 
         public int pushLimit { get; private set; }
+
+        private bool moving;
         
         public MovableTrait(int _pushLimit = -1) => pushLimit = _pushLimit;
 
-        public void SetUp(IPiece _piece) => Piece = _piece;
+        public void SetUp(IPiece _piece)
+        {
+            if (Piece != null) Piece.onTileChanged -= OnPieceMoved;
+            Piece = _piece;
+            if (Piece != null) Piece.onTileChanged += OnPieceMoved;
+        }
 
+        private void OnPieceMoved(ITile currentTile, ITile newTile)
+        {
+            moving = false;
+        }
+        
         public bool TryMove(Vector2 direction, int? maxPush = null)
         {
+            if (moving) return false;
+            moving = true;
             int limit = maxPush ?? pushLimit;
             bool push = limit != 0;
             var finalCoordinate = Piece.coordinate;

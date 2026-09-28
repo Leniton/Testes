@@ -15,6 +15,7 @@ namespace GameData
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
         public List<ITrait> traits { get; set; }
+        public Action<ITile, ITile> onTileChanged { get; set; }
 
         private void Awake()
         {

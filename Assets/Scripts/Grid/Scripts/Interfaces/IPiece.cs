@@ -12,6 +12,7 @@ namespace GridSystem
         public Coordinate coordinate { get; set; }
         public Action onClick { get; set; }
         public List<ITrait> traits { get; set; }
+        public Action<ITile, ITile> onTileChanged { get; set; }
 
         public void Initialize()
         {
@@ -99,6 +100,7 @@ namespace GridSystem
             currentTile?.RemovePiece(piece);
             tile?.PlacePiece(piece);
             piece.SetCurrentTile(currentTile, tile, coordinates);
+            piece.onTileChanged?.Invoke(currentTile, tile);
         }
     }
 }

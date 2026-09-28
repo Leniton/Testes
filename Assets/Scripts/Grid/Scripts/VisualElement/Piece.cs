@@ -15,6 +15,7 @@ namespace GridSystem.VisualElements
         public Action onExit { get; set; }
         public Action onClick { get; set; }
         public List<ITrait> traits { get; set; } = new();
+        public Action<ITile, ITile> onTileChanged { get; set; }
 
         public Piece()
         {
