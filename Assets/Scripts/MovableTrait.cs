@@ -40,14 +40,14 @@ namespace GameData
             while (next != goal)
             {
                 ITile targetTile = IGrid.Instance.GetTileAt(next);
-                if (!ValidTile(targetTile).OnFalse(() => MovePiece(finalCoordinate))) return Moved();
+                if (!ValidTile(targetTile).OnFalse(() => PushAndMove(finalCoordinate, targetTile))) return Moved();
                 finalCoordinate = next;
                 next += step;
             }
             ITile goalTile = IGrid.Instance.GetTileAt(goal);
-            if (!ValidTile(goalTile).OnFalse(() => MovePiece(finalCoordinate))) return Moved();
+            if (!ValidTile(goalTile).OnFalse(() => PushAndMove(finalCoordinate, goalTile))) return Moved();
             finalCoordinate = goal;
-            MovePiece(finalCoordinate);
+            PushAndMove(finalCoordinate, goalTile);
             return Moved();
 
             bool ValidTile(ITile tile)
@@ -60,6 +60,12 @@ namespace GameData
             }
 
             bool Moved() => finalCoordinate != Piece.coordinate;
+
+            void PushAndMove(Coordinate coordinate, ITile targetTile)
+            {
+                TryPush(targetTile, direction, limit);
+                MovePiece(coordinate);
+            }
         }
 
         private void MovePiece(Coordinate coordinate)
@@ -73,12 +79,12 @@ namespace GameData
         private bool TryPush(ITile tile, Vector2 direction, int maxPush)
         {
             if (tile == null) return false;
-            var pieces = tile.pieces;
+            var pieces = tile.GetPiecesWith<MovableTrait>();
             pieces ??= new();
             int id = 0;
             while (id < pieces.Count)
             {
-                var movable = pieces[id]?.GetTrait<MovableTrait>();
+                var movable = pieces[id];
                 if (movable == null || !movable.TryMove(direction, maxPush - 1)) id++;
             }
             return tile.pieces is { Count: <= 0 };
