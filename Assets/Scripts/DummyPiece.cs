@@ -18,14 +18,17 @@ namespace GameData
         public List<ITrait> traits { get; set; }
         public Action<ITile, ITile> onTileChanged { get; set; }
 
+        private IValue<int> healValue;
+
         private void Awake()
         {
             IPiece piece = this;
             HealthTrait healthTrait = new(50);
             piece.AddTrait(healthTrait);
+            healValue = new ReferenceValue<int>(() => healthTrait.MaxHealth);
             healthTrait.onDamaged += () =>
                 CoroutineExtensions.AwaitCoroutine(CoroutineExtensions.DelayCoroutine(1), 
-                    () => healthTrait.Heal(new Value<int>(healthTrait.MaxHealth)));
+                    () => healthTrait.Heal(healValue));
         }
 
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)

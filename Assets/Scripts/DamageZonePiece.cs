@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using GridSystem;
+using LenixSO.Sequences.Coroutines;
 using UI.Utils.IValue;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace GameData
 {
@@ -23,30 +26,30 @@ namespace GameData
             piece.AddTrait(new GhostTrait());
         }
 
+        private void OnEnable()
+        {
+            StartCoroutine(DamageDelay());
+        }
+
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
         {
-            RemoveListeners(previousTile);
-            AddListeners(newTile);
             transform.localPosition = newCoordinates;
         }
 
-        private void AddListeners(ITile tile)
+        private IEnumerator DamageDelay()
         {
-            if (tile == null) return;
-            tile.onPiecePlaced += OnPiecePlaced;
+            yield return CoroutineExtensions.DelayCoroutine(1);
+            DamagePieces();
+            if (pool != null) pool.Release(this);
         }
 
-        private void RemoveListeners(ITile tile)
+        private void DamagePieces()
         {
-            if (tile == null) return;
-            tile.onPiecePlaced -= OnPiecePlaced;
-        }
-
-        private void OnPiecePlaced(IPiece piece)
-        {
-            var health = piece.GetTrait<HealthTrait>();
-            if (health == null) return;
-            health.Damage(new Value<int>(1));
+            var pieces = IGrid.Instance.GetTileAt(coordinate)?.GetPiecesWith<HealthTrait>();
+            if (pieces == null) return;
+            IValue<int> dmg = new Value<int>(1);
+            for (int i = 0; i < pieces.Count; i++)
+                pieces[i].Damage(dmg);
         }
         
         private class GhostTrait : ITrait
@@ -57,6 +60,32 @@ namespace GameData
             public void SetUp(IPiece _piece)
             {
                 Piece = _piece;
+            }
+        }
+
+        private static ObjectPool<DamageZonePiece> pool;
+
+        private static void CreatePool()
+        {
+            pool = new ObjectPool<DamageZonePiece>(
+                () => Instantiate(Resources.Load<DamageZonePiece>("dmg_zone"))
+                , piece => piece.gameObject.SetActive(true)
+                , piece =>
+                {
+                    piece.gameObject.SetActive(false);
+                    IPiece.PlacePieceOnTile(piece, null, new Coordinate(-999, -999), IGrid.Instance.GetTileAt(piece.coordinate));
+                });
+        }
+        
+        public static void CreateDamageZone(Coordinate point, Area area)
+        {
+            if (pool == null) CreatePool();
+            var coordinates = area.GetCoordinates(point);
+            for (int i = 0; i < coordinates.Count; i++)
+            {
+                var piece = pool.Get();
+                var coordinate = coordinates[i];
+                IPiece.PlacePieceOnTile(piece, IGrid.Instance.GetTileAt(coordinate), coordinate);
             }
         }
     }

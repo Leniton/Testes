@@ -43,6 +43,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         var jump = Input.Map("Player").Action("Jump");
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
+        castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2)));
         jump.performed += _ => castSequence.Begin();
         jump.canceled += _ => castSequence.End();
     }

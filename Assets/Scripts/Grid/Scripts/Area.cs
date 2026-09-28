@@ -374,6 +374,22 @@ namespace GridSystem
             }
         }
 
+        public List<Coordinate> GetCoordinates(Coordinate origin)
+        {
+            var coordinates = new List<Coordinate>(areaCoordinates.Count);
+
+            for (int i = 0; i < areaCoordinates.Count; i++)
+            {
+                Coordinate coordinate;
+                coordinate.x = origin.x + areaCoordinates[i].x;
+                coordinate.y = origin.y + areaCoordinates[i].y;
+                var tile = IGrid.Instance.GetTileAt(coordinate);
+                if (tile != null) coordinates.Add(coordinate);
+            }
+
+            return coordinates;
+        }
+        
         public List<Coordinate> GetCoordinates(Coordinate origin, int width, int height)
         {
             var coordinates = new List<Coordinate>();
