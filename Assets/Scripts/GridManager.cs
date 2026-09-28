@@ -43,8 +43,9 @@ public class GridManager : MonoBehaviour, IGrid
         
         //Debug barricades
         var prefab = Resources.Load("box") as GameObject;
-        IPiece b = new PlayerInput.ObjectPiece(Instantiate(prefab));
+        IPiece b = Instantiate(Resources.Load<DummyPiece>("dummy"));
         b.Initialize();
+        b.AddTrait(new MovableTrait());
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
 

@@ -23,19 +23,20 @@ namespace GameData
         private VisualElement currentHpBar;
         private Label hpText;
 
+        private static VisualElement container;
+
         public HealthTrait(int health)
         {
             MaxHealth = health;
             Health = health;
 
-            var container = new VisualElement()
+            container ??= new VisualElement()
                 .Size(100, unit: LengthUnit.Percent)
                 // .BgColor(Color.white.Transparent(.5f))
                 .JustifyContent(Justify.Center)
                 .AlignItems(Align.Center);
             container.Add(hpBar = new VisualElement()
                 .BgColor(Color.white)
-                .AbsPos()
                 .JustifyContent(Justify.Center)
                 .AlignItems(Align.Center)
                 .Padding(5)

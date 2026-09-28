@@ -33,7 +33,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece.Initialize();
         movement.piece.AddTrait(new MovableTrait());
         var health = new HealthTrait(5);
-        health.onDamaged += () => Debug.Log($"{health.Health}/{health.MaxHealth}");
+        // health.onDamaged += () => Debug.Log($"{health.Health}/{health.MaxHealth}");
         movement.piece.AddTrait(health);
         
         var move = Input.Map("Player").Action("Move");
