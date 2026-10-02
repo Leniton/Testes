@@ -13,12 +13,12 @@ namespace GameData.Skills
             damage = dmg ??= new Value<int>(1);
         }
         
-        public override void Begin()
+        public override void Use()
         {
             //feedback?
         }
         
-        public override void End()
+        public override void Cancel()
         {
             if (direction == Vector2.zero) direction = Vector2.up;
             var targetTile = IGrid.Instance.GetTileAt(user.coordinate + direction);

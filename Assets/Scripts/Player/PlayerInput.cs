@@ -56,8 +56,8 @@ public class PlayerInput : MonoBehaviour, IPiece
         //jump.performed += _ => castSequence.Begin();
         //jump.canceled += _ => castSequence.End();
         
-        jump.performed += _ => skill.Begin();
-        jump.canceled += _ => skill.End();
+        jump.performed += _ => skill.Use();
+        jump.canceled += _ => skill.Cancel();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)

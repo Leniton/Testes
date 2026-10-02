@@ -10,7 +10,7 @@ namespace GameData.Skills
         
         public virtual void Setup(IPiece source) => user = source;
         
-        public abstract void Begin();
-        public abstract void End();
+        public abstract void Use();
+        public abstract void Cancel();
     }
 }
