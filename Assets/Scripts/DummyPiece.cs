@@ -26,7 +26,7 @@ namespace GameData
             HealthTrait healthTrait = new(50);
             piece.AddTrait(healthTrait);
             healValue = new ReferenceValue<int>(() => healthTrait.MaxHealth);
-            healthTrait.onDamaged += _ =>
+            healthTrait.onDamaged += (_, _) =>
                 CoroutineExtensions.AwaitCoroutine(CoroutineExtensions.DelayCoroutine(1), 
                     () => healthTrait.Heal(healValue));
         }

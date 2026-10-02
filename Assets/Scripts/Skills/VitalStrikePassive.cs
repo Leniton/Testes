@@ -92,13 +92,14 @@ namespace GameData.Skills
             markObject.transform.rotation = Quaternion.AngleAxis(Vector2.SignedAngle(Vector2.up, markDirection), Vector3.forward);
         }
 
-        private void CheckMarkHit(int diff)
+        private void CheckMarkHit(int diff, IPiece source)
         {
+            if (source != markSource) return;
             Vector2 hitDirection = markSource.coordinate - piece.coordinate;
             if (hitDirection != markDirection) return;
             //detonate mark
             trait.onDamaged -= CheckMarkHit;
-            trait.Damage(new Value<int>(5));
+            trait.Damage(new Value<int>(5), source);
             trait.onDamaged += CheckMarkHit;
         }
     }

@@ -80,7 +80,7 @@ namespace GameData
                 });
         }
         
-        public static void CreateDamageZone(Coordinate point, Area area, int damage = 1, float delay = 1)
+        public static void CreateDamageZone(Coordinate point, Area area, int damage = 1, float delay = 1, IPiece source = null)
         {
             if (pool == null) CreatePool();
             var coordinates = area.GetCoordinates(point);

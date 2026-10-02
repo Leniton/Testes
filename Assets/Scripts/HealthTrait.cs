@@ -15,8 +15,8 @@ namespace GameData
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
 
-        public event Action<int> onDamaged;
-        public event Action<int> onHealed;
+        public event Action<int, IPiece> onDamaged;
+        public event Action<int, IPiece> onHealed;
         public event Action onDeath;
 
         private VisualElement hpBar;
@@ -78,7 +78,7 @@ namespace GameData
             hpBar.Position(new Vector2(x, y), LengthUnit.Pixel);
         }
 
-        public void Damage(IValue<int> damage)
+        public void Damage(IValue<int> damage, IPiece source = null)
         {
             int health = Math.Max(Health - damage.GetValue(), 0);
             int difference = Health - health;
@@ -86,11 +86,11 @@ namespace GameData
             if (!changed) return;
             Health = health;
             UpdateUI();
-            onDamaged?.Invoke(difference);
+            onDamaged?.Invoke(difference, source);
             if (Health <= 0) onDeath?.Invoke();
         }
 
-        public void Heal(IValue<int> heal)
+        public void Heal(IValue<int> heal, IPiece source = null)
         {
             var health = Math.Min(Health + heal.GetValue(), MaxHealth);
             int difference = Health - health;
@@ -98,7 +98,7 @@ namespace GameData
             if (!changed) return;
             Health = health;
             UpdateUI();
-            onHealed?.Invoke(difference);
+            onHealed?.Invoke(difference, source);
         }
 
         private void UpdateUI()

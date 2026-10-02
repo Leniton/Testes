@@ -26,7 +26,7 @@ namespace GameData.Skills
             var pieces = targetTile.GetPiecesWith<HealthTrait>();
             pieces ??= new();
             for (int i = 0; i < pieces.Count; i++)
-                pieces[i].Damage(damage);
+                pieces[i].Damage(damage, user);
         }
     }
 }
