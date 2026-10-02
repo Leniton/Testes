@@ -20,6 +20,8 @@ namespace GameData
         public List<ITrait> traits { get; set; }
         public Action<ITile, ITile> onTileChanged { get; set; }
 
+        private IPiece source;
+
         public float delay = 1;
         public int damage = 1;
 
@@ -52,7 +54,7 @@ namespace GameData
             if (pieces == null) return;
             IValue<int> dmg = new Value<int>(damage);
             for (int i = 0; i < pieces.Count; i++)
-                pieces[i].Damage(dmg);
+                pieces[i].Damage(dmg, source);
         }
         
         private class GhostTrait : ITrait
@@ -87,6 +89,7 @@ namespace GameData
             for (int i = 0; i < coordinates.Count; i++)
             {
                 var piece = pool.Get();
+                piece.source = source;
                 piece.damage = damage;
                 piece.delay = delay;
                 var coordinate = coordinates[i];
