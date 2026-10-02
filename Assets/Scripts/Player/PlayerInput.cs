@@ -38,13 +38,11 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece.Initialize();
         movement.piece.AddTrait(new MovableTrait());
         var health = new HealthTrait(5);
-        // health.onDamaged += () => Debug.Log($"{health.Health}/{health.MaxHealth}");
         movement.piece.AddTrait(health);
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
         move.canceled += OnMoveCanceled;
-        // Input.Map("Player").Action("Jump").performed += _ => TestSpell();
         var jump = Input.Map("Player").Action("Jump");
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
