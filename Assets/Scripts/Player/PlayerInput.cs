@@ -48,13 +48,14 @@ public class PlayerInput : MonoBehaviour, IPiece
         var jump = Input.Map("Player").Action("Jump");
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
-        castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2)));
+        castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2), source:this));
         Passive passive = new VitalStrikePassive();
         passive.Setup(this);
         skill = new BasicAttackSkill(new Value<int>(1));
         skill.Setup(this);
-        //jump.performed += _ => castSequence.Begin();
-        //jump.canceled += _ => castSequence.End();
+        var attack = Input.Map("Player").Action("Attack");
+        attack.performed += _ => castSequence.Begin();
+        attack.canceled += _ => castSequence.End();
         
         jump.performed += _ => skill.Use();
         jump.canceled += _ => skill.Cancel();
