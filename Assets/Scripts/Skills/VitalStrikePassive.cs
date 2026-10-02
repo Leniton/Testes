@@ -96,7 +96,7 @@ namespace GameData.Skills
         {
             if (source != markSource) return;
             Vector2 hitDirection = markSource.coordinate - piece.coordinate;
-            if (hitDirection != markDirection) return;
+            if (hitDirection.normalized != markDirection) return;
             //detonate mark
             trait.onDamaged -= CheckMarkHit;
             trait.Damage(new Value<int>(5), source);
