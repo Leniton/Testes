@@ -51,6 +51,14 @@ public class PlayerInput : MonoBehaviour, IPiece
         passive.Setup(this);
         skill = new BasicAttackSkill(new Value<int>(1));
         skill.Setup(this);
+        var atk = skill;
+        skill = new DashSkill(onDashEnd: _ =>
+        {
+            atk.direction = skill.direction;
+            atk.Use();
+            atk.Cancel();
+        });
+        skill.Setup(this);
         var attack = Input.Map("Player").Action("Attack");
         attack.performed += _ => castSequence.Begin();
         attack.canceled += _ => castSequence.End();
