@@ -26,13 +26,13 @@ namespace GameData
             moving = false;
         }
         
-        public bool TryMove(Vector2 direction, int? maxPush = null)
+        public (bool moved, Coordinate finalPosition) TryMove(Vector2 direction, int? maxPush = null)
         {
-            if (moving) return false;
+            var finalCoordinate = Piece.coordinate;
+            if (moving) return (false, finalCoordinate);
             moving = true;
             int limit = maxPush ?? pushLimit;
             bool push = limit != 0;
-            var finalCoordinate = Piece.coordinate;
             Coordinate step = new Coordinate(Math.Clamp((int)direction.x, -1, 1), Math.Clamp((int)direction.y, -1, 1));//update each step to afford uneven steps?
             Coordinate next = Piece.coordinate + step;
             Coordinate goal = Piece.coordinate + direction;
@@ -40,21 +40,23 @@ namespace GameData
             while (next != goal)
             {
                 ITile targetTile = IGrid.Instance.GetTileAt(next);
-                if (!ValidTile(targetTile).OnFalse(() => PushAndMove(finalCoordinate, targetTile))) return Moved();
+                if (!ValidTile(targetTile).OnFalse(() => PushAndMove(finalCoordinate, targetTile)))
+                    return (Moved(), finalCoordinate);
                 finalCoordinate = next;
                 next += step;
             }
             ITile goalTile = IGrid.Instance.GetTileAt(goal);
-            if (!ValidTile(goalTile).OnFalse(() => PushAndMove(finalCoordinate, goalTile))) return Moved();
+            if (!ValidTile(goalTile).OnFalse(() => PushAndMove(finalCoordinate, goalTile)))
+                return (Moved(), finalCoordinate);
             finalCoordinate = goal;
             PushAndMove(finalCoordinate, goalTile);
-            return Moved();
+            return (Moved(), finalCoordinate);
 
             bool ValidTile(ITile tile)
             {
                 // Debug.Log($"checking {next}/{goal}");
                 bool valid = tile != null;
-                if (valid) valid = (tile.pieceID & 1) != 0;
+                if (valid) valid = (tile.pieceID & ITile.EMPTY) != 0;
                 if (!valid && push) valid = TryPush(tile, direction, limit);
                 return valid;
             }
@@ -85,7 +87,7 @@ namespace GameData
             while (id < pieces.Count)
             {
                 var movable = pieces[id];
-                if (movable == null || !movable.TryMove(direction, maxPush - 1)) id++;
+                if (movable == null || !movable.TryMove(direction, maxPush - 1).moved) id++;
             }
             return tile.pieces is { Count: <= 0 };
         }

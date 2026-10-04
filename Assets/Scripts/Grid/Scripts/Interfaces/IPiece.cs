@@ -7,6 +7,8 @@ namespace GridSystem
 {
     public interface IPiece: IHover
     {
+        public const int GENERIC = 2;
+        
         public string Name { get; set; }
         public int id { get; set; }
         public Coordinate coordinate { get; set; }
@@ -21,7 +23,7 @@ namespace GridSystem
 
         public void RefreshId()
         {
-            var newId = (int)PieceType.generic;
+            var newId = GENERIC;
             traits ??= new();
             for (int i = 0; i < traits.Count; i++)
                 traits[i].ModifyID(ref newId);

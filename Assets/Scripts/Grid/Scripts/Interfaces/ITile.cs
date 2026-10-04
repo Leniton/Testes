@@ -6,14 +6,16 @@ namespace GridSystem
 {
     public interface ITile
     {
+        public const int EMPTY = 1;
+        
         public List<IPiece> pieces { get; set; }
 
         public int pieceID
         {
             get
             {
-                if (pieces.Count <= 0) return 1;
-                int value = 2;
+                if (pieces.Count <= 0) return EMPTY;
+                int value = 0;
                 for (int i = 0; i < pieces.Count; i++)
                     value |= pieces[i].id;
 
