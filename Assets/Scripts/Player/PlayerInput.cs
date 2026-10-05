@@ -50,6 +50,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         Passive passive = new VitalStrikePassive();
         passive.Setup(this);
         skill = new BasicAttackSkill(new Value<int>(1));
+        skill = new AutoTargetSkill(skill);
         skill.Setup(this);
         var atk = skill;
         skill = new DashSkill(onDashEnd: _ =>
