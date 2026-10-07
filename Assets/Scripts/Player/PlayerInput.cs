@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameData;
-using GameData.Skills;
 using GridSystem;
 using InputSystemHelper;
 using LenixSO.Sequences;
@@ -28,8 +27,6 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     private ISequence castSequence;
     
-    private Skill skill;
-    
     private void Awake()
     {
         IPiece.PlacePieceOnTile(this, IGrid.Instance.GetTileAt(transform.position), transform.position);
@@ -47,36 +44,16 @@ public class PlayerInput : MonoBehaviour, IPiece
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
         castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2), source:this));
-        Passive passive = new VitalStrikePassive();
-        passive.Setup(this);
-        skill = new BasicAttackSkill(new Value<int>(1));
-        skill = new AutoTargetSkill(skill);
-        skill.Setup(this);
-        var atk = skill;
-        skill = new DashSkill(onDashEnd: _ =>
-        {
-            atk.direction = skill.direction;
-            atk.Use();
-            atk.Cancel();
-        });
-        skill.Setup(this);
-        var attack = Input.Map("Player").Action("Attack");
-        attack.performed += _ => castSequence.Begin();
-        attack.canceled += _ => castSequence.End();
         
-        jump.performed += _ => skill.Use();
-        jump.canceled += _ => skill.Cancel();
+        //jump.performed += _ => skill.Use();
+        //jump.canceled += _ => skill.Cancel();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         var direction = context.ReadValue<Vector2>();
-        if (direction != Vector2.zero) skill.direction = direction;
         if (direction == Vector2.zero || !castSequence.running)
-        {
             movement.MoveNow(direction);
-            return;
-        }
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
