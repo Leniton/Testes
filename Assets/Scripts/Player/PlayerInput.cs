@@ -34,8 +34,6 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece = this;
         movement.piece.Initialize();
         movement.piece.AddTrait(new MovableTrait());
-        var health = new HealthTrait(5);
-        movement.piece.AddTrait(health);
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
@@ -43,7 +41,6 @@ public class PlayerInput : MonoBehaviour, IPiece
         var jump = Input.Map("Player").Action("Jump");
         var delay = new CoroutineSequence(new(() => CoroutineExtensions.DelayCoroutine(.2f)));
         castSequence = CustomSequence.EmptySequence();
-        castSequence = new CustomSequence(() => DamageZonePiece.CreateDamageZone(coordinate, Area.Circle(2), source:this));
         
         //jump.performed += _ => skill.Use();
         //jump.canceled += _ => skill.Cancel();

@@ -43,9 +43,8 @@ public class GridManager : MonoBehaviour, IGrid
         
         //Debug barricades
         var prefab = Resources.Load("box") as GameObject;
-        IPiece b = Instantiate(Resources.Load<DummyPiece>("dummy"));
+        IPiece b = new PlayerInput.ObjectPiece(Instantiate(Resources.Load<GameObject>("dummy")));
         b.Initialize();
-        b.AddTrait(new MovableTrait());
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
 
@@ -55,7 +54,8 @@ public class GridManager : MonoBehaviour, IGrid
         c = new Coordinate(0, -1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         
-        b = Instantiate(Resources.Load<DamageZonePiece>("dmg_zone"));
+        b = new PlayerInput.ObjectPiece(Instantiate(prefab));
+        b.AddTrait(new MovableTrait());
         b.Initialize();
         c = new Coordinate(1, 0);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
