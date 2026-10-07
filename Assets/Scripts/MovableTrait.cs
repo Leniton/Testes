@@ -57,7 +57,7 @@ namespace GameData
                 // Debug.Log($"checking {next}/{goal}");
                 bool valid = tile != null;
                 if (valid) valid = (tile.pieceID & ITile.EMPTY) != 0;
-                if (!valid && push) valid = TryPush(tile, direction, limit);
+                if (!valid) valid = TryPush(tile, direction, limit);
                 return valid;
             }
 
@@ -65,7 +65,7 @@ namespace GameData
 
             void PushAndMove(Coordinate coordinate, ITile targetTile)
             {
-                TryPush(targetTile, direction, limit);
+                if (push) TryPush(targetTile, direction, limit);
                 MovePiece(coordinate);
             }
         }
@@ -87,7 +87,8 @@ namespace GameData
             while (id < pieces.Count)
             {
                 var movable = pieces[id];
-                if (movable == null || !movable.TryMove(direction, maxPush - 1).moved) id++;
+                int push = movable?.pushLimit ?? 0;
+                if (movable == null || movable.pushLimit == 0 || !movable.TryMove(direction, --push).moved) id++;
             }
             return tile.pieces is { Count: <= 0 };
         }

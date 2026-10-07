@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameData;
+using GameData.Words.ConcreteWords;
 using GridSystem;
 using LenixSO.Sequences.Coroutines;
 using LenixSO.Sequences.Decorator;
@@ -43,10 +44,17 @@ public class GridManager : MonoBehaviour, IGrid
         
         //Debug barricades
         var prefab = Resources.Load("box") as GameObject;
-        IPiece b = new PlayerInput.ObjectPiece(Instantiate(Resources.Load<GameObject>("dummy")));
+        Doll doll = new();
+        IPiece b = doll.GetPiece();
         b.Initialize();
         Coordinate c = new Coordinate(0, 1);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        
+        b = doll.GetPiece();
+        b.Initialize();
+        c = new Coordinate(0, 2);
+        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        new You().Form(doll);
 
         b = new PlayerInput.ObjectPiece(Instantiate(prefab));
         b.Initialize();
