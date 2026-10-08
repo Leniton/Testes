@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameData;
+using GameData.Words;
 using GameData.Words.ConcreteWords;
 using GridSystem;
 using LenixSO.Sequences.Coroutines;
@@ -68,10 +69,10 @@ public class GridManager : MonoBehaviour, IGrid
         c = new Coordinate(1, 0);
         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
         
-        // b = new PlayerInput.ObjectPiece(new("barricade"));
-        // b.Initialize();
-        // c = new Coordinate(-1, 0);
-        // IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+         b = Instantiate(Resources.Load<Is>("is"));
+         b.Initialize();
+         c = new Coordinate(-1, 0);
+         IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
     }
 
     public ITile GetTileAt(Coordinate coordinates)

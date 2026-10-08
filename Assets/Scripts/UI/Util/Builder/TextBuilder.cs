@@ -39,6 +39,18 @@ namespace UI.Utils.Builder
             return builder;
         }
 
+        public static T Font<T>(this T element, Font font) where T : TextElement
+        {
+            element.style.unityFontDefinition = new StyleFontDefinition(font);
+            return element;
+        }
+        
+        public static T LetterSpacing<T>(this T element, float spacing, LengthUnit unit = LengthUnit.Pixel) where T : TextElement
+        {
+            element.style.letterSpacing = new Length(spacing, unit);
+            return element;
+        }
+        
         public static T TextOutline<T>(this T element, float width) where T : TextElement
         {
             element.style.unityTextOutlineWidth = width;
