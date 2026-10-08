@@ -47,44 +47,30 @@ public class GridManager : MonoBehaviour, IGrid
         //Debug barricades
         // var prefab = Resources.Load("box") as GameObject;
         var prefab = Resources.Load<TextPiece>("text");
-        var you = new You();
+        You you = new();
         Doll doll = new();
-        IPiece b = doll.GetPiece();
-        b.Initialize();
-        Coordinate c = new Coordinate(0, 1);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        
+        PlacePiece(doll.GetPiece(), new(0, 1));
+        //PlacePiece(doll.GetPiece(), new(1, 1));
+        //PlacePiece(doll.GetPiece(), new(-1, 1));
 
-        b = doll.GetPiece();
-        b.Initialize();
-        c = new Coordinate(-1, 1);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
-        b = doll.GetPiece();
-        b.Initialize();
-        c = new Coordinate(1, 1);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
-
-        b = Instantiate(Resources.Load<Is>("is"));
-        b.Initialize();
-        c = new Coordinate(0, 0);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        PlacePiece(Instantiate(Resources.Load<Is>("is")), new());
 
         var text = Instantiate(prefab);
         text.ChangeText("do\nll", Color.magenta);
-        b = text;
-        b.Initialize();
-        b.AddTrait(new ReferenceTrait<Word>(doll));
-        // b.AddTrait(new MovableTrait());
-        c = new Coordinate(-1, 0);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        PlacePiece(text, new(-1, 0), new ReferenceTrait<Word>(doll));
 
         text = Instantiate(prefab);
         text.ChangeText("you", ColorExtension.GrayShade(.9f), Color.magenta);
-        b = text;
-        b.AddTrait(new ReferenceTrait<Verb>(you));
-        // b.AddTrait(new MovableTrait());
-        b.Initialize();
-        c = new Coordinate(1, 0);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        PlacePiece(text, new(1, 0), new ReferenceTrait<Verb>(you));
+    }
+
+    private void PlacePiece(IPiece piece, Coordinate coordinate, params ITrait[] traits)
+    {
+        piece.Initialize();
+        for (int i = 0; i < traits.Length; i++)
+            piece.AddTrait(traits[i]);
+        IPiece.PlacePieceOnTile(piece, GetTileAt(coordinate), coordinate);
     }
 
     public ITile GetTileAt(Coordinate coordinates)
