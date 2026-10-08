@@ -24,12 +24,13 @@ namespace GameData.Words
         {
             var colorText = textColor ?? Color.white;
             var bgColor = backgroundColor ?? new();
-            var label = new Label(word);
+            var label = new Label();
             label
                 .BgColor(bgColor)
                 .AbsPos()
+                .Text($"<line-height=70%>{word}")
                 .Font(Resources.Load<Font>("LowresPixel-Regular"))
-                .FontSize(60)
+                .FontSize(50)
                 .LetterSpacing(10)
                 .WrapText(WhiteSpace.Normal)
                 .TextAlign(TextAnchor.MiddleCenter)

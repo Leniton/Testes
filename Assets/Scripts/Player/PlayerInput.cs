@@ -88,9 +88,6 @@ public class PlayerInput : MonoBehaviour, IPiece
 
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
         {
-            previousTile?.RemovePiece(this);
-            newTile?.PlacePiece(this);
-            coordinate = newCoordinates;
             target.transform.localPosition = newCoordinates;
         }
     }

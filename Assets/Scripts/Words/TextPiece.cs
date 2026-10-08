@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace GameData.Words
 {
-    public abstract class TextPiece : MonoBehaviour, IPiece
+    public class TextPiece : MonoBehaviour, IPiece
     {
         public Action onEnter { get; set; }
         public Action onExit { get; set; }
@@ -52,8 +52,8 @@ namespace GameData.Words
             var bgColor = backgroundColor ?? new();
             label
                 .BgColor(bgColor)
-                .Color(colorText)
-                .Text(text);
+                .Text($"<line-height=70%>{text}")
+                .Color(colorText);
         }
         
         protected virtual void PositionUi()
