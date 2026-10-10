@@ -19,10 +19,11 @@ namespace GameData.Words.ConcreteWords
 
         public override void Form(Word word)
         {
-            if (words.Contains(word)) return;
+            if (Contains(word)) return;
             words.Add(word);
             word.ForEachPiece(piece =>
             {
+                piece.AddTrait(new YouTrait());
                 var movable = piece.GetTrait<MovableTrait>();
                 if (movable != null) return;
                 piece.AddTrait(new MovableTrait(0));
@@ -31,10 +32,11 @@ namespace GameData.Words.ConcreteWords
 
         public override void Break(Word word)
         {
-            if (!words.Contains(word)) return;
+            if (!Contains(word)) return;
             words.Remove(word);
             word.ForEachPiece(piece =>
             {
+                piece.RemoveTrait<YouTrait>();
                 var movable = piece.GetTrait<MovableTrait>();
                 if (movable != null)
                     piece.RemoveTrait<MovableTrait>();
@@ -72,7 +74,6 @@ namespace GameData.Words.ConcreteWords
         
         public class YouTrait : ITrait
         {
-            public int idModifier { get; } = ITile.EMPTY;
             public IPiece Piece { get; private set; }
             public void SetUp(IPiece _piece) => Piece = _piece;
         }
