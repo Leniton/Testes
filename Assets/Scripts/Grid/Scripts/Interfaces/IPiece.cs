@@ -55,7 +55,9 @@ namespace GridSystem
         public bool RemoveTrait<T>(T trait) where T : ITrait
         {
             bool removed = traits.Remove(trait);
-            if (removed) RefreshId();
+            if (!removed) return false;
+            RefreshId();
+            trait.SetUp(null);
             return removed;
         }
 
