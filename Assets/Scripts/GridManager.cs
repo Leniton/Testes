@@ -46,23 +46,38 @@ public class GridManager : MonoBehaviour, IGrid
 
         //Debug barricades
         // var prefab = Resources.Load("box") as GameObject;
-        var prefab = Resources.Load<TextPiece>("text");
-        You you = new();
         Doll doll = new();
         
         PlacePiece(doll.GetPiece(), new(0, 1));
         //PlacePiece(doll.GetPiece(), new(1, 1));
         //PlacePiece(doll.GetPiece(), new(-1, 1));
 
-        PlacePiece(Instantiate(Resources.Load<Is>("is")), new());
+        Box box = new();
+        PlacePiece(box.GetPiece(), new(0, 2));
 
+        var isMod = Resources.Load<Is>("is");
+        PlacePiece(Instantiate(isMod), new());
+
+        var prefab = Resources.Load<TextPiece>("text");
         var text = Instantiate(prefab);
         text.ChangeText("do\nll", Color.magenta);
         PlacePiece(text, new(-1, 0), new ReferenceTrait<Word>(doll));
 
+        You you = new();
         text = Instantiate(prefab);
         text.ChangeText("you", ColorExtension.GrayShade(.9f), Color.magenta);
         PlacePiece(text, new(1, 0), new ReferenceTrait<Verb>(you));
+        
+        PlacePiece(Instantiate(isMod), new(0,3));
+
+        text = Instantiate(prefab);
+        text.ChangeText("box", Color.sandyBrown);
+        PlacePiece(text, new(-1, 3), new ReferenceTrait<Word>(box));
+
+        Push push = new();
+        text = Instantiate(prefab);
+        text.ChangeText("pu\nsh", ColorExtension.GrayShade(.9f), Color.sandyBrown);
+        PlacePiece(text, new(1, 2), new ReferenceTrait<Verb>(push));
     }
 
     private void PlacePiece(IPiece piece, Coordinate coordinate, params ITrait[] traits)
@@ -98,9 +113,13 @@ public class GridManager : MonoBehaviour, IGrid
     {
         if (tickSequence == null)
         {
-            tickSequence = new CoroutineSequence(new(() => CoroutineExtensions.FrameDelay(onTick)));
-            tickSequence.OnFinished += () => onTick = null;
+            tickSequence = new CoroutineSequence(new(() => CoroutineExtensions.FrameDelay(() => onTick?.Invoke())));
+            tickSequence.OnFinished += () =>
+            {
+                onTick = null;
+            };
         }
+
         onTick += action;
         if (!tickSequence.running) tickSequence.Begin();
     }

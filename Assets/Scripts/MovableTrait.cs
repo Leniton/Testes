@@ -72,6 +72,7 @@ namespace GameData
 
         private void MovePiece(Coordinate coordinate)
         {
+            if (coordinate == Piece.coordinate) return;
             var currentTile = IGrid.Instance.GetTileAt(Piece.coordinate);
             var target = IGrid.Instance.GetTileAt(coordinate);
             if (target == null) return;

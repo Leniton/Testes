@@ -92,7 +92,7 @@ namespace GameData.Words
 
         private void PiecePlaced(IPiece piece)
         {
-            CheckSentence();
+            GridManager.QueueTick(CheckSentence);
         }
 
         private void VerticalWordRemoved(IPiece piece) =>
@@ -121,19 +121,20 @@ namespace GameData.Words
             {
                 if (piece.GetTrait<ReferenceTrait<Verb>>() is not { } verbRef) return;
                 var verb = verbRef.Value;
-                var wordsRef = IGrid.Instance.GetTileAt(verbCoordinate).GetPiecesWith<ReferenceTrait<Word>>();
+                var wordsRef = IGrid.Instance.GetTileAt(verbCoordinate)?.GetPiecesWith<ReferenceTrait<Word>>();
+                if (wordsRef == null) return;
                 foreach (var word in wordsRef)
                     verb.Break(word.Value);
             });
         }
 
-        private void CheckSentence() => ModifySentences(coordinate,MountSentences);
+        private void CheckSentence() => ModifySentences(coordinate, MountSentences);
         private void ModifySentences(Coordinate center, 
             Action<List<ReferenceTrait<Word>>, List<ReferenceTrait<Verb>>> modifyMethod)
         {
             //horizontal
-            var words = IGrid.Instance.GetTileAt(center + Vector2.left).GetPiecesWith<ReferenceTrait<Word>>();
-            var verbs = IGrid.Instance.GetTileAt(center + Vector2.right).GetPiecesWith<ReferenceTrait<Verb>>();
+            var words = IGrid.Instance.GetTileAt(center + Vector2.left)?.GetPiecesWith<ReferenceTrait<Word>>();
+            var verbs = IGrid.Instance.GetTileAt(center + Vector2.right)?.GetPiecesWith<ReferenceTrait<Verb>>();
             if (words is { Count: > 0 } && verbs is { Count: > 0 })
             {
                 // Debug.Log("word found: horizontal");
@@ -141,8 +142,8 @@ namespace GameData.Words
             }
 
             //vertical
-            words = IGrid.Instance.GetTileAt(center + Vector2.up).GetPiecesWith<ReferenceTrait<Word>>();
-            verbs = IGrid.Instance.GetTileAt(center + Vector2.down).GetPiecesWith<ReferenceTrait<Verb>>();
+            words = IGrid.Instance.GetTileAt(center + Vector2.up)?.GetPiecesWith<ReferenceTrait<Word>>();
+            verbs = IGrid.Instance.GetTileAt(center + Vector2.down)?.GetPiecesWith<ReferenceTrait<Verb>>();
             if (words is { Count: > 0 } && verbs is { Count: > 0 })
             {
                 // Debug.Log("word found: vertical");
@@ -158,6 +159,7 @@ namespace GameData.Words
                 for (int v = 0; v < verbs.Count; v++)
                 {
                     var verb = verbs[v].Value;
+                    if (!verb.Contains(word)) Debug.Log($"created: {word.GetType().Name} is {verb.GetType().Name}");
                     verb.Form(word);
                 }
             }
