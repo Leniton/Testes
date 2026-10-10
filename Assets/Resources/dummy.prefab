@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6530128225460723660}
   - component: {fileID: 8090110409035016220}
-  - component: {fileID: 7163118260741003589}
   m_Layer: 0
   m_Name: dummy
   m_TagString: Untagged
@@ -80,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1282362347, guid: 9dbb0dd7c366ae940b368e4893381fae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,15 +91,3 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &7163118260741003589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3064489072106047342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4efe5c82dab5d1f47beac0fbdf16178c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyPiece
