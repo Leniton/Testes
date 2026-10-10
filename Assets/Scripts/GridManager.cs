@@ -24,6 +24,9 @@ public class GridManager : MonoBehaviour, IGrid
     public Action<ITile> onClick { get; set; }
     public Action<ITile> onEnter { get; set; }
     public Action<ITile> onExit { get; set; }
+    
+    private readonly Text text = new();
+    private readonly Push push = new();
 
     private void Awake()
     {
@@ -44,10 +47,9 @@ public class GridManager : MonoBehaviour, IGrid
             tile.origin = grid.GetTileCoordinates(tile);
         }
 
-        //Debug barricades
-        // var prefab = Resources.Load("box") as GameObject;
-        Doll doll = new();
+        AddCoreRules();
         
+        Doll doll = new();
         PlacePiece(doll.GetPiece(), new(0, 1));
         //PlacePiece(doll.GetPiece(), new(1, 1));
         //PlacePiece(doll.GetPiece(), new(-1, 1));
@@ -55,29 +57,31 @@ public class GridManager : MonoBehaviour, IGrid
         Box box = new();
         PlacePiece(box.GetPiece(), new(0, 2));
 
-        var isMod = Resources.Load<Is>("is");
-        PlacePiece(Instantiate(isMod), new());
+        PlacePiece(text.GetIs(), new());
 
-        var prefab = Resources.Load<TextPiece>("text");
-        var text = Instantiate(prefab);
-        text.ChangeText("do\nll", Color.magenta);
-        PlacePiece(text, new(-1, 0), new ReferenceTrait<Word>(doll));
+        PlacePiece(text.GetText("do\nll", Color.magenta),
+            new(-1, 0), new ReferenceTrait<Word>(doll));
 
         You you = new();
-        text = Instantiate(prefab);
-        text.ChangeText("you", ColorExtension.GrayShade(.9f), Color.magenta);
-        PlacePiece(text, new(1, 0), new ReferenceTrait<Verb>(you));
+        PlacePiece(text.GetText("do\nll",ColorExtension.GrayShade(.9f), Color.magenta),
+            new(1, 0), new ReferenceTrait<Verb>(you));
         
-        PlacePiece(Instantiate(isMod), new(0,3));
+        PlacePiece(text.GetIs(), new(0,3));
 
-        text = Instantiate(prefab);
-        text.ChangeText("box", Color.sandyBrown);
-        PlacePiece(text, new(-1, 3), new ReferenceTrait<Word>(box));
+        PlacePiece(text.GetText("box", Color.sandyBrown),
+            new(-1, 3), new ReferenceTrait<Word>(box));
 
-        Push push = new();
-        text = Instantiate(prefab);
-        text.ChangeText("pu\nsh", ColorExtension.GrayShade(.9f), Color.sandyBrown);
-        PlacePiece(text, new(1, 2), new ReferenceTrait<Verb>(push));
+        PlacePiece(text.GetText("pu\nsh",ColorExtension.GrayShade(.9f), Color.sandyBrown),
+            new(1, 2), new ReferenceTrait<Verb>(push));
+    }
+
+    private void AddCoreRules()
+    {
+        Coordinate corner = new(Width / -2, Height / 2);
+        PlacePiece(text.GetPiece(), corner, new ReferenceTrait<Word>(text));
+        PlacePiece(text.GetIs(), corner + Vector2.down);
+        PlacePiece(text.GetText("pu\nsh", ColorExtension.GrayShade(.9f), Color.sandyBrown),
+            corner + (Vector2.down * 2), new ReferenceTrait<Verb>(push));
     }
 
     private void PlacePiece(IPiece piece, Coordinate coordinate, params ITrait[] traits)

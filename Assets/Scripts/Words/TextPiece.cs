@@ -25,7 +25,7 @@ namespace GameData.Words
         protected virtual void Awake()
         {
             IPiece piece = this;
-            piece.AddTrait(new MovableTrait());//temp
+            piece.AddTrait(new GhostTrait());
             
             label ??= Word.GetWordLabel("__");
             UiController.instance.root.Add(label);

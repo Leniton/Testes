@@ -74,7 +74,6 @@ public class PlayerInput : MonoBehaviour, IPiece
         public List<ITrait> traits { get; set; } = new();
         public Action<ITile, ITile> onTileChanged { get; set; }
 
-        
         private GameObject target;
         
         public ObjectPiece(GameObject target, Action<ITile,ITile> OnTileChanged = null)
@@ -90,5 +89,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         {
             target.transform.localPosition = newCoordinates;
         }
+
+        public override string ToString() => $"Piece({target.name})";
     }
 }

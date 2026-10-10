@@ -159,7 +159,7 @@ namespace GameData.Words
                 for (int v = 0; v < verbs.Count; v++)
                 {
                     var verb = verbs[v].Value;
-                    if (!verb.Contains(word)) Debug.Log($"created: {word.GetType().Name} is {verb.GetType().Name}");
+                    // if (!verb.Contains(word)) Debug.Log($"created: {word.GetType().Name} is {verb.GetType().Name}");
                     verb.Form(word);
                 }
             }
