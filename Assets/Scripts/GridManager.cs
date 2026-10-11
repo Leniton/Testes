@@ -63,7 +63,7 @@ public class GridManager : MonoBehaviour, IGrid
             new(-1, 0), new ReferenceTrait<Word>(doll));
 
         You you = new();
-        PlacePiece(text.GetText("do\nll",ColorExtension.GrayShade(.9f), Color.magenta),
+        PlacePiece(text.GetText("you",ColorExtension.GrayShade(.9f), Color.magenta),
             new(1, 0), new ReferenceTrait<Verb>(you));
         
         PlacePiece(text.GetIs(), new(0,3));
