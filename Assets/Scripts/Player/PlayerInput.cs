@@ -34,6 +34,8 @@ public class PlayerInput : MonoBehaviour, IPiece
 
     private QueuedSequences queuedSequences = new();
     
+    private HealthUi healthUi;
+    
     private void Awake()
     {
         IPiece.PlacePieceOnTile(this, IGrid.Instance.GetTileAt(transform.position), transform.position);
@@ -43,6 +45,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         movement.piece.AddTrait(new MovableTrait());
         var health = new HealthTrait(5);
         movement.piece.AddTrait(health);
+        healthUi = new(health);
         
         var move = Input.Map("Player").Action("Move");
         move.performed += OnMovePerformed;
@@ -91,7 +94,6 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
     {
-        // transform.localPosition = newCoordinates;
         MoveOrQueue(IGrid.Instance.GetTileCoordinates(previousTile), newCoordinates);
     }
 
@@ -99,8 +101,12 @@ public class PlayerInput : MonoBehaviour, IPiece
     {
         ISequence moveSequence =
             new CoroutineSequence(
-                new(() => ScriptAnimations.Animate(f => transform.localPosition = Vector2.Lerp(current, next, f)
-                    , customDuration: .05f)),
+                new(() => ScriptAnimations.Animate(f =>
+                {
+                    var position = Vector2.Lerp(current, next, f);
+                    transform.localPosition = position;
+                    healthUi?.PositionUI(position);
+                }, customDuration: .05f)),
                 this);
         queuedSequences.Add(moveSequence);
         if (!queuedSequences.running) queuedSequences.Begin();

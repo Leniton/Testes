@@ -19,11 +19,14 @@ namespace GameData
         public Action<ITile, ITile> onTileChanged { get; set; }
 
         private IValue<int> healValue;
+        
+        private HealthUi healthUi;
 
         private void Awake()
         {
             IPiece piece = this;
             HealthTrait healthTrait = new(50);
+            healthUi = new(healthTrait);
             piece.AddTrait(healthTrait);
             healValue = new ReferenceValue<int>(() => healthTrait.MaxHealth);
             healthTrait.onDamaged += (_, _) =>
@@ -34,6 +37,7 @@ namespace GameData
         public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
         {
             transform.localPosition = newCoordinates;
+            healthUi.PositionUI(newCoordinates);
         }
     }
 }

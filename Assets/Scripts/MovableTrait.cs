@@ -23,7 +23,7 @@ namespace GameData
         {
             var start = Piece.coordinate;
             var finalCoordinate = start;
-            if (moving.OnTrue(()=>Debug.Log("already moving"))) return (false, finalCoordinate);
+            if (moving) return (false, finalCoordinate);
             moving = true;
             int limit = maxPush ?? pushLimit;
             bool push = limit != 0;

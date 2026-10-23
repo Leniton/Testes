@@ -57,17 +57,6 @@ namespace GameData
                 pieces[i].Damage(dmg, source);
         }
         
-        private class GhostTrait : ITrait
-        {
-            public IPiece Piece { get; private set; }
-            public int idModifier => 1;
-
-            public void SetUp(IPiece _piece)
-            {
-                Piece = _piece;
-            }
-        }
-
         private static ObjectPool<DamageZonePiece> pool;
 
         private static void CreatePool()
