@@ -6,10 +6,12 @@ using GameData.Skills;
 using GridSystem;
 using InputSystemHelper;
 using LenixSO.Sequences;
+using LenixSO.Sequences.Composite;
 using LenixSO.Sequences.Coroutines;
 using UI.Utils.IValue;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util.Extensions;
 using Input = InputSystemHelper.Input;
 
 [RequireComponent(typeof(Movement))]
@@ -29,6 +31,8 @@ public class PlayerInput : MonoBehaviour, IPiece
     private ISequence castSequence;
     
     private Skill skill;
+
+    private QueuedSequences queuedSequences = new();
     
     private void Awake()
     {
@@ -66,6 +70,7 @@ public class PlayerInput : MonoBehaviour, IPiece
         
         jump.performed += _ => skill.Use();
         jump.canceled += _ => skill.Cancel();
+        queuedSequences.OnFinished += queuedSequences.Clear;
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -86,7 +91,19 @@ public class PlayerInput : MonoBehaviour, IPiece
     
     public void SetCurrentTile(ITile previousTile, ITile newTile, Coordinate newCoordinates)
     {
-        transform.localPosition = newCoordinates;
+        // transform.localPosition = newCoordinates;
+        MoveOrQueue(IGrid.Instance.GetTileCoordinates(previousTile), newCoordinates);
+    }
+
+    private void MoveOrQueue(Coordinate current, Coordinate next)
+    {
+        ISequence moveSequence =
+            new CoroutineSequence(
+                new(() => ScriptAnimations.Animate(f => transform.localPosition = Vector2.Lerp(current, next, f)
+                    , customDuration: .05f)),
+                this);
+        queuedSequences.Add(moveSequence);
+        if (!queuedSequences.running) queuedSequences.Begin();
     }
     
     public class ObjectPiece : IPiece
