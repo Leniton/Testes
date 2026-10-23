@@ -38,40 +38,40 @@ public class GridManager : MonoBehaviour, IGrid
         {
             var tile = new DebugTile(Vector2.zero);
             tiles.Add(tile);
-            tile.origin = grid.GetTileCoordinates(tile) - offset;
+            tile.origin = grid.GetTileCoordinates(tile);
         }
         
-        //Debug barricades
         var prefab = Resources.Load("box") as GameObject;
-        IPiece b = Instantiate(Resources.Load<DummyPiece>("dummy"));
-        b.Initialize();
-        b.AddTrait(new MovableTrait());
-        Coordinate c = new Coordinate(0, 1);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+        PlacePiece(Instantiate(Resources.Load<DummyPiece>("dummy")), new(0, 1), new MovableTrait());
+        PlacePiece(new PlayerInput.ObjectPiece(Instantiate(prefab)),new(0,-1),new MovableTrait());
+        PlacePiece(Instantiate(Resources.Load<DamageZonePiece>("dmg_zone")),new(1,0));
+    }
 
-        b = new PlayerInput.ObjectPiece(Instantiate(prefab));
-        b.Initialize();
-        b.AddTrait(new MovableTrait());
-        c = new Coordinate(0, -1);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
-        
-        b = Instantiate(Resources.Load<DamageZonePiece>("dmg_zone"));
-        b.Initialize();
-        c = new Coordinate(1, 0);
-        IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
-        
-        // b = new PlayerInput.ObjectPiece(new("barricade"));
-        // b.Initialize();
-        // c = new Coordinate(-1, 0);
-        // IPiece.PlacePieceOnTile(b, GetTileAt(c), c);
+    private void PlacePiece(IPiece piece, Coordinate coordinate, params ITrait[] traits)
+    {
+        piece.Initialize();
+        for (int i = 0; i < traits.Length; i++)
+            piece.AddTrait(traits[i]);
+        IPiece.PlacePieceOnTile(piece, GetTileAt(coordinate), coordinate);
     }
 
     public ITile GetTileAt(Coordinate coordinates)
     {
         coordinates += offset;
         return (coordinates.x < 0 || coordinates.y < 0 || coordinates.x >= Width || coordinates.y >= Height)
-                ? null
-                : tiles[(Width * coordinates.y) + coordinates.x];
+            ? null
+            : tiles[(Width * coordinates.y) + coordinates.x];
+    }
+
+    public Coordinate GetTileCoordinates(ITile tile)
+    {
+        int id = tiles.IndexOf(tile);
+        int x = id % Width;
+        int y = id / Width;
+
+        //print($"x:{x} | y:{y}");
+        var raw = new Coordinate(x, y);
+        return raw - offset;
     }
 }
 

@@ -16,20 +16,14 @@ namespace GameData
 
         public void SetUp(IPiece _piece)
         {
-            if (Piece != null) Piece.onTileChanged -= OnPieceMoved;
             Piece = _piece;
-            if (Piece != null) Piece.onTileChanged += OnPieceMoved;
-        }
-
-        private void OnPieceMoved(ITile currentTile, ITile newTile)
-        {
-            moving = false;
         }
         
         public (bool moved, Coordinate finalPosition) TryMove(Vector2 direction, int? maxPush = null)
         {
-            var finalCoordinate = Piece.coordinate;
-            if (moving) return (false, finalCoordinate);
+            var start = Piece.coordinate;
+            var finalCoordinate = start;
+            if (moving.OnTrue(()=>Debug.Log("already moving"))) return (false, finalCoordinate);
             moving = true;
             int limit = maxPush ?? pushLimit;
             bool push = limit != 0;
@@ -57,21 +51,23 @@ namespace GameData
                 // Debug.Log($"checking {next}/{goal}");
                 bool valid = tile != null;
                 if (valid) valid = (tile.pieceID & ITile.EMPTY) != 0;
-                if (!valid && push) valid = TryPush(tile, direction, limit);
+                if (!valid) valid = TryPush(tile, direction, limit);
                 return valid;
             }
 
-            bool Moved() => finalCoordinate != Piece.coordinate;
+            bool Moved() => finalCoordinate != start;
 
             void PushAndMove(Coordinate coordinate, ITile targetTile)
             {
-                TryPush(targetTile, direction, limit);
+                if (push) TryPush(targetTile, direction, limit);
                 MovePiece(coordinate);
+                moving = false;
             }
         }
 
         private void MovePiece(Coordinate coordinate)
         {
+            if (coordinate == Piece.coordinate) return;
             var currentTile = IGrid.Instance.GetTileAt(Piece.coordinate);
             var target = IGrid.Instance.GetTileAt(coordinate);
             if (target == null) return;
@@ -81,13 +77,13 @@ namespace GameData
         private bool TryPush(ITile tile, Vector2 direction, int maxPush)
         {
             if (tile == null) return false;
-            var pieces = tile.GetPiecesWith<MovableTrait>();
-            pieces ??= new();
-            int id = 0;
-            while (id < pieces.Count)
+            var pieces = tile.GetPiecesWith<MovableTrait>() ?? new();
+            for (int i = 0; i < pieces.Count; i++)
             {
-                var movable = pieces[id];
-                if (movable == null || !movable.TryMove(direction, maxPush - 1).moved) id++;
+                var movable = pieces[i];
+                int push = movable?.pushLimit ?? 0;
+                if (movable?.pushLimit != 0)
+                    movable?.TryMove(direction, --push);
             }
             return tile.pieces is { Count: <= 0 };
         }
