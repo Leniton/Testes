@@ -43,7 +43,7 @@ public class GridManager : MonoBehaviour, IGrid
         
         var prefab = Resources.Load("box") as GameObject;
         PlacePiece(Instantiate(Resources.Load<DummyPiece>("dummy")), new(0, 1), new MovableTrait());
-        PlacePiece(new PlayerInput.ObjectPiece(Instantiate(prefab)),new(0,-1),new MovableTrait());
+        PlacePiece(new GameObjectPiece(Instantiate(prefab)),new(0,-1),new MovableTrait());
         PlacePiece(Instantiate(Resources.Load<DamageZonePiece>("dmg_zone")),new(1,0));
     }
 
