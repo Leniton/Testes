@@ -27,14 +27,13 @@ public class PlayerInput : MonoBehaviour, IPiece
     public Action onClick { get; set; }
     public List<ITrait> traits { get; set; }
     public Action<ITile, ITile> onTileChanged { get; set; }
-    
-    private ISequence castSequence;
-    
-    private Skill skill;
 
     private QueuedSequences queuedSequences = new();
     
     private HealthUi healthUi;
+    
+    private ISequence castSequence;
+    private Skill skill;
     
     private void Awake()
     {
@@ -80,11 +79,8 @@ public class PlayerInput : MonoBehaviour, IPiece
     {
         var direction = context.ReadValue<Vector2>();
         if (direction != Vector2.zero) skill.direction = direction;
-        if (direction == Vector2.zero || !castSequence.running)
-        {
-            movement.MoveNow(direction);
-            return;
-        }
+        if (direction != Vector2.zero && castSequence.running) return;
+        movement.MoveNow(direction);
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
